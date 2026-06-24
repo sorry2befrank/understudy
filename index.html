@@ -189,6 +189,17 @@
   .consult-band .price small { font-size: 12.5px; color: var(--dim); font-weight: 500; display: block; }
   .consult-band .btn { margin-top: 12px; }
   @media (max-width: 680px) { .consult-band { flex-direction: column; text-align: center; align-items: stretch; } }
+
+  /* project screenshots + reviews */
+  .case .shot { position: relative; aspect-ratio: 16 / 10; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); background: linear-gradient(135deg, var(--panel-2), var(--panel)); margin-bottom: 16px; display: grid; place-items: center; }
+  .case .shot::after { content: "Screenshot"; font-family: var(--disp); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--dim); opacity: 0.45; }
+  .case .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .case .visit { display: inline-block; margin-top: 10px; font-family: var(--disp); font-size: 12.5px; letter-spacing: 0.04em; color: var(--spot); }
+  .case .visit:hover { color: var(--spot-lit); }
+  .reviews { display: grid; gap: 18px; max-width: 680px; margin: 0 auto; }
+  .review { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin: 0; }
+  .review p { font-size: 17px; color: var(--bone); line-height: 1.55; font-style: italic; }
+  .review cite { display: block; margin-top: 14px; font-family: var(--disp); font-style: normal; font-size: 13px; letter-spacing: 0.04em; color: var(--spot); }
 </style>
 </head>
 <body>
@@ -232,11 +243,100 @@
     </div>
   </section>
 
+  <section id="consult">
+    <div class="wrap">
+      <div class="consult-band reveal">
+        <div class="ctext">
+          <span class="eyebrow">Not sure yet? Start here</span>
+          <h3>Work with me — a consultation</h3>
+          <p>We shape your idea together: I help you scope it, map the phases, and figure out what your budget gets you first. Paid upfront — and it credits toward your build if you move forward.</p>
+        </div>
+        <div class="cright">
+          <div class="price">$150 <small>credited toward your build</small></div>
+          <a class="btn" id="consult-btn" href="mailto:frankeppsjr@gmail.com?subject=Understudy%20%E2%80%94%20book%20a%20consultation">Book a consultation &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="wrap reveal">
+      <div class="why">
+        <span class="eyebrow">Why Understudy</span>
+        <h2>An understudy learns the role — and supports the lead.</h2>
+        <p>Every founder needs one: something that learns a part of the job and can run it without you. That's the hard, valuable part of AI — not generating text, but doing real work <strong>safely, evaluated, and under your control.</strong> I've shipped exactly that: an autonomous multi-agent system running live, with a critic that vets every action and a human gate before anything ships. You're always the lead. The understudy just makes sure the show goes on. And because I use my own agents to help build, the prices stay fixed and fair.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>What I've shipped</h2>
+        <p>Real, deployed systems — built end to end.</p>
+      </div>
+      <div class="proof">
+        <div class="case reveal">
+          <div class="shot"><img src="img/ai-content-engine.png" alt="AI Content Engine" loading="lazy" onerror="this.style.display='none'"></div>
+          <span class="ref">AI agents &amp; automation</span>
+          <h4>AI Content Engine</h4>
+          <p>An AI that runs a brand's social media on its own — it plans the posts, writes them, double-checks its own work, and waits for a person's OK before anything goes out.</p>
+        </div>
+        <div class="case reveal">
+          <div class="shot"><img src="img/cosmic-blueprint.png" alt="Cosmic Blueprint" loading="lazy" onerror="this.style.display='none'"></div>
+          <span class="ref">Live SaaS &amp; payments</span>
+          <h4>Cosmic Blueprint</h4>
+          <p>A subscription website that's live and taking payments: people sign up, pay, and get personalized, AI-written reports. Built start to finish.</p>
+          <a class="visit" href="https://cosmic-blueprint.org" target="_blank" rel="noopener">View live &rarr;</a>
+        </div>
+        <div class="case reveal">
+          <div class="shot"><img src="img/three-mountaintops.png" alt="Three Mountaintops" loading="lazy" onerror="this.style.display='none'"></div>
+          <span class="ref">Memberships &amp; access</span>
+          <h4>Three Mountaintops</h4>
+          <p>A membership platform where one login unlocks the right content across a website and two games — paying members see more, everyone else gets a taste.</p>
+          <a class="visit" href="https://threemountaintops.world" target="_blank" rel="noopener">View live &rarr;</a>
+        </div>
+        <div class="case reveal">
+          <div class="shot"><img src="img/pulse-desk.png" alt="Pulse Desk" loading="lazy" onerror="this.style.display='none'"></div>
+          <span class="ref">Real-time data</span>
+          <h4>Pulse Desk</h4>
+          <p>A live trading dashboard that pulls real market data, runs the math, and scores how strong a setup is — checked against years of history before it trusts a signal.</p>
+        </div>
+        <div class="case reveal">
+          <div class="shot"><img src="img/authors-codex.png" alt="Authors Codex" loading="lazy" onerror="this.style.display='none'"></div>
+          <span class="ref">Secure desktop app</span>
+          <h4>Authors Codex</h4>
+          <p>A private writing app for novelists: your work is encrypted on your own device and syncs across your computers — fast, secure, and works offline.</p>
+          <a class="visit" href="https://authors-codex.vercel.app" target="_blank" rel="noopener">View live &rarr;</a>
+        </div>
+        <div class="case reveal">
+          <div class="shot"><img src="img/michael.png" alt="Michael" loading="lazy" onerror="this.style.display='none'"></div>
+          <span class="ref">AI app</span>
+          <h4>Michael</h4>
+          <p>A live AI app that pulls together many sources and turns them into a single, clear, personalized reading for each person.</p>
+          <a class="visit" href="https://michael-rust.vercel.app" target="_blank" rel="noopener">View live &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="wrap">
+      <div class="section-head reveal"><h2>What clients say</h2></div>
+      <div class="reviews">
+        <blockquote class="review reveal">
+          <p>"He ships real, working software — not half-done demos. He took my idea and turned it into something live that people actually use. I'd work with him again."</p>
+          <cite>&mdash; Tori Indigo &middot; Cosmic Atlas</cite>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
   <section id="packages">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>What I build</h2>
-        <p>Fixed scope, fixed price. Anything outside a package is a clearly-priced add-on you approve first — never a surprise invoice.</p>
+        <h2>The packages</h2>
+        <p>Fixed scope, fixed price — or start smaller and build phase by phase. Anything outside a package is a clearly-priced add-on you approve first, never a surprise invoice.</p>
       </div>
       <div class="pkgs">
         <div class="pkg reveal">
@@ -278,58 +378,6 @@
             <li>Standalone, or added to your app</li>
           </ul>
           <a class="btn ghost" href="#quote">Start a quote</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="consult">
-    <div class="wrap">
-      <div class="consult-band reveal">
-        <div class="ctext">
-          <span class="eyebrow">Not sure yet? Start here</span>
-          <h3>Work with me — a consultation</h3>
-          <p>We shape your idea together: I help you scope it, map the phases, and figure out what your budget gets you first. Paid upfront — and it credits toward your build if you move forward.</p>
-        </div>
-        <div class="cright">
-          <div class="price">$150 <small>credited toward your build</small></div>
-          <a class="btn" id="consult-btn" href="mailto:frankeppsjr@gmail.com?subject=Understudy%20%E2%80%94%20book%20a%20consultation">Book a consultation &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="why">
-    <div class="wrap reveal">
-      <div class="why">
-        <span class="eyebrow">Why Understudy</span>
-        <h2>An understudy learns the role — and supports the lead.</h2>
-        <p>Every founder needs one: something that learns a part of the job and can run it without you. That's the hard, valuable part of AI — not generating text, but doing real work <strong>safely, evaluated, and under your control.</strong> I've shipped exactly that: an autonomous multi-agent system running live, with a critic that vets every action and a human gate before anything ships. You're always the lead. The understudy just makes sure the show goes on. And because I use my own agents to help build, the prices stay fixed and fair.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="work">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <h2>What I've shipped</h2>
-        <p>Not slideware — real, deployed systems.</p>
-      </div>
-      <div class="proof">
-        <div class="case reveal">
-          <span class="ref">The understudy, live</span>
-          <h4>Autonomous marketing agent</h4>
-          <p>A multi-agent system — a Strategist that drafts, a Critic that vets, a human who approves — with an eval harness and safety rails, running 24/7.</p>
-        </div>
-        <div class="case reveal">
-          <span class="ref">Ask your world</span>
-          <h4>AI semantic search &amp; RAG</h4>
-          <p>Retrieval over a 100k-word knowledge base: ask by meaning, get answers grounded in the source — with citations, not hallucinations.</p>
-        </div>
-        <div class="case reveal">
-          <span class="ref">Real-time data</span>
-          <h4>Fintech decision dashboard</h4>
-          <p>Live brokerage data, options analytics, and an engine that measures its own edge against years of history before it trusts a signal.</p>
         </div>
       </div>
     </div>
