@@ -303,15 +303,16 @@
   <section id="quote" class="quote">
     <div class="wrap">
       <div class="section-head reveal" style="text-align:center;">
-        <h2 style="margin:0 auto;">See what your idea costs.</h2>
-        <p style="margin:8px auto 0;">Describe it below. I'll reply with the package, the scope, the timeline, and a fixed price.</p>
+        <h2 style="margin:0 auto;">See what your idea costs — instantly.</h2>
+        <p style="margin:8px auto 0;">Describe it below. You'll get the right package, a tailored scope, a timeline, and a price — in seconds.</p>
       </div>
       <div class="quote-box reveal">
         <label for="idea">Your idea — what do you want to build, and what should it do?</label>
         <textarea id="idea" placeholder="e.g. A web app where coaches book clients and an AI summarizes each session…"></textarea>
-        <button class="btn" id="send">Send my idea →</button>
-        <p class="quote-note">Goes straight to my inbox. No call required, no obligation.</p>
+        <button class="btn" id="send">Get my instant quote →</button>
+        <p class="quote-note">Instant, free, no obligation — or it lands straight in my inbox.</p>
       </div>
+      <div id="quote-result" class="reveal" style="max-width:640px;margin:18px auto 0;"></div>
     </div>
   </section>
 </main>
@@ -324,6 +325,10 @@
 </footer>
 
 <script>
+  // ← After deploying the engine to Render, set this to your URL, e.g. "https://understudy-engine.onrender.com"
+  // Leave empty and the form gracefully falls back to email.
+  var UNDERSTUDY_API = "";
+
   // scroll reveal
   (function () {
     var els = document.querySelectorAll('.reveal');
@@ -334,12 +339,50 @@
     els.forEach(function (e) { io.observe(e); });
   })();
 
-  // "Send my idea" → builds a mailto (works with no backend; swap for the instant-quote API later)
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+
+  function mailtoIdea(idea) {
+    var body = encodeURIComponent(idea || '(describe your idea here)');
+    window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — my idea') + '&body=' + body;
+  }
+
+  function renderQuote(q, idea) {
+    var bullet = function (s) { return '<li style="padding-left:20px;position:relative;font-size:14.5px;color:var(--bone);margin:0">' + '<span style="position:absolute;left:0;color:var(--spot)">✦</span>' + esc(s) + '</li>'; };
+    var scope = (q.scope || []).map(bullet).join('');
+    var needs = (q.whatINeedToStart || []).map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('');
+    var head = function (t) { return '<div style="font-family:var(--disp);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--spot);margin:8px 0 6px">' + t + '</div>'; };
+    var startBody = encodeURIComponent("I'd like to start: " + (q.recommendedPackage || '') + "\n\nMy idea:\n" + idea);
+    document.getElementById('quote-result').innerHTML =
+      '<div class="quote-box" style="text-align:left">' +
+        '<div style="font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--spot)">Recommended · ' + esc(q.recommendedPackage) + '</div>' +
+        (q.greeting ? '<p style="margin:8px 0 0">' + esc(q.greeting) + '</p>' : '') +
+        '<div style="font-family:var(--disp);font-weight:700;font-size:26px;color:var(--spot-lit);margin:12px 0 2px">' + esc(q.price) + '</div>' +
+        '<div style="font-family:var(--disp);font-size:13px;color:var(--dim);margin-bottom:12px">' + esc(q.timeline) + '</div>' +
+        (q.why ? '<p style="color:var(--dim);margin-bottom:8px">' + esc(q.why) + '</p>' : '') +
+        (scope ? head("What's included") + '<ul style="list-style:none;display:grid;gap:8px;margin:0 0 12px;padding:0">' + scope + '</ul>' : '') +
+        (needs ? head("To start, I'd need") + '<ul style="color:var(--dim);font-size:14px;margin:0 0 12px;padding-left:18px">' + needs + '</ul>' : '') +
+        (q.note ? '<p style="color:var(--dim);font-size:14px;font-style:italic;margin-bottom:14px">' + esc(q.note) + '</p>' : '') +
+        '<a class="btn" style="width:100%;text-align:center;border:none" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — let's start") + '&body=' + startBody + '">' + esc(q.cta || 'Start this build →') + '</a>' +
+      '</div>';
+  }
+
+  // Get a quote: hit the API if configured; otherwise (or on failure) fall back to email.
   document.getElementById('send').addEventListener('click', function () {
     var idea = document.getElementById('idea').value.trim();
-    var subject = encodeURIComponent('Understudy — my idea');
-    var body = encodeURIComponent(idea || '(describe your idea here)');
-    window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + subject + '&body=' + body;
+    if (!idea) { document.getElementById('idea').focus(); return; }
+    if (!UNDERSTUDY_API) { mailtoIdea(idea); return; }
+    var btn = document.getElementById('send'), label = btn.textContent, out = document.getElementById('quote-result');
+    btn.disabled = true; btn.textContent = 'Thinking…';
+    out.innerHTML = '<p style="color:var(--dim);text-align:center">Scoping your idea…</p>';
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/quote', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: idea })
+    }).then(function (r) { return r.json(); }).then(function (q) {
+      if (q.error) throw new Error(q.error);
+      renderQuote(q, idea);
+    }).catch(function () {
+      out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t reach the quote engine — sending your idea to my inbox instead.</p>';
+      setTimeout(function () { mailtoIdea(idea); }, 1000);
+    }).finally(function () { btn.disabled = false; btn.textContent = label; });
   });
 </script>
 </body>
