@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Understudy — Technical breakdown</title>
+<meta name="description" content="The technical version: Next.js, Supabase, Stripe, and Claude tool-use agents — evaluated, gated, deployed. For people who know what they want." />
+<meta name="theme-color" content="#0A0B10" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>✦</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root{ --ink:#0A0B10; --panel:#14161F; --panel-2:#1B1E29; --line:rgba(232,178,76,0.18); --line-lit:rgba(232,178,76,0.46); --spot:#E8B24C; --spot-lit:#F5D08A; --bone:#ECE9E1; --dim:#9A9DA8; --disp:"Space Grotesk",system-ui,sans-serif; --body:"Inter",system-ui,sans-serif; --mono:"IBM Plex Mono",monospace; --max:1080px; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--ink);color:var(--bone);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 70% 48% at 50% -8%, rgba(232,178,76,0.13), transparent 60%)}
+  .wrap{max-width:var(--max);margin:0 auto;padding:0 26px;position:relative;z-index:1}
+  a{color:inherit;text-decoration:none}
+  .eyebrow{font-family:var(--disp);font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--spot)}
+  header.site{position:sticky;top:0;z-index:20;backdrop-filter:blur(10px);background:rgba(10,11,16,0.72);border-bottom:1px solid var(--line)}
+  .site .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .wordmark{font-family:var(--disp);font-weight:700;letter-spacing:0.04em;font-size:19px}
+  .wordmark .star{color:var(--spot)}
+  .nav{display:flex;gap:24px;align-items:center}
+  .nav a{font-family:var(--disp);font-size:13px;letter-spacing:0.04em;color:var(--dim);transition:color .25s}
+  .nav a:hover{color:var(--spot-lit)}
+  @media(max-width:680px){.nav a:not(.btn){display:none}}
+  .btn{font-family:var(--disp);font-weight:600;font-size:13.5px;letter-spacing:0.02em;padding:12px 22px;border:1px solid var(--spot);color:var(--ink);background:var(--spot);border-radius:8px;cursor:pointer;transition:background .25s,transform .2s;display:inline-block}
+  .btn:hover{background:var(--spot-lit);transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--bone)}
+  .btn:disabled{opacity:.5}
+  .nav .btn{padding:9px 16px}
+  section{padding:68px 0;position:relative}
+  .section-head{margin-bottom:32px}
+  .section-head h2{font-family:var(--disp);font-weight:700;font-size:clamp(24px,4vw,34px);letter-spacing:-0.01em}
+  .section-head p{color:var(--dim);margin-top:8px;max-width:62ch}
+  .hero{padding:82px 0 52px}
+  .hero h1{font-family:var(--disp);font-weight:700;font-size:clamp(34px,6vw,58px);line-height:1.06;letter-spacing:-0.02em;max-width:18ch;margin:18px 0 0}
+  .hero h1 em{font-style:normal;color:var(--spot-lit)}
+  .hero .lede{font-size:18px;color:var(--dim);max-width:64ch;margin:20px 0 0}
+  .stackline{font-family:var(--mono);font-size:14px;color:var(--spot);margin-top:18px}
+  .cta-row{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap}
+  .arch{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:760px){.arch{grid-template-columns:1fr}}
+  .arch .item{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:22px}
+  .arch h4{font-family:var(--disp);font-weight:600;font-size:18px;margin-bottom:6px;color:var(--spot-lit)}
+  .arch p{color:var(--dim);font-size:15px}
+  .arch code{font-family:var(--mono);font-size:13px;color:var(--spot);background:rgba(232,178,76,0.08);padding:1px 6px;border-radius:4px}
+  .quote-box{max-width:640px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px;text-align:left}
+  .quote-box label{font-family:var(--disp);font-size:13px;color:var(--dim);display:block;margin-bottom:10px}
+  .quote-box textarea{width:100%;min-height:120px;resize:vertical;background:var(--ink);border:1px solid var(--line);border-radius:10px;color:var(--bone);font-family:var(--body);font-size:15.5px;padding:14px 16px;outline:none}
+  .quote-box textarea:focus{border-color:var(--line-lit)}
+  .quote-box .btn{width:100%;margin-top:14px;text-align:center;border:none}
+  .pkgs{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  @media(max-width:860px){.pkgs{grid-template-columns:1fr}}
+  .pkg{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:24px 22px}
+  .pkg h3{font-family:var(--disp);font-weight:700;font-size:20px}
+  .pkg .price{font-family:var(--disp);font-weight:700;font-size:26px;color:var(--spot-lit);margin:10px 0 2px}
+  .pkg .meta{font-family:var(--mono);font-size:12px;color:var(--dim);margin-bottom:12px}
+  .pkg ul{list-style:none;display:grid;gap:7px;font-size:14px;color:var(--bone)}
+  .pkg li{padding-left:16px;position:relative}
+  .pkg li::before{content:"·";position:absolute;left:4px;color:var(--spot)}
+  footer.site{border-top:1px solid var(--line);padding:28px 0;margin-top:30px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-family:var(--disp);font-size:12.5px;color:var(--dim)}
+  footer a:hover{color:var(--spot-lit)}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap">
+    <span class="wordmark"><span class="star">✦</span> Understudy <span style="color:var(--dim);font-weight:400;font-size:13px">/ technical</span></span>
+    <nav class="nav">
+      <a href="index.html">← Beginner view</a>
+      <a href="#stack">Stack</a>
+      <a href="#packages">Packages</a>
+      <a class="btn" href="#quote">Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">For people who know what they want</span>
+      <h1>Production AI web apps &amp; <em>autonomous agents</em>.</h1>
+      <p class="lede">Full-stack builds, shipped and deployed — with the unglamorous parts done right: typed APIs, row-level security, signed webhooks, server-side keys, and agents that are <strong>evaluated and gated</strong>, not vibes.</p>
+      <div class="stackline">Next.js · TypeScript · Supabase/Postgres · Stripe · Claude (tool use) · RAG · Vercel / Render</div>
+      <div class="cta-row">
+        <a class="btn" href="#quote">Spec your build → instant quote</a>
+        <a class="btn ghost" href="https://github.com/sorry2befrank" target="_blank" rel="noopener">GitHub →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <div class="section-head"><h2>How the agents are actually built</h2><p>The hard part of AI isn't generating text — it's doing real work safely. In practice, that's:</p></div>
+      <div class="arch">
+        <div class="item"><h4>Tool-use loop</h4><p>Claude <code>tool use</code> over your real functions/APIs — observe → plan → call tools → continue. Read-and-propose by default; it never publishes or spends on its own.</p></div>
+        <div class="item"><h4>Critic + human-in-the-loop</h4><p>A second agent vets each action against your rules; everything lands in an approval queue. Nothing ships without your cue.</p></div>
+        <div class="item"><h4>Eval harness</h4><p>Outputs scored against a written contract, CI-gateable — so a prompt or model change can't silently regress. Verified, not hoped.</p></div>
+        <div class="item"><h4>Safety rails</h4><p>Kill switch, budget caps, dry-run, full audit log, runaway-step bounds. The boring guarantees that make it safe to run.</p></div>
+        <div class="item"><h4>Secure full-stack</h4><p>Supabase <code>RLS</code>, server-side keys, rate-limited serverless routes, Stripe Checkout + signed idempotent webhooks. Auth + entitlements wired correctly.</p></div>
+        <div class="item"><h4>RAG done right</h4><p>Chunk-level retrieval with citation verification — grounded answers from your real source, not hallucinated ones.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote">
+    <div class="wrap">
+      <div class="section-head" style="text-align:center"><h2 style="margin:0 auto">Spec it. Get a phased quote.</h2><p style="margin:8px auto 0">Describe the build — stack, scope, the works. You'll get a phased roadmap with per-phase pricing, instantly.</p></div>
+      <div class="quote-box">
+        <label for="idea">Your build — what does it do, and what's the stack/scope?</label>
+        <textarea id="idea" placeholder="e.g. Next.js + Supabase multi-tenant CRM with Stripe subscriptions, role-based access, and a Claude agent that triages inbound email…"></textarea>
+        <button class="btn" id="send">Get my phased quote →</button>
+      </div>
+      <div id="quote-result" style="max-width:640px;margin:18px auto 0"></div>
+    </div>
+  </section>
+
+  <section id="packages">
+    <div class="wrap">
+      <div class="section-head"><h2>Packages</h2><p>Fixed-price, or phased pay-as-you-go. Add-ons are quoted and approved upfront.</p></div>
+      <div class="pkgs">
+        <div class="pkg"><h3>AI Feature</h3><div class="price">from $1,500</div><div class="meta">~1–2 wks</div><ul><li>One Claude feature: assistant / structured gen / RAG</li><li>Server-side keys + eval harness</li><li>Standalone or bolted onto your app</li></ul></div>
+        <div class="pkg"><h3>MVP Launch</h3><div class="price">from $3,000</div><div class="meta">~2–3 wks</div><ul><li>Next.js + Supabase app, auth + RLS</li><li>Up to 3 core features, responsive</li><li>Deployed to your domain · repo + handoff</li></ul></div>
+        <div class="pkg"><h3>Operator Agent</h3><div class="price">from $6,000 + monthly</div><div class="meta">~3–5 wks</div><ul><li>MVP + a tool-using agent with a Critic</li><li>Human-in-the-loop + safety rails</li><li>You own it; monthly keeps it sharp</li></ul></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span><span style="color:var(--spot)">✦</span> Understudy — built &amp; run by Frank Epps</span>
+    <span><a href="index.html">Beginner view</a> · <a href="mailto:frankeppsjr@gmail.com">frankeppsjr@gmail.com</a> · <a href="https://github.com/sorry2befrank" target="_blank" rel="noopener">GitHub</a></span>
+  </div>
+</footer>
+
+<script>
+  var UNDERSTUDY_API = "https://three-mountaintops-engine.onrender.com";
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  function money(n) { return '$' + Number(n || 0).toLocaleString('en-US'); }
+  function mailtoIdea(idea) { window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — my build') + '&body=' + encodeURIComponent(idea || ''); }
+  function renderQuote(q, idea) {
+    var head = function (t) { return '<div style="font-family:var(--disp);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--spot);margin:14px 0 8px">' + t + '</div>'; };
+    var phases = (q.phases || []).map(function (p, i) {
+      return '<div style="border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:10px;background:var(--ink)">' +
+        '<div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline"><div style="font-family:var(--disp);font-weight:600;color:var(--bone);font-size:15px">' + esc(p.name || ('Phase ' + (i + 1))) + '</div><div style="font-family:var(--disp);font-weight:700;color:var(--spot-lit);white-space:nowrap">' + money(p.price) + '</div></div>' +
+        '<div style="color:var(--dim);font-size:14px;margin-top:5px">' + esc(p.delivers || '') + '</div>' +
+        (p.weeks ? '<div style="color:var(--dim);font-size:12.5px;margin-top:5px;font-family:var(--disp)">' + esc(p.weeks) + '</div>' : '') + '</div>';
+    }).join('');
+    var startBody = encodeURIComponent("I'd like to start with Phase 1 of:\n" + idea);
+    document.getElementById('quote-result').innerHTML = '<div class="quote-box">' +
+      (q.greeting ? '<p style="margin:0 0 6px">' + esc(q.greeting) + '</p>' : '') +
+      (q.fullVision ? '<p style="color:var(--dim);font-size:14.5px;margin-bottom:4px"><strong style="color:var(--spot-lit)">The full vision:</strong> ' + esc(q.fullVision) + '</p>' : '') +
+      head('Your roadmap — pay as you go, phase by phase') + phases +
+      '<div style="font-family:var(--disp);font-weight:700;font-size:18px;color:var(--spot-lit);text-align:right;margin:4px 0 2px">Full build: ' + money(q.total) + '</div>' +
+      '<div style="color:var(--dim);font-size:12.5px;text-align:right;margin-bottom:6px">Each phase paid upfront — start anywhere.</div>' +
+      (q.startRecommendation ? head('Where to start') + '<p style="color:var(--bone);font-size:14.5px;margin-bottom:10px">' + esc(q.startRecommendation) + '</p>' : '') +
+      (q.note ? '<p style="color:var(--dim);font-size:14px;font-style:italic;margin-bottom:14px">' + esc(q.note) + '</p>' : '') +
+      '<a class="btn" style="width:100%;text-align:center;border:none" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — let's start Phase 1") + '&body=' + startBody + '">' + esc(q.cta || 'Start Phase 1 →') + '</a></div>';
+  }
+  document.getElementById('send').addEventListener('click', function () {
+    var idea = document.getElementById('idea').value.trim();
+    if (!idea) { document.getElementById('idea').focus(); return; }
+    if (!UNDERSTUDY_API) { mailtoIdea(idea); return; }
+    var btn = document.getElementById('send'), label = btn.textContent, out = document.getElementById('quote-result');
+    btn.disabled = true; btn.textContent = 'Thinking…'; out.innerHTML = '<p style="color:var(--dim);text-align:center">Scoping your build…</p>';
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: idea }) })
+      .then(function (r) { return r.json(); }).then(function (q) { if (q.error) throw new Error(q.error); renderQuote(q, idea); })
+      .catch(function () { out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t reach the engine — sending to my inbox instead.</p>'; setTimeout(function () { mailtoIdea(idea); }, 1000); })
+      .finally(function () { btn.disabled = false; btn.textContent = label; });
+  });
+</script>
+</body>
+</html>
