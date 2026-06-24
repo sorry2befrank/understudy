@@ -157,6 +157,27 @@
     .reveal { opacity: 1; transform: none; transition: none; }
     .btn:hover, .pkg:hover, .case:hover { transform: none; }
   }
+
+  /* two lanes + discovery chat */
+  .lane-toggle { display: flex; gap: 10px; justify-content: center; margin: 0 auto 18px; max-width: 640px; flex-wrap: wrap; }
+  .lane-toggle button { font-family: var(--disp); font-weight: 600; font-size: 13.5px; letter-spacing: 0.02em; padding: 11px 20px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--dim); cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
+  .lane-toggle button.active { border-color: var(--spot); color: var(--bone); background: rgba(232,178,76,0.08); }
+  .lane-toggle button:hover { color: var(--spot-lit); }
+  .hidden { display: none !important; }
+  #founder-lane, #curious-lane { max-width: 640px; margin: 0 auto; }
+  #chat-log { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; max-height: 440px; overflow-y: auto; }
+  .msg { padding: 11px 15px; border-radius: 13px; font-size: 15px; line-height: 1.5; max-width: 88%; }
+  .msg.ai { background: var(--panel-2); border: 1px solid var(--line); color: var(--bone); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg.me { background: rgba(232,178,76,0.12); border: 1px solid var(--line-lit); color: var(--bone); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .chat-input-row { display: flex; gap: 10px; }
+  .chat-input-row input { flex: 1; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; color: var(--bone); font-family: var(--body); font-size: 15px; padding: 12px 14px; outline: none; transition: border-color .2s; }
+  .chat-input-row input:focus { border-color: var(--line-lit); }
+  .chat-input-row .btn { padding: 12px 18px; }
+  .idea-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-top: 10px; align-self: stretch; }
+  .idea-card h5 { font-family: var(--disp); font-weight: 600; font-size: 17px; color: var(--spot-lit); margin-bottom: 4px; }
+  .idea-card p { font-size: 14.5px; color: var(--bone); margin-bottom: 6px; }
+  .idea-card .why { color: var(--dim); font-size: 13.5px; margin-bottom: 12px; }
+  .idea-card .btn { padding: 9px 16px; font-size: 12.5px; }
 </style>
 </head>
 <body>
@@ -306,12 +327,27 @@
         <h2 style="margin:0 auto;">See what your idea costs — instantly.</h2>
         <p style="margin:8px auto 0;">Describe it below. You'll get the right package, a tailored scope, a timeline, and a price — in seconds.</p>
       </div>
-      <div class="quote-box reveal">
+      <div class="lane-toggle reveal">
+        <button id="lane-founder" class="active" type="button">I know what I want</button>
+        <button id="lane-curious" type="button">Help me figure it out</button>
+      </div>
+
+      <div id="founder-lane" class="quote-box reveal">
         <label for="idea">Your idea — what do you want to build, and what should it do?</label>
         <textarea id="idea" placeholder="e.g. A web app where coaches book clients and an AI summarizes each session…"></textarea>
         <button class="btn" id="send">Get my instant quote →</button>
         <p class="quote-note">Instant, free, no obligation — or it lands straight in my inbox.</p>
       </div>
+
+      <div id="curious-lane" class="quote-box reveal hidden">
+        <div id="chat-log"></div>
+        <div class="chat-input-row">
+          <input id="chat-input" type="text" placeholder="Type your answer…" autocomplete="off" />
+          <button class="btn" id="chat-send" type="button">Send</button>
+        </div>
+        <p class="quote-note">A few quick questions and I'll suggest ideas that fit you.</p>
+      </div>
+
       <div id="quote-result" class="reveal" style="max-width:640px;margin:18px auto 0;"></div>
     </div>
   </section>
@@ -382,6 +418,90 @@
       out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t reach the quote engine — sending your idea to my inbox instead.</p>';
       setTimeout(function () { mailtoIdea(idea); }, 1000);
     }).finally(function () { btn.disabled = false; btn.textContent = label; });
+  });
+
+  // ===== Curious lane: discovery chat =====
+  var chatMessages = [], chatStarted = false;
+  var OPENER = "I'm not sure what to build yet — help me figure it out.";
+
+  function addMsg(who, text) {
+    var log = document.getElementById('chat-log');
+    var d = document.createElement('div');
+    d.className = 'msg ' + (who === 'me' ? 'me' : 'ai');
+    d.innerHTML = esc(text).replace(/\n/g, '<br>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    log.appendChild(d); log.scrollTop = log.scrollHeight;
+    return d;
+  }
+
+  function quoteForIdea(idea) {
+    var out = document.getElementById('quote-result');
+    out.innerHTML = '<p style="color:var(--dim);text-align:center">Scoping that idea…</p>';
+    var desc = idea.title + ' — ' + idea.pitch + (idea.shape ? ' (' + idea.shape + ')' : '');
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/quote', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: desc })
+    }).then(function (r) { return r.json(); }).then(function (q) {
+      if (q.error) throw new Error(q.error);
+      renderQuote(q, desc);
+      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }).catch(function () { out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t reach the engine — try again in a moment.</p>'; });
+  }
+
+  function renderIdeas(data) {
+    if (data.reflection) addMsg('ai', data.reflection);
+    var log = document.getElementById('chat-log');
+    (data.ideas || []).forEach(function (idea) {
+      var card = document.createElement('div');
+      card.className = 'idea-card';
+      card.innerHTML = '<h5>' + esc(idea.title) + '</h5><p>' + esc(idea.pitch) + '</p>' +
+        (idea.whyYou ? '<div class="why">' + esc(idea.whyYou) + '</div>' : '') +
+        '<button class="btn" type="button">Quote this idea →</button>';
+      card.querySelector('button').addEventListener('click', function () { quoteForIdea(idea); });
+      log.appendChild(card);
+    });
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function sendChat(userText) {
+    if (userText) { addMsg('me', userText); chatMessages.push({ role: 'user', content: userText }); }
+    var input = document.getElementById('chat-input'), sb = document.getElementById('chat-send');
+    input.disabled = true; sb.disabled = true;
+    var thinking = addMsg('ai', '…');
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/discover', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: chatMessages })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      thinking.remove();
+      if (d.error) throw new Error(d.error);
+      if (d.done) { renderIdeas(d); var row = document.querySelector('#curious-lane .chat-input-row'); if (row) row.style.display = 'none'; }
+      else { addMsg('ai', d.question); chatMessages.push({ role: 'assistant', content: d.question }); }
+    }).catch(function () { thinking.remove(); addMsg('ai', 'Sorry — I hit a snag. Mind trying that again?'); })
+      .finally(function () { input.disabled = false; sb.disabled = false; input.focus(); });
+  }
+
+  function startChat() {
+    if (chatStarted) return; chatStarted = true;
+    if (!UNDERSTUDY_API) { addMsg('ai', 'This guided chat needs the live engine — for now, switch to "I know what I want," or email me your idea.'); return; }
+    chatMessages = [{ role: 'user', content: OPENER }];
+    sendChat(null);
+  }
+
+  document.getElementById('lane-curious').addEventListener('click', function () {
+    this.classList.add('active'); document.getElementById('lane-founder').classList.remove('active');
+    document.getElementById('founder-lane').classList.add('hidden');
+    document.getElementById('curious-lane').classList.remove('hidden');
+    document.getElementById('quote-result').innerHTML = '';
+    startChat();
+  });
+  document.getElementById('lane-founder').addEventListener('click', function () {
+    this.classList.add('active'); document.getElementById('lane-curious').classList.remove('active');
+    document.getElementById('curious-lane').classList.add('hidden');
+    document.getElementById('founder-lane').classList.remove('hidden');
+  });
+  document.getElementById('chat-send').addEventListener('click', function () {
+    var v = document.getElementById('chat-input').value.trim();
+    if (!v) return; document.getElementById('chat-input').value = ''; sendChat(v);
+  });
+  document.getElementById('chat-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('chat-send').click(); }
   });
 </script>
 </body>
