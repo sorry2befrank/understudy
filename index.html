@@ -178,6 +178,17 @@
   .idea-card p { font-size: 14.5px; color: var(--bone); margin-bottom: 6px; }
   .idea-card .why { color: var(--dim); font-size: 13.5px; margin-bottom: 12px; }
   .idea-card .btn { padding: 9px 16px; font-size: 12.5px; }
+
+  /* consultation band */
+  .consult-band { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; background: linear-gradient(180deg, rgba(232,178,76,0.07), var(--panel)); border: 1px solid var(--line-lit); border-radius: 16px; padding: 28px 32px; box-shadow: 0 16px 50px -28px rgba(232,178,76,0.4); }
+  .consult-band .ctext { flex: 1; min-width: 240px; }
+  .consult-band h3 { font-family: var(--disp); font-weight: 700; font-size: 22px; margin: 6px 0 8px; }
+  .consult-band p { color: var(--dim); font-size: 15px; max-width: 52ch; }
+  .consult-band .cright { text-align: center; }
+  .consult-band .price { font-family: var(--disp); font-weight: 700; font-size: 30px; color: var(--spot-lit); }
+  .consult-band .price small { font-size: 12.5px; color: var(--dim); font-weight: 500; display: block; }
+  .consult-band .btn { margin-top: 12px; }
+  @media (max-width: 680px) { .consult-band { flex-direction: column; text-align: center; align-items: stretch; } }
 </style>
 </head>
 <body>
@@ -267,6 +278,22 @@
             <li>Standalone, or added to your app</li>
           </ul>
           <a class="btn ghost" href="#quote">Start a quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="consult">
+    <div class="wrap">
+      <div class="consult-band reveal">
+        <div class="ctext">
+          <span class="eyebrow">Not sure yet? Start here</span>
+          <h3>Work with me — a consultation</h3>
+          <p>We shape your idea together: I help you scope it, map the phases, and figure out what your budget gets you first. Paid upfront — and it credits toward your build if you move forward.</p>
+        </div>
+        <div class="cright">
+          <div class="price">$150 <small>credited toward your build</small></div>
+          <a class="btn" id="consult-btn" href="mailto:frankeppsjr@gmail.com?subject=Understudy%20%E2%80%94%20book%20a%20consultation">Book a consultation &rarr;</a>
         </div>
       </div>
     </div>
@@ -363,6 +390,8 @@
 <script>
   // Live engine on Render. Empty string would gracefully fall back to email.
   var UNDERSTUDY_API = "https://three-mountaintops-engine.onrender.com";
+  // Paste your Stripe Payment Link here to take the consultation fee upfront. Empty = email to book.
+  var UNDERSTUDY_CONSULT_LINK = "";
 
   // scroll reveal
   (function () {
@@ -382,22 +411,30 @@
   }
 
   function renderQuote(q, idea) {
-    var bullet = function (s) { return '<li style="padding-left:20px;position:relative;font-size:14.5px;color:var(--bone);margin:0">' + '<span style="position:absolute;left:0;color:var(--spot)">✦</span>' + esc(s) + '</li>'; };
-    var scope = (q.scope || []).map(bullet).join('');
-    var needs = (q.whatINeedToStart || []).map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('');
-    var head = function (t) { return '<div style="font-family:var(--disp);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--spot);margin:8px 0 6px">' + t + '</div>'; };
-    var startBody = encodeURIComponent("I'd like to start: " + (q.recommendedPackage || '') + "\n\nMy idea:\n" + idea);
+    var money = function (n) { return '$' + Number(n || 0).toLocaleString('en-US'); };
+    var head = function (t) { return '<div style="font-family:var(--disp);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--spot);margin:14px 0 8px">' + t + '</div>'; };
+    var phases = (q.phases || []).map(function (p, i) {
+      return '<div style="border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:10px;background:var(--ink)">' +
+        '<div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline">' +
+          '<div style="font-family:var(--disp);font-weight:600;color:var(--bone);font-size:15px">' + esc(p.name || ('Phase ' + (i + 1))) + '</div>' +
+          '<div style="font-family:var(--disp);font-weight:700;color:var(--spot-lit);white-space:nowrap">' + money(p.price) + '</div>' +
+        '</div>' +
+        '<div style="color:var(--dim);font-size:14px;margin-top:5px">' + esc(p.delivers || '') + '</div>' +
+        (p.weeks ? '<div style="color:var(--dim);font-size:12.5px;margin-top:5px;font-family:var(--disp)">' + esc(p.weeks) + '</div>' : '') +
+      '</div>';
+    }).join('');
+    var startBody = encodeURIComponent("I'd like to start with Phase 1 of:\n" + idea);
     document.getElementById('quote-result').innerHTML =
       '<div class="quote-box" style="text-align:left">' +
-        '<div style="font-family:var(--disp);font-weight:600;font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--spot)">Recommended · ' + esc(q.recommendedPackage) + '</div>' +
-        (q.greeting ? '<p style="margin:8px 0 0">' + esc(q.greeting) + '</p>' : '') +
-        '<div style="font-family:var(--disp);font-weight:700;font-size:26px;color:var(--spot-lit);margin:12px 0 2px">' + esc(q.price) + '</div>' +
-        '<div style="font-family:var(--disp);font-size:13px;color:var(--dim);margin-bottom:12px">' + esc(q.timeline) + '</div>' +
-        (q.why ? '<p style="color:var(--dim);margin-bottom:8px">' + esc(q.why) + '</p>' : '') +
-        (scope ? head("What's included") + '<ul style="list-style:none;display:grid;gap:8px;margin:0 0 12px;padding:0">' + scope + '</ul>' : '') +
-        (needs ? head("To start, I'd need") + '<ul style="color:var(--dim);font-size:14px;margin:0 0 12px;padding-left:18px">' + needs + '</ul>' : '') +
+        (q.greeting ? '<p style="margin:0 0 6px">' + esc(q.greeting) + '</p>' : '') +
+        (q.fullVision ? '<p style="color:var(--dim);font-size:14.5px;margin-bottom:4px"><strong style="color:var(--spot-lit)">The full vision:</strong> ' + esc(q.fullVision) + '</p>' : '') +
+        head('Your roadmap — pay as you go, phase by phase') +
+        phases +
+        '<div style="font-family:var(--disp);font-weight:700;font-size:18px;color:var(--spot-lit);text-align:right;margin:4px 0 2px">Full build: ' + money(q.total) + '</div>' +
+        '<div style="color:var(--dim);font-size:12.5px;text-align:right;margin-bottom:6px">Each phase paid upfront — start anywhere, build as your budget allows.</div>' +
+        (q.startRecommendation ? head('Where to start') + '<p style="color:var(--bone);font-size:14.5px;margin-bottom:10px">' + esc(q.startRecommendation) + '</p>' : '') +
         (q.note ? '<p style="color:var(--dim);font-size:14px;font-style:italic;margin-bottom:14px">' + esc(q.note) + '</p>' : '') +
-        '<a class="btn" style="width:100%;text-align:center;border:none" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — let's start") + '&body=' + startBody + '">' + esc(q.cta || 'Start this build →') + '</a>' +
+        '<a class="btn" style="width:100%;text-align:center;border:none" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — let's start Phase 1") + '&body=' + startBody + '">' + esc(q.cta || 'Start Phase 1 →') + '</a>' +
       '</div>';
   }
 
@@ -503,6 +540,9 @@
   document.getElementById('chat-input').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') { e.preventDefault(); document.getElementById('chat-send').click(); }
   });
+
+  // Point the consultation button at your Stripe Payment Link once you've made it.
+  if (UNDERSTUDY_CONSULT_LINK) { var cb = document.getElementById('consult-btn'); if (cb) { cb.href = UNDERSTUDY_CONSULT_LINK; cb.target = '_blank'; cb.rel = 'noopener'; } }
 </script>
 </body>
 </html>
