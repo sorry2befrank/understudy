@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Understudy — It learns your job, then runs it.</title>
+<meta name="description" content="Understudy builds your MVP and the AI agent that runs it. Fixed price, fixed timeline. For solo founders who want the thing operated, not just built." />
+<meta name="theme-color" content="#0A0B10" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Understudy — It learns your job, then runs it." />
+<meta property="og:description" content="We build your MVP and the AI agent that runs it. Fixed price, fixed timeline." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>✦</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink:      #0A0B10;
+    --panel:    #14161F;
+    --panel-2:  #1B1E29;
+    --line:     rgba(232,178,76,0.18);
+    --line-lit: rgba(232,178,76,0.46);
+    --spot:     #E8B24C;
+    --spot-lit: #F5D08A;
+    --bone:     #ECE9E1;
+    --dim:      #9A9DA8;
+    --disp: "Space Grotesk", system-ui, sans-serif;
+    --body: "Inter", system-ui, sans-serif;
+    --max: 1080px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* warm stage spotlight */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 48% at 50% -8%, rgba(232,178,76,0.16), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(232,178,76,0.05), transparent 70%);
+  }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 26px; position: relative; z-index: 1; }
+  a { color: inherit; text-decoration: none; }
+  .eyebrow { font-family: var(--disp); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--spot); }
+
+  /* header */
+  header.site { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(10,11,16,0.72); border-bottom: 1px solid var(--line); }
+  .site .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .wordmark { font-family: var(--disp); font-weight: 700; letter-spacing: 0.04em; font-size: 19px; }
+  .wordmark .star { color: var(--spot); }
+  .nav { display: flex; gap: 26px; align-items: center; }
+  .nav a { font-family: var(--disp); font-size: 13px; letter-spacing: 0.04em; color: var(--dim); transition: color .25s; }
+  .nav a:hover, .nav a:focus-visible { color: var(--spot-lit); }
+  @media (max-width: 680px) { .nav a:not(.btn) { display: none; } }
+
+  .btn {
+    font-family: var(--disp); font-weight: 600; font-size: 13.5px; letter-spacing: 0.02em;
+    padding: 12px 22px; border: 1px solid var(--spot); color: var(--ink); background: var(--spot);
+    border-radius: 8px; cursor: pointer; transition: background .25s, transform .2s, color .25s; display: inline-block;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--spot-lit); transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--bone); }
+  .btn.ghost:hover, .btn.ghost:focus-visible { color: var(--spot-lit); border-color: var(--line-lit); }
+  .nav .btn { padding: 9px 16px; }
+
+  section { padding: 76px 0; position: relative; }
+  .section-head { margin-bottom: 40px; }
+  .section-head h2 { font-family: var(--disp); font-weight: 700; font-size: clamp(26px, 4vw, 38px); letter-spacing: -0.01em; }
+  .section-head p { color: var(--dim); margin-top: 8px; max-width: 56ch; }
+
+  /* hero */
+  .hero { padding: 104px 0 84px; text-align: center; }
+  .hero h1 { font-family: var(--disp); font-weight: 700; font-size: clamp(40px, 7.5vw, 76px); line-height: 1.04; letter-spacing: -0.02em; max-width: 16ch; margin: 22px auto 0; }
+  .hero h1 em { font-style: normal; color: var(--spot-lit); }
+  .hero .lede { font-size: 19px; color: var(--dim); max-width: 60ch; margin: 24px auto 8px; }
+  .hero .lede strong { color: var(--bone); font-weight: 500; }
+  .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
+
+  /* steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+  .step { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 26px 24px; }
+  .step .k { font-family: var(--disp); font-weight: 700; color: var(--spot); font-size: 14px; letter-spacing: 0.04em; }
+  .step h4 { font-family: var(--disp); font-weight: 600; font-size: 19px; margin: 12px 0 8px; }
+  .step p { color: var(--dim); font-size: 15.5px; }
+
+  /* packages */
+  .pkgs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 860px) { .pkgs { grid-template-columns: 1fr; } }
+  .pkg { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 30px 26px; display: flex; flex-direction: column; transition: border-color .3s, transform .3s, background .3s; }
+  .pkg:hover { border-color: var(--line-lit); transform: translateY(-3px); background: var(--panel-2); }
+  .pkg.feature { border-color: var(--line-lit); box-shadow: 0 0 0 1px var(--line-lit), 0 24px 60px -30px rgba(232,178,76,0.4); }
+  .pkg .tag { position: absolute; top: -11px; left: 26px; font-family: var(--disp); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink); background: var(--spot); padding: 4px 11px; border-radius: 6px; }
+  .pkg h3 { font-family: var(--disp); font-weight: 700; font-size: 22px; }
+  .pkg .price { font-family: var(--disp); font-weight: 700; font-size: 30px; margin: 14px 0 2px; color: var(--spot-lit); }
+  .pkg .price small { font-size: 14px; color: var(--dim); font-weight: 500; }
+  .pkg .meta { font-family: var(--disp); font-size: 12.5px; color: var(--dim); letter-spacing: 0.04em; margin-bottom: 16px; }
+  .pkg ul { list-style: none; margin: 4px 0 22px; display: grid; gap: 9px; }
+  .pkg li { font-size: 14.5px; color: var(--bone); padding-left: 22px; position: relative; }
+  .pkg li::before { content: "✦"; position: absolute; left: 0; color: var(--spot); font-size: 12px; top: 2px; }
+  .pkg .role { color: var(--dim); font-size: 14px; margin-bottom: 16px; font-style: italic; }
+  .pkg .btn { margin-top: auto; text-align: center; }
+  .pkg.feature .btn { background: var(--spot); color: var(--ink); }
+
+  /* why */
+  .why { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 44px 38px; }
+  .why h2 { font-family: var(--disp); font-weight: 700; font-size: clamp(24px, 3.6vw, 34px); max-width: 22ch; line-height: 1.12; }
+  .why p { color: var(--dim); margin-top: 16px; max-width: 64ch; font-size: 16.5px; }
+  .why p strong { color: var(--bone); font-weight: 500; }
+
+  /* proof */
+  .proof { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 860px) { .proof { grid-template-columns: 1fr; } }
+  .case { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 26px 24px; transition: border-color .3s, transform .3s; }
+  .case:hover { border-color: var(--line-lit); transform: translateY(-3px); }
+  .case .ref { font-family: var(--disp); font-size: 11px; letter-spacing: 0.14em; color: var(--spot); text-transform: uppercase; }
+  .case h4 { font-family: var(--disp); font-weight: 600; font-size: 19px; margin: 12px 0 8px; }
+  .case p { color: var(--dim); font-size: 15px; }
+
+  /* faq */
+  .faq { display: grid; gap: 2px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; }
+  details { background: var(--panel); border-bottom: 1px solid var(--line); }
+  details:last-child { border-bottom: none; }
+  summary { cursor: pointer; padding: 20px 24px; font-family: var(--disp); font-weight: 600; font-size: 16px; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+  summary::-webkit-details-marker { display: none; }
+  summary::after { content: "+"; color: var(--spot); font-size: 22px; line-height: 1; transition: transform .25s; }
+  details[open] summary::after { transform: rotate(45deg); }
+  details p { padding: 0 24px 22px; color: var(--dim); font-size: 15.5px; }
+
+  /* contact / quote */
+  .quote { text-align: center; }
+  .quote-box { max-width: 640px; margin: 26px auto 0; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 28px 26px; text-align: left; }
+  .quote-box label { font-family: var(--disp); font-size: 13px; color: var(--dim); letter-spacing: 0.03em; display: block; margin-bottom: 10px; }
+  .quote-box textarea { width: 100%; min-height: 120px; resize: vertical; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; color: var(--bone); font-family: var(--body); font-size: 15.5px; padding: 14px 16px; outline: none; transition: border-color .25s; }
+  .quote-box textarea:focus { border-color: var(--line-lit); }
+  .quote-box .btn { width: 100%; margin-top: 14px; text-align: center; border: none; }
+  .quote-note { color: var(--dim); font-size: 13px; margin-top: 12px; text-align: center; }
+
+  footer.site { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center; }
+  footer span, footer a { font-family: var(--disp); font-size: 12.5px; letter-spacing: 0.04em; color: var(--dim); }
+  footer a:hover { color: var(--spot-lit); }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  :focus-visible { outline: 2px solid var(--spot-lit); outline-offset: 3px; border-radius: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .btn:hover, .pkg:hover, .case:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <span class="wordmark"><span class="star">✦</span> Understudy</span>
+    <nav class="nav">
+      <a href="#how">How it works</a>
+      <a href="#packages">Packages</a>
+      <a href="#work">Work</a>
+      <a class="btn" href="#quote">Get a quote</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow reveal">A build studio for founders</span>
+      <h1 class="reveal">It learns your job, <em>then runs it.</em></h1>
+      <p class="lede reveal"><strong>I build your MVP — and the AI agent that operates it.</strong> Fixed price, fixed timeline, no sales calls. Most shops build the app and leave. Understudy also builds the agent that runs a piece of it — so the thing keeps working without you.</p>
+      <div class="cta-row reveal">
+        <a class="btn" href="#quote">Describe your idea → get a quote</a>
+        <a class="btn ghost" href="#work">See the work</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>How it works</h2>
+        <p>Three steps, no agency runaround.</p>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><span class="k">01 · Describe</span><h4>Tell me your idea</h4><p>Type what you want to build. You get a clear plan, the right package, the timeline, and a fixed price — up front.</p></div>
+        <div class="step reveal"><span class="k">02 · Cast</span><h4>Pick a package</h4><p>Transparent, scoped pricing. You know exactly what you're getting — and what isn't included — before you pay a cent.</p></div>
+        <div class="step reveal"><span class="k">03 · Run</span><h4>I build it & hand it over</h4><p>Live on your domain, fully yours. And if you want it, an understudy — an agent that learns a function and runs the show.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="packages">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>What I build</h2>
+        <p>Fixed scope, fixed price. Anything outside a package is a clearly-priced add-on you approve first — never a surprise invoice.</p>
+      </div>
+      <div class="pkgs">
+        <div class="pkg reveal">
+          <h3>MVP Launch</h3>
+          <div class="price">from $3,000</div>
+          <div class="meta">~2–3 weeks · setting the stage</div>
+          <ul>
+            <li>Next.js + Supabase web app</li>
+            <li>Auth &amp; secure data (RLS)</li>
+            <li>Up to 3 core features</li>
+            <li>Responsive, deployed to your domain</li>
+            <li>Repo + walkthrough — you own it all</li>
+          </ul>
+          <a class="btn ghost" href="#quote">Start a quote</a>
+        </div>
+        <div class="pkg feature reveal">
+          <span class="tag">The understudy</span>
+          <h3>Operator Agent</h3>
+          <div class="price">from $6,000 <small>+ monthly</small></div>
+          <div class="meta">~3–5 weeks · learns the part, runs the show</div>
+          <p class="role">An autonomous agent that runs one function — content, support, or ops.</p>
+          <ul>
+            <li>Tool-using agent + a Critic that vets its work</li>
+            <li>Human-in-the-loop — it never goes on without your cue</li>
+            <li>Safety rails: kill switch, budget caps, full audit log</li>
+            <li>You inherit &amp; own it; monthly support keeps it sharp</li>
+          </ul>
+          <a class="btn" href="#quote">Start a quote</a>
+        </div>
+        <div class="pkg reveal">
+          <h3>AI Feature</h3>
+          <div class="price">from $1,500</div>
+          <div class="meta">~1–2 weeks · giving it its lines</div>
+          <ul>
+            <li>One Claude-powered feature, done right</li>
+            <li>Assistant, structured generation, or</li>
+            <li>RAG — “chat with your docs,” with citations</li>
+            <li>Server-side keys + an eval harness</li>
+            <li>Standalone, or added to your app</li>
+          </ul>
+          <a class="btn ghost" href="#quote">Start a quote</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why">
+    <div class="wrap reveal">
+      <div class="why">
+        <span class="eyebrow">Why Understudy</span>
+        <h2>An understudy learns the role — and supports the lead.</h2>
+        <p>Every founder needs one: something that learns a part of the job and can run it without you. That's the hard, valuable part of AI — not generating text, but doing real work <strong>safely, evaluated, and under your control.</strong> I've shipped exactly that: an autonomous multi-agent system running live, with a critic that vets every action and a human gate before anything ships. You're always the lead. The understudy just makes sure the show goes on. And because I use my own agents to help build, the prices stay fixed and fair.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2>What I've shipped</h2>
+        <p>Not slideware — real, deployed systems.</p>
+      </div>
+      <div class="proof">
+        <div class="case reveal">
+          <span class="ref">The understudy, live</span>
+          <h4>Autonomous marketing agent</h4>
+          <p>A multi-agent system — a Strategist that drafts, a Critic that vets, a human who approves — with an eval harness and safety rails, running 24/7.</p>
+        </div>
+        <div class="case reveal">
+          <span class="ref">Ask your world</span>
+          <h4>AI semantic search &amp; RAG</h4>
+          <p>Retrieval over a 100k-word knowledge base: ask by meaning, get answers grounded in the source — with citations, not hallucinations.</p>
+        </div>
+        <div class="case reveal">
+          <span class="ref">Real-time data</span>
+          <h4>Fintech decision dashboard</h4>
+          <p>Live brokerage data, options analytics, and an engine that measures its own edge against years of history before it trusts a signal.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal"><h2>Straight answers</h2></div>
+      <div class="faq reveal">
+        <details><summary>Are the prices really fixed?</summary><p>Yes — for the scope in your package. Anything extra is a clearly-priced add-on you approve before I start. No surprise invoices, ever.</p></details>
+        <details><summary>Do I own everything?</summary><p>Completely — the code, the accounts, and the agent. I hand it over with a walkthrough so you can run it. No lock-in.</p></details>
+        <details><summary>Is it safe to let an AI agent run?</summary><p>It never acts unsupervised by default. Human approval, a kill switch, budget caps, and a full audit log are built in. The understudy supports the lead — it doesn't replace you.</p></details>
+        <details><summary>What if my idea doesn't fit a package?</summary><p>The quote tells you honestly. If it's bigger, we scope it before you commit — and I'll tell you if you <em>shouldn't</em> build it, or if I'm not the right fit.</p></details>
+        <details><summary>What about ongoing help?</summary><p>Every build ships with handoff docs and a walkthrough. Operator Agents come with an optional monthly retainer for support, safety monitoring, and tuning.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote" class="quote">
+    <div class="wrap">
+      <div class="section-head reveal" style="text-align:center;">
+        <h2 style="margin:0 auto;">See what your idea costs.</h2>
+        <p style="margin:8px auto 0;">Describe it below. I'll reply with the package, the scope, the timeline, and a fixed price.</p>
+      </div>
+      <div class="quote-box reveal">
+        <label for="idea">Your idea — what do you want to build, and what should it do?</label>
+        <textarea id="idea" placeholder="e.g. A web app where coaches book clients and an AI summarizes each session…"></textarea>
+        <button class="btn" id="send">Send my idea →</button>
+        <p class="quote-note">Goes straight to my inbox. No call required, no obligation.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span><span style="color:var(--spot)">✦</span> Understudy — built &amp; run by Frank Epps</span>
+    <a href="mailto:frankeppsjr@gmail.com">frankeppsjr@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+  // scroll reveal
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+
+  // "Send my idea" → builds a mailto (works with no backend; swap for the instant-quote API later)
+  document.getElementById('send').addEventListener('click', function () {
+    var idea = document.getElementById('idea').value.trim();
+    var subject = encodeURIComponent('Understudy — my idea');
+    var body = encodeURIComponent(idea || '(describe your idea here)');
+    window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + subject + '&body=' + body;
+  });
+</script>
+</body>
+</html>
