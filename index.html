@@ -196,6 +196,10 @@
   .case .shot img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .case .visit { display: inline-block; margin-top: 10px; font-family: var(--disp); font-size: 12.5px; letter-spacing: 0.04em; color: var(--spot); }
   .case .visit:hover { color: var(--spot-lit); }
+  .case.feature { grid-column: 1 / -1; border-color: var(--line-lit); box-shadow: 0 0 0 1px var(--line-lit), 0 24px 60px -30px rgba(232,178,76,0.32); }
+  .shots2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px; }
+  .shots2 .shot { margin-bottom: 0; }
+  @media (max-width: 760px) { .shots2 { grid-template-columns: 1fr; } }
   .reviews { display: grid; gap: 18px; max-width: 680px; margin: 0 auto; }
   .review { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px 26px; margin: 0; }
   .review p { font-size: 17px; color: var(--bone); line-height: 1.55; font-style: italic; }
@@ -293,11 +297,14 @@
         <p>Real, deployed systems — built end to end.</p>
       </div>
       <div class="proof">
-        <div class="case reveal">
-          <div class="shot"><img src="img/ai-content-engine.png" alt="AI Content Engine" loading="lazy" onerror="this.style.display='none'"></div>
-          <span class="ref">AI agents &amp; automation</span>
+        <div class="case feature reveal">
+          <div class="shots2">
+            <div class="shot"><img src="img/ai-content-engine.png" alt="AI Content Engine dashboard — posts waiting for approval" loading="lazy" onerror="this.style.display='none'"></div>
+            <div class="shot"><img src="img/ai-strategist.png" alt="AI Content Engine — the AI Strategist agent planning a content drop" loading="lazy" onerror="this.style.display='none'"></div>
+          </div>
+          <span class="ref">AI agents &amp; automation · my own product</span>
           <h4>AI Content Engine</h4>
-          <p>An AI that runs a brand's social media on its own — it plans the posts, writes them, double-checks its own work, and waits for a person's OK before anything goes out.</p>
+          <p>This is the engine that runs the marketing for my own book series. It reads my story's codex, writes a week of posts for every platform — Instagram, Threads, Facebook, Bluesky, Patreon, email — and stacks them for me to approve. I just glance and say yes. Give it a goal like "grow my audience this week" and it plans the whole content drop itself; it never posts without my OK, with budget caps and a kill switch behind it.</p>
         </div>
         <div class="case reveal">
           <div class="shot"><img src="img/cosmic-blueprint.png" alt="Cosmic Blueprint" loading="lazy" onerror="this.style.display='none'"></div>
