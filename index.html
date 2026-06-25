@@ -13,6 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<script src="https://js.stripe.com/v3/"></script>
 <style>
   :root {
     --ink:      #0A0B10;
@@ -459,11 +460,33 @@
   </div>
 </footer>
 
+<!-- Stripe embedded checkout — keeps payment on-page (no redirect) -->
+<style>
+  .uc-pay-overlay { position: fixed; inset: 0; z-index: 1000; display: none; align-items: flex-start; justify-content: center; padding: 30px 16px; overflow-y: auto; background: rgba(8,9,13,0.82); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+  .uc-pay-overlay.open { display: flex; }
+  .uc-pay-card { position: relative; width: 100%; max-width: 540px; background: #1b1e27; border: 1px solid var(--line); border-radius: 14px; padding: 20px; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7); }
+  .uc-pay-x { position: absolute; top: 8px; right: 14px; background: none; border: none; color: var(--dim); font-size: 26px; line-height: 1; cursor: pointer; }
+  .uc-pay-x:hover { color: var(--bone); }
+  #uc-pay-title { font-family: var(--disp); font-size: 18px; font-weight: 600; color: var(--bone); margin-bottom: 8px; padding-right: 26px; }
+  #uc-pay-status { color: var(--dim); font-size: 14px; line-height: 1.5; }
+  #uc-pay-status:not(:empty) { margin-bottom: 12px; }
+</style>
+<div id="uc-pay" class="uc-pay-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="uc-pay-title">
+  <div class="uc-pay-card">
+    <button type="button" class="uc-pay-x" id="uc-pay-close" aria-label="Close">&times;</button>
+    <div id="uc-pay-title">Secure checkout</div>
+    <div id="uc-pay-status"></div>
+    <div id="uc-checkout"></div>
+  </div>
+</div>
+
 <script>
   // Live engine on Render. Empty string would gracefully fall back to email.
   var UNDERSTUDY_API = "https://three-mountaintops-engine.onrender.com";
   // Paste your Stripe Payment Link here to take the consultation fee upfront. Empty = email to book.
   var UNDERSTUDY_CONSULT_LINK = "";
+  // Paste your Stripe PUBLISHABLE key (pk_test_… to test, then pk_live_…) to take payments on-page. Empty = email fallback.
+  var STRIPE_PK = "";
 
   // scroll reveal
   (function () {
@@ -493,6 +516,7 @@
         '</div>' +
         '<div style="color:var(--dim);font-size:14px;margin-top:5px">' + esc(p.delivers || '') + '</div>' +
         (p.weeks ? '<div style="color:var(--dim);font-size:12.5px;margin-top:5px;font-family:var(--disp)">' + esc(p.weeks) + '</div>' : '') +
+        '<button type="button" class="uc-pay btn ghost" style="width:100%;margin-top:11px;padding:9px;font-size:13.5px">Pay ' + money(p.price) + ' — start this phase &rarr;</button>' +
       '</div>';
     }).join('');
     var startBody = encodeURIComponent("I'd like to start with Phase 1 of:\n" + idea);
@@ -506,7 +530,7 @@
         '<div style="color:var(--dim);font-size:12.5px;text-align:right;margin-bottom:6px">Each phase paid upfront — start anywhere, build as your budget allows.</div>' +
         (q.startRecommendation ? head('Where to start') + '<p style="color:var(--bone);font-size:14.5px;margin-bottom:10px">' + esc(q.startRecommendation) + '</p>' : '') +
         (q.note ? '<p style="color:var(--dim);font-size:14px;font-style:italic;margin-bottom:14px">' + esc(q.note) + '</p>' : '') +
-        '<a class="btn" style="width:100%;text-align:center;border:none" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — let's start Phase 1") + '&body=' + startBody + '">' + esc(q.cta || 'Start Phase 1 →') + '</a>' +
+        '<div style="text-align:center;margin-top:2px"><a style="font-family:var(--disp);font-size:13px;color:var(--dim)" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — a question before I start") + '&body=' + startBody + '">Prefer to talk it through first? Email me &rarr;</a></div>' +
         '<div style="margin-top:14px;border-top:1px solid var(--line);padding-top:14px">' +
           '<label style="font-family:var(--disp);font-size:13px;color:var(--dim);display:block;margin-bottom:8px">Want me to save this and follow up? Drop your email.</label>' +
           '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
@@ -518,7 +542,59 @@
       '</div>';
     var _ls = document.getElementById('lead-save');
     if (_ls) _ls.addEventListener('click', function () { submitLead(idea, 'Full build: ' + money(q.total) + (q.fullVision ? ' — ' + q.fullVision : '')); });
+    var _pays = document.getElementById('quote-result').querySelectorAll('.uc-pay');
+    Array.prototype.forEach.call(_pays, function (b, i) {
+      var p = (q.phases || [])[i] || {};
+      b.addEventListener('click', function () { payFor(Number(p.price) || 0, p.name || ('Phase ' + (i + 1)), idea, 'phase'); });
+    });
   }
+
+  // ===== Stripe embedded checkout — stays on the page (no redirect) =====
+  var _stripe = (window.Stripe && STRIPE_PK) ? Stripe(STRIPE_PK) : null;
+  var _ucCheckout = null;
+  function _ucOv() { return document.getElementById('uc-pay'); }
+  function openPay(title) {
+    document.getElementById('uc-pay-title').textContent = title || 'Secure checkout';
+    document.getElementById('uc-pay-status').textContent = '';
+    document.getElementById('uc-checkout').innerHTML = '';
+    _ucOv().classList.add('open'); _ucOv().setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePay() {
+    if (_ucCheckout) { try { _ucCheckout.destroy(); } catch (e) {} _ucCheckout = null; }
+    _ucOv().classList.remove('open'); _ucOv().setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function payStatus(m) { var s = document.getElementById('uc-pay-status'); if (s) s.textContent = m || ''; }
+  function payFor(amount, label, idea, kind) {
+    var email = ''; var le = document.getElementById('lead-email'); if (le && le.value) email = le.value.trim();
+    if (!_stripe || !UNDERSTUDY_API) {
+      var body = encodeURIComponent("I'd like to pay for: " + (label || 'a phase') + (idea ? "\n\nProject: " + idea : ""));
+      window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — ' + (label || 'payment')) + '&body=' + body; return;
+    }
+    openPay(label || 'Secure checkout'); payStatus('Loading secure checkout…');
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/checkout', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: amount, label: label, idea: idea, email: email, kind: kind || 'phase' })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.error) throw new Error(d.error);
+      return _stripe.initEmbeddedCheckout({ clientSecret: d.clientSecret, onComplete: function () { onPaid(label); } });
+    }).then(function (checkout) { _ucCheckout = checkout; payStatus(''); checkout.mount('#uc-checkout'); })
+      .catch(function () { payStatus("Couldn't start checkout. Email me at frankeppsjr@gmail.com and I'll send a secure link."); });
+  }
+  function onPaid(label) {
+    if (_ucCheckout) { try { _ucCheckout.destroy(); } catch (e) {} _ucCheckout = null; }
+    document.getElementById('uc-checkout').innerHTML = '';
+    document.getElementById('uc-pay-title').textContent = 'Payment received ✦';
+    payStatus("Thank you! Your payment for " + (label || 'your build') + " came through — I'll email you within a day to kick things off. — Frank");
+  }
+  (function () {
+    var x = document.getElementById('uc-pay-close'); if (x) x.addEventListener('click', closePay);
+    var ov = _ucOv(); if (ov) ov.addEventListener('click', function (e) { if (e.target === ov) closePay(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov && ov.classList.contains('open')) closePay(); });
+    var cb = document.getElementById('consult-btn');
+    if (cb && _stripe) cb.addEventListener('click', function (e) { e.preventDefault(); payFor(150, 'Understudy consultation (credited to your build)', '', 'consult'); });
+  })();
 
   // Lead capture: save the email + idea so a quote is never lost.
   var currentLane = 'founder';
