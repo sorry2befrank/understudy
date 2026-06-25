@@ -555,15 +555,18 @@
   function renderQuote(q, idea) {
     var money = function (n) { return '$' + Number(n || 0).toLocaleString('en-US'); };
     var head = function (t) { return '<div style="font-family:var(--disp);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--spot);margin:14px 0 8px">' + t + '</div>'; };
-    var phases = (q.phases || []).map(function (p, i) {
-      return '<div style="border:1px solid var(--line);border-radius:10px;padding:13px 15px;margin-bottom:10px;background:var(--ink)">' +
+    var steps = (q.steps || []);
+    var startPrice = q.startPrice || (steps[0] && steps[0].price) || 150;
+    var phases = steps.map(function (s, i) {
+      var first = i === 0;
+      return '<div style="border:1px solid ' + (first ? 'var(--line-lit)' : 'var(--line)') + ';border-radius:10px;padding:13px 15px;margin-bottom:10px;background:var(--ink)">' +
         '<div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline">' +
-          '<div style="font-family:var(--disp);font-weight:600;color:var(--bone);font-size:15px">' + esc(p.name || ('Phase ' + (i + 1))) + '</div>' +
-          '<div style="font-family:var(--disp);font-weight:700;color:var(--spot-lit);white-space:nowrap">' + money(p.price) + '</div>' +
+          '<div style="font-family:var(--disp);font-weight:600;color:var(--bone);font-size:15px">' + (first ? '<span style="color:var(--spot)">Start &#9656; </span>' : (i + 1) + '. ') + esc(s.name || ('Step ' + (i + 1))) + '</div>' +
+          '<div style="font-family:var(--disp);font-weight:700;color:var(--spot-lit);white-space:nowrap">' + money(s.price) + '</div>' +
         '</div>' +
-        '<div style="color:var(--dim);font-size:14px;margin-top:5px">' + esc(p.delivers || '') + '</div>' +
-        (p.weeks ? '<div style="color:var(--dim);font-size:12.5px;margin-top:5px;font-family:var(--disp)">' + esc(p.weeks) + '</div>' : '') +
-        '<button type="button" class="uc-pay btn ghost" style="width:100%;margin-top:11px;padding:12px;font-size:13.5px">Pay ' + money(p.price) + ' — start this phase &rarr;</button>' +
+        '<div style="color:var(--dim);font-size:14px;margin-top:5px">' + esc(s.delivers || '') + '</div>' +
+        (s.hoursLabel ? '<div style="color:var(--dim);font-size:12.5px;margin-top:5px;font-family:var(--disp)">' + esc(s.hoursLabel) + ' of work</div>' : '') +
+        '<button type="button" class="uc-pay btn ' + (first ? '' : 'ghost') + '" style="width:100%;margin-top:11px;padding:12px;font-size:13.5px">' + (first ? 'Start now — ' + money(s.price) : 'Add this step — ' + money(s.price)) + ' &rarr;</button>' +
       '</div>';
     }).join('');
     var startBody = encodeURIComponent("I'd like to start with Phase 1 of:\n" + idea);
@@ -571,10 +574,14 @@
       '<div class="quote-box" style="text-align:left">' +
         (q.greeting ? '<p style="margin:0 0 6px">' + esc(q.greeting) + '</p>' : '') +
         (q.fullVision ? '<p style="color:var(--dim);font-size:14.5px;margin-bottom:4px"><strong style="color:var(--spot-lit)">The full vision:</strong> ' + esc(q.fullVision) + '</p>' : '') +
-        head('Your roadmap — pay as you go, phase by phase') +
+        '<div style="text-align:center;background:linear-gradient(180deg,rgba(232,178,76,0.10),var(--ink));border:1px solid var(--line-lit);border-radius:12px;padding:16px;margin:10px 0 6px">' +
+          '<div style="font-family:var(--disp);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--spot)">You can start today for</div>' +
+          '<div style="font-family:var(--disp);font-weight:700;font-size:34px;color:var(--spot-lit);line-height:1.1;margin:2px 0">' + money(startPrice) + '</div>' +
+          '<div style="color:var(--dim);font-size:13.5px">No big upfront bill. Fund one small step, I build &amp; ship it, then you decide the next.</div>' +
+        '</div>' +
+        head('Your path — small steps, pay as you go') +
         phases +
-        '<div style="font-family:var(--disp);font-weight:700;font-size:18px;color:var(--spot-lit);text-align:right;margin:4px 0 2px">Full build: ' + money(q.total) + '</div>' +
-        '<div style="color:var(--dim);font-size:12.5px;text-align:right;margin-bottom:6px">Each phase paid upfront — start anywhere, build as your budget allows.</div>' +
+        '<div style="color:var(--dim);font-size:12.5px;text-align:center;margin-bottom:6px">You only ever pay for the next step — I\'ll always work with your budget.</div>' +
         (q.startRecommendation ? head('Where to start') + '<p style="color:var(--bone);font-size:14.5px;margin-bottom:10px">' + esc(q.startRecommendation) + '</p>' : '') +
         (q.note ? '<p style="color:var(--dim);font-size:14px;font-style:italic;margin-bottom:14px">' + esc(q.note) + '</p>' : '') +
         '<div style="text-align:center;margin-top:2px"><a style="font-family:var(--disp);font-size:13px;color:var(--dim)" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — a question before I start") + '&body=' + startBody + '">Prefer to talk it through first? Email me &rarr;</a></div>' +
@@ -588,11 +595,11 @@
         '</div>' +
       '</div>';
     var _ls = document.getElementById('lead-save');
-    if (_ls) _ls.addEventListener('click', function () { submitLead(idea, 'Full build: ' + money(q.total) + (q.fullVision ? ' — ' + q.fullVision : '')); });
+    if (_ls) _ls.addEventListener('click', function () { submitLead(idea, 'Start ' + money(startPrice) + (q.fullVision ? ' — ' + q.fullVision : '')); });
     var _pays = document.getElementById('quote-result').querySelectorAll('.uc-pay');
     Array.prototype.forEach.call(_pays, function (b, i) {
-      var p = (q.phases || [])[i] || {};
-      b.addEventListener('click', function () { payFor(Number(p.price) || 0, p.name || ('Phase ' + (i + 1)), idea, 'phase'); });
+      var s = (q.steps || [])[i] || {};
+      b.addEventListener('click', function () { payFor(Number(s.price) || 0, s.name || ('Step ' + (i + 1)), idea, 'step'); });
     });
   }
 
