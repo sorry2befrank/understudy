@@ -215,11 +215,14 @@
   function payStatus(m) { var s = document.getElementById('uc-pay-status'); if (s) s.textContent = m || ''; }
   function payFor(amount, label, idea, kind) {
     var email = ''; var le = document.getElementById('lead-email'); if (le && le.value) email = le.value.trim();
-    if (!_stripe || !UNDERSTUDY_API) {
-      var body = encodeURIComponent("I'd like to pay for: " + (label || 'a phase') + (idea ? "\n\nProject: " + idea : ""));
-      window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — ' + (label || 'payment')) + '&body=' + body; return;
+    openPay(label || 'Secure checkout');
+    var mail = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — ' + (label || 'payment')) + '&body=' + encodeURIComponent("I'd like to pay for: " + (label || 'a phase') + (idea ? "\n\nProject: " + idea : ""));
+    if (!window.Stripe || !_stripe || !UNDERSTUDY_API) {
+      document.getElementById('uc-checkout').innerHTML = '<a class="btn" style="display:inline-block;text-decoration:none" href="' + mail + '">Email me to pay &rarr;</a>';
+      payStatus("Secure checkout couldn't load here (often an ad-blocker, or a cached page — try a hard refresh). In the meantime:");
+      return;
     }
-    openPay(label || 'Secure checkout'); payStatus('Loading secure checkout…');
+    payStatus('Loading secure checkout…');
     fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/checkout', {
       method: 'POST', headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ amount: amount, label: label, idea: idea, email: email, kind: kind || 'phase' })
