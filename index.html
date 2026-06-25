@@ -3,13 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Understudy — It learns your job, then runs it.</title>
-<meta name="description" content="Understudy builds your MVP and the AI agent that runs it. Fixed price, fixed timeline. For solo founders who want the thing operated, not just built." />
+<title>Understudy — Build Together</title>
+<meta name="description" content="An AI teammate for your business. I build your MVP and the AI that runs it — working alongside you, not instead of you. Fixed price, fixed timeline." />
 <meta name="theme-color" content="#0A0B10" />
+<link rel="icon" href="img/understudy-logo.png" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Understudy — It learns your job, then runs it." />
-<meta property="og:description" content="We build your MVP and the AI agent that runs it. Fixed price, fixed timeline." />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='13' font-size='13'>✦</text></svg>" />
+<meta property="og:url" content="https://sorry2befrank.github.io/understudy/" />
+<meta property="og:title" content="Understudy — Build Together" />
+<meta property="og:description" content="An AI teammate for your business. I build your MVP and the AI that runs it — alongside you, not instead of you." />
+<meta property="og:image" content="https://sorry2befrank.github.io/understudy/img/understudy-logo.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Understudy — Build Together" />
+<meta name="twitter:description" content="An AI teammate for your business — I build your MVP and the AI that runs it, alongside you." />
+<meta name="twitter:image" content="https://sorry2befrank.github.io/understudy/img/understudy-logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
@@ -23,6 +29,8 @@
     --line-lit: rgba(232,178,76,0.46);
     --spot:     #E8B24C;
     --spot-lit: #F5D08A;
+    --steel:    #5E8FB8;
+    --steel-lit:#93BEE0;
     --bone:     #ECE9E1;
     --dim:      #9A9DA8;
     --disp: "Space Grotesk", system-ui, sans-serif;
@@ -81,6 +89,10 @@
   .hero { padding: 104px 0 84px; text-align: center; }
   .hero h1 { font-family: var(--disp); font-weight: 700; font-size: clamp(40px, 7.5vw, 76px); line-height: 1.04; letter-spacing: -0.02em; max-width: 16ch; margin: 22px auto 0; }
   .hero h1 em { font-style: normal; color: var(--spot-lit); }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .hero h1 em { background: linear-gradient(95deg, var(--spot-lit) 30%, var(--steel-lit)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+  }
+  .hero-logo { display: block; width: clamp(118px, 22vw, 164px); height: auto; margin: 0 auto 4px; filter: drop-shadow(0 10px 34px rgba(94,143,184,0.18)); }
   .hero .lede { font-size: 19px; color: var(--dim); max-width: 60ch; margin: 24px auto 8px; }
   .hero .lede strong { color: var(--bone); font-weight: 500; }
   .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 34px; }
@@ -168,7 +180,7 @@
   #founder-lane, #curious-lane { max-width: 640px; margin: 0 auto; }
   #chat-log { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; max-height: 440px; overflow-y: auto; }
   .msg { padding: 11px 15px; border-radius: 13px; font-size: 15px; line-height: 1.5; max-width: 88%; }
-  .msg.ai { background: var(--panel-2); border: 1px solid var(--line); color: var(--bone); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg.ai { background: var(--panel-2); border: 1px solid rgba(94,143,184,0.45); color: var(--bone); align-self: flex-start; border-bottom-left-radius: 4px; }
   .msg.me { background: rgba(232,178,76,0.12); border: 1px solid var(--line-lit); color: var(--bone); align-self: flex-end; border-bottom-right-radius: 4px; }
   .chat-input-row { display: flex; gap: 10px; }
   .chat-input-row input { flex: 1; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; color: var(--bone); font-family: var(--body); font-size: 15px; padding: 12px 14px; outline: none; transition: border-color .2s; }
@@ -209,6 +221,15 @@
   .explainer p { font-size: 17px; line-height: 1.6; margin-bottom: 14px; color: var(--bone); }
   .explainer p:last-child { margin-bottom: 0; }
 
+  /* mission / manifesto — the two-pillars idea in copy + a gold→steel bar */
+  .manifesto { padding-top: 8px; }
+  .mission { position: relative; overflow: hidden; background: linear-gradient(180deg, rgba(94,143,184,0.06), var(--panel)); border: 1px solid var(--line); border-radius: 18px; padding: 42px 38px; text-align: center; }
+  .mission::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--spot), var(--steel)); }
+  .mission h2 { font-family: var(--disp); font-weight: 700; font-size: clamp(24px, 3.6vw, 34px); line-height: 1.14; max-width: 22ch; margin: 0 auto; }
+  .mission p { color: var(--dim); font-size: 17px; max-width: 60ch; margin: 16px auto 0; }
+  .mission p em { font-style: italic; color: var(--steel-lit); }
+  .mission p strong { color: var(--bone); font-weight: 600; }
+
   /* ---- small-phone polish ---- */
   @media (max-width: 560px) {
     .wrap { padding: 0 18px; }
@@ -220,6 +241,7 @@
     .why { padding: 30px 22px; }
     .consult-band { padding: 24px 20px; }
     .step, .pkg, .case { padding: 22px 19px; }
+    .mission { padding: 30px 22px; }
     .msg { max-width: 92%; }
   }
 </style>
@@ -228,7 +250,7 @@
 
 <header class="site">
   <div class="wrap">
-    <span class="wordmark"><span class="star">✦</span> Understudy</span>
+    <span class="wordmark"><span class="star">✦</span> understudy</span>
     <nav class="nav">
       <a href="#how">How it works</a>
       <a href="#packages">Packages</a>
@@ -241,14 +263,24 @@
 <main>
   <section class="hero">
     <div class="wrap">
-      <span class="eyebrow reveal">A build studio for founders</span>
-      <h1 class="reveal">It learns your job, <em>then runs it.</em></h1>
-      <p class="lede reveal"><strong>I build your MVP — and the AI agent that operates it.</strong> Fixed price, fixed timeline, no sales calls. Most shops build the app and leave. Understudy also builds the agent that runs a piece of it — so the thing keeps working without you.</p>
+      <img src="img/understudy-logo.png" class="hero-logo reveal" alt="Understudy — two pillars, human and AI, building together" width="160" height="160" />
+      <span class="eyebrow reveal">An AI build studio</span>
+      <h1 class="reveal">Build it <em>together.</em></h1>
+      <p class="lede reveal"><strong>I build your MVP — and the AI teammate that operates it.</strong> Every great dream deserves a great teammate: one that learns a piece of the job and runs it alongside you, so the work keeps moving without you. Fixed price, fixed timeline, no sales calls.</p>
       <div class="cta-row reveal">
         <a class="btn" href="#quote">Describe your idea → get a quote</a>
         <a class="btn ghost" href="#work">See the work</a>
       </div>
       <p class="reveal" style="margin-top:18px;font-size:14px;color:var(--dim)">Know exactly what you want, and speak the tech? <a href="build.html" style="color:var(--spot)">See the technical breakdown &rarr;</a></p>
+    </div>
+  </section>
+
+  <section class="manifesto">
+    <div class="wrap">
+      <div class="mission reveal">
+        <h2>Every great dream deserves a great teammate.</h2>
+        <p>Understudy exists to help you build the business you imagine — with an AI that works <em>alongside</em> you, each of you doing what you do best toward the same vision. The future isn't humans versus AI. It's humans and AI, <strong>building together.</strong></p>
+      </div>
     </div>
   </section>
 
@@ -469,7 +501,7 @@
 
 <footer class="site">
   <div class="wrap">
-    <span><span style="color:var(--spot)">✦</span> Understudy — built &amp; run by Frank Epps</span>
+    <span><span style="color:var(--spot)">✦</span> understudy — built &amp; run by Frank Epps · <em style="font-style:normal;color:var(--steel-lit)">Build together.</em></span>
     <a href="mailto:frankeppsjr@gmail.com">frankeppsjr@gmail.com</a>
   </div>
 </footer>
