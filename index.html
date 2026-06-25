@@ -114,7 +114,7 @@
   .hero-art img { width: 100%; display: block; border-radius: 16px; border: 1px solid var(--line-lit); box-shadow: 0 30px 70px -28px rgba(0,0,0,0.7); }
   .hero-trust { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 22px; font-family: var(--disp); font-size: 12.5px; letter-spacing: 0.04em; color: var(--dim); }
   .hero-trust span::before { content: "✦"; color: var(--spot); margin-right: 6px; font-size: 10px; }
-  @media (max-width: 860px) { .hero { text-align: center; } .hero-grid { grid-template-columns: 1fr; gap: 30px; } .hero-copy { order: 2; } .hero-art { order: 1; max-width: 520px; margin: 0 auto; } .hero h1, .hero .lede { margin-left: auto; margin-right: auto; } .cta-row, .hero-trust { justify-content: center; } }
+  @media (max-width: 860px) { .hero { text-align: center; } .hero-grid { grid-template-columns: 1fr; gap: 24px; } .hero-copy { order: 2; } .hero-art { order: 1; max-width: 300px; margin: 0 auto; } .hero-art img { border: none; box-shadow: none; } .hero h1, .hero .lede { margin-left: auto; margin-right: auto; } .cta-row, .hero-trust { justify-content: center; } }
   .hero h1 { font-family: var(--disp); font-weight: 700; font-size: clamp(40px, 6vw, 68px); line-height: 1.04; letter-spacing: -0.02em; max-width: 15ch; margin: 14px 0 0; }
   .hero h1 em { font-style: normal; color: var(--spot-lit); }
   @supports ((-webkit-background-clip: text) or (background-clip: text)) {
@@ -357,7 +357,10 @@
           <p class="reveal" style="margin-top:16px;font-size:13.5px;color:var(--dim)">Know exactly what you want, and speak the tech? <a href="build.html" style="color:var(--spot)">See the technical breakdown &rarr;</a></p>
         </div>
         <div class="hero-art reveal">
-          <img src="img/hero.png" alt="A person and an AI walking together between two pillars toward a sunrise" />
+          <picture>
+            <source media="(max-width: 860px)" srcset="img/understudy-logo.png" />
+            <img src="img/hero.png" alt="A person and an AI walking together between two pillars toward a sunrise" />
+          </picture>
         </div>
       </div>
     </div>
