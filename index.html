@@ -83,7 +83,8 @@
   /* header */
   header.site { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(10,11,16,0.72); border-bottom: 1px solid var(--line); }
   .site .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
-  .wordmark { font-family: var(--disp); font-weight: 700; letter-spacing: 0.04em; font-size: 19px; }
+  .wordmark { font-family: var(--disp); font-weight: 700; letter-spacing: 0.04em; font-size: 19px; display: inline-flex; align-items: center; gap: 8px; }
+  .wordmark-logo { height: 28px; width: auto; border-radius: 5px; display: block; }
   .wordmark .star { color: var(--spot); }
   .nav { display: flex; gap: 26px; align-items: center; }
   .nav a { font-family: var(--disp); font-size: 13px; letter-spacing: 0.04em; color: var(--dim); transition: color .25s; }
@@ -330,7 +331,7 @@
 
 <header class="site">
   <div class="wrap">
-    <span class="wordmark"><span class="star">✦</span> understudy</span>
+    <span class="wordmark"><img class="wordmark-logo" src="img/understudy-mark.png" alt="" /> Understudy</span>
     <nav class="nav">
       <a href="#how">How it works</a>
       <a href="#packages">Packages</a>
