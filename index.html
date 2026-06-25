@@ -588,12 +588,13 @@
   <section id="quote" class="quote">
     <div class="wrap">
       <div class="section-head reveal" style="text-align:center;">
-        <h2 style="margin:0 auto;">See what your idea costs — instantly.</h2>
-        <p style="margin:8px auto 0;">Describe it below. You'll get the right package, a tailored scope, a timeline, and a price — in seconds.</p>
+        <h2 style="margin:0 auto;">See what it costs — instantly.</h2>
+        <p style="margin:8px auto 0;">New idea, not sure yet, or already have a site? Pick a lane — you'll get a tailored, start-small plan in seconds.</p>
       </div>
       <div class="lane-toggle reveal">
         <button id="lane-founder" class="active" type="button">I know what I want</button>
         <button id="lane-curious" type="button">Help me figure it out</button>
+        <button id="lane-site" type="button">I have a site</button>
       </div>
 
       <div id="founder-lane" class="quote-box reveal">
@@ -610,6 +611,14 @@
           <button class="btn" id="chat-send" type="button">Send</button>
         </div>
         <p class="quote-note">A few quick questions and I'll suggest ideas that fit you.</p>
+      </div>
+
+      <div id="site-lane" class="quote-box reveal hidden">
+        <label for="site-url">Your website — I'll read it and tell you what I'd improve or build first.</label>
+        <input id="site-url" type="url" placeholder="https://yoursite.com" autocomplete="off" style="width:100%;background:var(--ink);border:1px solid var(--line);border-radius:10px;color:var(--bone);font-family:var(--body);font-size:15.5px;padding:13px 16px;outline:none;margin-bottom:10px" />
+        <textarea id="site-goal" placeholder="Anything frustrating you, or a goal? (optional) — e.g. 'I want more bookings' or 'it feels slow'" style="min-height:70px"></textarea>
+        <button class="btn" id="site-send">Evaluate my site →</button>
+        <p class="quote-note">I'll read your live site and propose a start-small plan — instant, free, no obligation.</p>
       </div>
 
       <div id="quote-result" class="reveal" style="max-width:640px;margin:18px auto 0;"></div>
@@ -956,17 +965,37 @@
     sendChat(null);
   }
 
-  document.getElementById('lane-curious').addEventListener('click', function () {
-    this.classList.add('active'); document.getElementById('lane-founder').classList.remove('active');
-    document.getElementById('founder-lane').classList.add('hidden');
-    document.getElementById('curious-lane').classList.remove('hidden');
+  function showLane(which) {
+    var lanes = { founder: 'founder-lane', curious: 'curious-lane', site: 'site-lane' };
+    var btns = { founder: 'lane-founder', curious: 'lane-curious', site: 'lane-site' };
+    Object.keys(lanes).forEach(function (k) {
+      document.getElementById(lanes[k]).classList.toggle('hidden', k !== which);
+      document.getElementById(btns[k]).classList.toggle('active', k === which);
+    });
     document.getElementById('quote-result').innerHTML = '';
-    startChat();
-  });
-  document.getElementById('lane-founder').addEventListener('click', function () {
-    this.classList.add('active'); document.getElementById('lane-curious').classList.remove('active');
-    document.getElementById('curious-lane').classList.add('hidden');
-    document.getElementById('founder-lane').classList.remove('hidden');
+  }
+  document.getElementById('lane-founder').addEventListener('click', function () { showLane('founder'); });
+  document.getElementById('lane-curious').addEventListener('click', function () { showLane('curious'); startChat(); });
+  document.getElementById('lane-site').addEventListener('click', function () { showLane('site'); });
+  document.getElementById('site-send').addEventListener('click', function () {
+    var url = document.getElementById('site-url').value.trim();
+    var goal = document.getElementById('site-goal').value.trim();
+    if (!url) { document.getElementById('site-url').focus(); return; }
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+    currentLane = 'site';
+    var btn = this, label = btn.textContent, out = document.getElementById('quote-result');
+    if (!UNDERSTUDY_API) { window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — improve my site') + '&body=' + encodeURIComponent('My site: ' + url + (goal ? '\n\n' + goal : '')); return; }
+    btn.disabled = true; btn.textContent = 'Looking at your site…';
+    out.innerHTML = '<p style="color:var(--dim);text-align:center">Reading your site and scoping improvements…</p>';
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/audit', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: url, goal: goal })
+    }).then(function (r) { return r.json(); }).then(function (q) {
+      if (q.error) throw new Error(q.error);
+      renderQuote(q, 'improvements for ' + url);
+      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }).catch(function (e) {
+      out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t read that site (' + esc(e.message || '') + '). Double-check the URL, or email me and I\'ll take a look: <a style="color:var(--spot)" href="mailto:frankeppsjr@gmail.com">frankeppsjr@gmail.com</a></p>';
+    }).finally(function () { btn.disabled = false; btn.textContent = label; });
   });
   document.getElementById('chat-send').addEventListener('click', function () {
     var v = document.getElementById('chat-input').value.trim();
