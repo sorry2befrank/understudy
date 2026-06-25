@@ -164,8 +164,8 @@
 
 <script>
   var UNDERSTUDY_API = "https://three-mountaintops-engine.onrender.com";
-  // Stripe PUBLISHABLE key (safe to expose). Currently TEST — swap to pk_live_… to go live. Empty = email fallback.
-  var STRIPE_PK = "pk_test_51TVoa9EODdnbv1UtMaGYLki23Gq4CPP3xhorFvcIvPOEsMBgBqRatCyetW1FazKzcAKpOCX6qNDskp2zrQFo0nIq00Ot9HZL3l";
+  // Stripe PUBLISHABLE key (safe to expose) — LIVE. Empty = email fallback.
+  var STRIPE_PK = "pk_live_51TVoa9EODdnbv1UtrlCExV2P3PXRxDfwOWnTBEn2B8WZQF6xTNlBe4LRpkrOxFxsJlL3S7HsIeRDwfCNKXtJeXIB00q3Ri4MHS";
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function money(n) { return '$' + Number(n || 0).toLocaleString('en-US'); }
   function mailtoIdea(idea) { window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — my build') + '&body=' + encodeURIComponent(idea || ''); }
