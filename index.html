@@ -815,6 +815,7 @@
   // ===== Stripe embedded checkout — stays on the page (no redirect) =====
   var _stripe = (window.Stripe && STRIPE_PK) ? Stripe(STRIPE_PK) : null;
   var _ucCheckout = null;
+  var _payCtx = {}; // remembers what was just paid for, to prefill the intake form
   function _ucOv() { return document.getElementById('uc-pay'); }
   function openPay(title) {
     document.getElementById('uc-pay-title').textContent = title || 'Secure checkout';
@@ -831,6 +832,7 @@
   function payStatus(m) { var s = document.getElementById('uc-pay-status'); if (s) s.textContent = m || ''; }
   function payFor(amount, label, idea, kind) {
     var email = ''; var le = document.getElementById('lead-email'); if (le && le.value) email = le.value.trim();
+    _payCtx = { amount: amount, label: label, idea: idea, kind: kind, email: email };
     openPay(label || 'Secure checkout');
     var mail = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — ' + (label || 'payment')) + '&body=' + encodeURIComponent("I'd like to pay for: " + (label || 'a phase') + (idea ? "\n\nProject: " + idea : ""));
     if (!window.Stripe || !_stripe || !UNDERSTUDY_API) {
@@ -848,11 +850,71 @@
     }).then(function (checkout) { _ucCheckout = checkout; payStatus(''); checkout.mount('#uc-checkout'); })
       .catch(function () { payStatus("Couldn't start checkout. Email me at frankeppsjr@gmail.com and I'll send a secure link."); });
   }
+  // Field helper for the intake form.
+  function _ucField(idv, labelText, type, val, req) {
+    return '<label style="font-family:var(--disp);font-size:12.5px;color:var(--dim);display:block">' + esc(labelText) + (req ? ' <span style="color:var(--spot)">*</span>' : '') +
+      '<input id="' + idv + '" type="' + type + '" value="' + esc(val || '') + '" autocomplete="off" style="width:100%;margin-top:6px;background:var(--ink);border:1px solid var(--line);border-radius:8px;color:var(--bone);font-family:var(--body);font-size:14.5px;padding:10px 12px;outline:none"></label>';
+  }
+
+  // After a successful payment: collect a short intake brief so a payment becomes a ready-to-start client.
   function onPaid(label) {
     if (_ucCheckout) { try { _ucCheckout.destroy(); } catch (e) {} _ucCheckout = null; }
-    document.getElementById('uc-checkout').innerHTML = '';
+    var ctx = _payCtx || {};
     document.getElementById('uc-pay-title').textContent = 'Payment received ✦';
-    payStatus("Thank you! Your payment for " + (label || 'your build') + " came through — I'll email you within a day to kick things off. — Frank");
+    payStatus('');
+    document.getElementById('uc-checkout').innerHTML =
+      '<p style="color:var(--bone);font-size:14.5px;margin-bottom:4px">Thank you — your payment' + (label ? ' for <strong>' + esc(label) + '</strong>' : '') + ' came through. ✦</p>' +
+      '<p style="color:var(--dim);font-size:13px;margin-bottom:14px">One quick step so I start with everything I need — then I\'ll email you within a day to kick off.</p>' +
+      '<div style="display:grid;gap:10px">' +
+        _ucField('ui-name', 'Your name', 'text', '', true) +
+        _ucField('ui-biz', 'Business or project (optional)', 'text', '', false) +
+        _ucField('ui-email', 'Best email', 'email', ctx.email, false) +
+        _ucField('ui-phone', 'Phone (optional)', 'tel', '', false) +
+        '<label style="font-family:var(--disp);font-size:12.5px;color:var(--dim);display:block">What do you want built?' +
+          '<textarea id="ui-details" style="width:100%;min-height:82px;margin-top:6px;resize:vertical;background:var(--ink);border:1px solid var(--line);border-radius:8px;color:var(--bone);font-family:var(--body);font-size:14.5px;padding:10px 12px;outline:none">' + esc(ctx.idea || '') + '</textarea></label>' +
+        _ucField('ui-timeline', 'How soon do you need it? (optional)', 'text', '', false) +
+      '</div>' +
+      '<button type="button" id="ui-submit" class="btn" style="width:100%;margin-top:14px;border:none">Send my details &rarr;</button>' +
+      '<div id="ui-msg" style="font-size:13px;color:var(--dim);margin-top:10px;text-align:center"></div>' +
+      '<button type="button" id="ui-skip" style="display:block;margin:8px auto 0;background:none;border:none;color:var(--dim);font-family:var(--disp);font-size:12px;cursor:pointer;text-decoration:underline">Skip — just email me the details</button>';
+    document.getElementById('ui-submit').addEventListener('click', function () { submitIntake(ctx); });
+    document.getElementById('ui-skip').addEventListener('click', function () { intakeDone("Perfect — I'll email you within a day to kick things off. — Frank"); });
+    var n = document.getElementById('ui-name'); if (n) n.focus();
+  }
+
+  function submitIntake(ctx) {
+    var name = (document.getElementById('ui-name').value || '').trim();
+    var msg = document.getElementById('ui-msg');
+    if (!name) { msg.textContent = "Please add your name so I know who I'm building for."; document.getElementById('ui-name').focus(); return; }
+    var btn = document.getElementById('ui-submit'); if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    var payload = {
+      name: name,
+      business: (document.getElementById('ui-biz').value || '').trim(),
+      email: (document.getElementById('ui-email').value || '').trim(),
+      phone: (document.getElementById('ui-phone').value || '').trim(),
+      details: (document.getElementById('ui-details').value || '').trim(),
+      timeline: (document.getElementById('ui-timeline').value || '').trim(),
+      paidFor: (ctx && ctx.label) || '', amount: (ctx && ctx.amount) || 0
+    };
+    if (!UNDERSTUDY_API) { intakeDone("Got it — I'll email you within a day. — Frank"); return; }
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/intake', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.error) throw new Error(d.error);
+      intakeDone("You're all set, " + esc(name.split(' ')[0]) + " ✦ I've got your brief and I'll email you within a day to kick off. — Frank");
+    }).catch(function () {
+      if (btn) { btn.disabled = false; btn.textContent = 'Send my details →'; }
+      msg.innerHTML = "Couldn't send just now — email me at <a style='color:var(--spot)' href='mailto:frankeppsjr@gmail.com'>frankeppsjr@gmail.com</a> and we'll start.";
+    });
+  }
+
+  function intakeDone(html) {
+    if (_ucCheckout) { try { _ucCheckout.destroy(); } catch (e) {} _ucCheckout = null; }
+    document.getElementById('uc-pay-title').textContent = "You're all set ✦";
+    payStatus('');
+    document.getElementById('uc-checkout').innerHTML = '<p style="color:var(--bone);font-size:15px;line-height:1.55">' + html + '</p>' +
+      '<button type="button" id="ui-close" class="btn ghost" style="width:100%;margin-top:16px">Close</button>';
+    var c = document.getElementById('ui-close'); if (c) c.addEventListener('click', closePay);
   }
   (function () {
     var x = document.getElementById('uc-pay-close'); if (x) x.addEventListener('click', closePay);
