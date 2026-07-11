@@ -126,6 +126,13 @@
   .hero .lede strong { color: var(--bone); font-weight: 500; }
   .cta-row { display: flex; gap: 14px; justify-content: flex-start; flex-wrap: wrap; margin-top: 28px; }
 
+  .voyage-proof { padding: 0 0 72px; }
+  .voyage-card { display: flex; align-items: center; justify-content: space-between; gap: 24px; background: linear-gradient(120deg, rgba(232,178,76,0.10), rgba(94,143,184,0.08)); border: 1px solid var(--line-lit); border-radius: 16px; padding: 26px 30px; box-shadow: 0 24px 70px -36px rgba(232,178,76,0.42); }
+  .voyage-card .vtext { flex: 1; min-width: 240px; }
+  .voyage-card p { color: var(--bone); font-size: clamp(18px, 2.4vw, 24px); line-height: 1.35; margin-top: 7px; max-width: 40ch; }
+  .voyage-card .btn { white-space: nowrap; }
+  @media (max-width: 720px) { .voyage-proof { padding-bottom: 56px; } .voyage-card { align-items: stretch; flex-direction: column; text-align: center; padding: 24px 20px; } .voyage-card .vtext { min-width: 0; } .voyage-card p { margin-left: auto; margin-right: auto; } }
+
   /* steps */
   .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
@@ -362,6 +369,18 @@
             <img src="img/hero.jpg" alt="A person and an AI walking together between two pillars toward a sunrise" />
           </picture>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="voyage-proof" aria-labelledby="voyage-proof-title">
+    <div class="wrap">
+      <div class="voyage-card reveal">
+        <div class="vtext">
+          <span class="eyebrow">THE PROOF, RENDERED</span>
+          <p id="voyage-proof-title">Scroll through a universe one person built &mdash; three suns, live projects, thirty days.</p>
+        </div>
+        <a class="btn" href="https://understudy-voyage.vercel.app/">&#9656; Take the Voyage</a>
       </div>
     </div>
   </section>
