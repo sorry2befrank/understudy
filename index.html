@@ -364,6 +364,22 @@
   .peak { text-align: center; }
   .peak .dot { width: 9px; height: 9px; border-radius: 50%; margin: 0 auto 12px; }
   .peak h4 { font-size: 16px; } .peak p { color: var(--dim); font-size: 14px; margin-top: 6px; }
+  /* founder application */
+  #apply { padding-top: 20px; }
+  .apply-band { max-width: 680px; margin: 0 auto; background: var(--panel); border: 1px solid var(--line-lit); border-radius: 18px; padding: 34px 32px; }
+  @media (max-width: 560px) { .apply-band { padding: 26px 20px; } }
+  .apply-form { display: flex; flex-direction: column; gap: 16px; }
+  .apply-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .apply-grid { grid-template-columns: 1fr; } }
+  .apply-form label { display: flex; flex-direction: column; gap: 7px; font-family: var(--disp); font-size: 13px; color: var(--bone); letter-spacing: .01em; }
+  .apply-form input, .apply-form textarea { background: var(--ink); border: 1px solid var(--line); border-radius: 10px; color: var(--bone); font-family: var(--body); font-size: 15px; padding: 12px 14px; outline: none; transition: border-color .2s; width: 100%; }
+  .apply-form input:focus, .apply-form textarea:focus { border-color: var(--line-lit); }
+  .apply-form textarea { resize: vertical; }
+  .apply-form .btn { align-self: flex-start; margin-top: 4px; }
+  .apply-note { font-size: 13px; color: var(--dim); font-family: var(--body); margin: 0; }
+  .apply-done { text-align: center; padding: 18px 0; }
+  .apply-done h3 { font-family: var(--disp); color: var(--spot-lit); font-size: 22px; }
+  .apply-done p { color: var(--dim); margin-top: 8px; }
 </style>
 </head>
 <body>
@@ -390,8 +406,8 @@
           <h1 class="reveal">Don't just build a thing.<br>Build your <em>universe.</em></h1>
           <p class="lede reveal"><strong>Understudy is two things in one.</strong> Get a product built — done right and yours to own — or get your own <em style="font-style:normal;color:var(--steel-lit)">understudy</em>: an AI that learns your world and helps you build the next thing, and the next, safely under your control.</p>
           <div class="cta-row reveal">
-            <a class="btn" href="#founders">&#10022; Become a founder</a>
-            <a class="btn ghost" href="#quote">Get a build done &rarr;</a>
+            <a class="btn" href="#apply">&#10022; Apply to be a founder</a>
+            <a class="btn ghost" href="#quote">Get a diagnosis &rarr;</a>
           </div>
           <div class="hero-trust reveal"><span>Instant quote</span><span>Pay as you go</span><span>You own everything</span><span>You always lead</span></div>
           <p class="reveal" style="margin-top:16px;font-size:13.5px;color:var(--dim)">Know exactly what you want, and speak the tech? <a href="build.html" style="color:var(--spot)">See the technical breakdown &rarr;</a></p>
@@ -432,35 +448,59 @@
       <div class="section-head reveal">
         <span class="eyebrow">Two ways in</span>
         <h2>Start a project, or start a partnership.</h2>
-        <p>Come for a build. Or come for an understudy of your own — and keep building.</p>
+        <p>Come for a diagnosis and a clear plan. Or apply for an understudy of your own — and keep building.</p>
       </div>
       <div class="doors">
         <div class="door founder reveal">
-          <div class="k">The ongoing understudy</div>
-          <h3>Become a founder</h3>
-          <div class="price">Founding rate &middot; $99/mo</div>
-          <p>You get your own understudy — an AI that learns your work and helps you build across everything you make. We grow it with you until it can safely build <em>for</em> you.</p>
+          <div class="k">The ongoing understudy &middot; by application</div>
+          <h3>Apply to be a founder</h3>
+          <div class="price">$99/mo once you're in &middot; a few founders at a time</div>
+          <p>For people <em>already making money</em> — a real practice or product that's earning — who don't yet have the tools to grow it. You get your own understudy: an AI that learns your work and helps you build across everything you make, until it can safely build <em>for</em> you.</p>
           <ul>
             <li>Your own private console &amp; knowledge base</li>
             <li>It captures your ideas and turns them into plans</li>
             <li>Nothing goes live until you've seen it and said yes</li>
             <li>A live product <em>and</em> a partner that keeps building</li>
           </ul>
-          <a class="btn" href="mailto:frankeppsjr@gmail.com?subject=Understudy%20%E2%80%94%20founding%20group">Join the founding group &rarr;</a>
+          <a class="btn" href="#apply">Apply to join &rarr;</a>
         </div>
         <div class="door reveal">
           <div class="k">The build</div>
-          <h3>Get design work done</h3>
-          <div class="price">From $150 &middot; pay as you go</div>
-          <p>Tell me your idea, or point me at the site you already have. You get a plan, a fixed price, and something real shipped at every step — live on your domain, fully yours.</p>
+          <h3>Get a diagnosis</h3>
+          <div class="price">$150 &middot; credited toward the fix</div>
+          <p>Something broken, or something to build? Start with a $150 diagnosis — I dig into exactly what's wrong or what you need and hand you a clear plan and a fixed price. The $150 comes right off the build if we do it.</p>
           <ul>
             <li>A new product, one feature, or a rescue of a live app</li>
+            <li>The diagnosis fee credits toward the work</li>
             <li>Fixed prices, no agency runaround, no lock-in</li>
             <li>Repo + walkthrough — the code and accounts are yours</li>
-            <li>Credits roll forward if you want to keep going</li>
           </ul>
-          <a class="btn ghost" href="#quote">Get an instant quote &rarr;</a>
+          <a class="btn ghost" href="#quote">Start with a diagnosis &rarr;</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="apply">
+    <div class="wrap">
+      <div class="apply-band reveal">
+        <div class="section-head" style="margin-bottom:20px">
+          <span class="eyebrow">Apply to be a founder</span>
+          <h2>A few founders at a time.</h2>
+          <p>It's just me, so I take a handful of founders and give each one real time. The best fit: you're <strong>already making money</strong> — a practice or product that's earning — and you're missing the tools to grow it. Tell me about you; I read every one myself.</p>
+        </div>
+        <form id="apply-form" class="apply-form" autocomplete="on">
+          <div class="apply-grid">
+            <label>Your name<input id="ap-name" type="text" required></label>
+            <label>Email<input id="ap-email" type="email" required></label>
+          </div>
+          <label>What do you do, and what's already working? <span style="color:var(--dim)">(your business, and how it makes money)</span>
+            <textarea id="ap-biz" rows="3" required placeholder="e.g. I run readings — ~40 paying clients a month, all by DM, no real site yet…"></textarea></label>
+          <label>What do you want to build or grow?
+            <textarea id="ap-goal" rows="3" required placeholder="The thing you can't get to on your own."></textarea></label>
+          <button class="btn" id="ap-send" type="submit">Send my application &rarr;</button>
+          <p class="apply-note" id="ap-note">Free to apply. I read every one personally and reply within a day or two. No obligation.</p>
+        </form>
       </div>
     </div>
   </section>
@@ -1049,6 +1089,31 @@
       setTimeout(function () { mailtoIdea(idea); }, 1000);
     }).finally(function () { btn.disabled = false; btn.textContent = label; });
   });
+
+  // Founder application — free; lands in Frank's inbox (he vets + invites). Reuses /lead.
+  (function () {
+    var form = document.getElementById('apply-form');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = (document.getElementById('ap-name').value || '').trim();
+      var email = (document.getElementById('ap-email').value || '').trim();
+      var biz = (document.getElementById('ap-biz').value || '').trim();
+      var goal = (document.getElementById('ap-goal').value || '').trim();
+      var note = document.getElementById('ap-note'), btn = document.getElementById('ap-send');
+      if (!name || !email || email.indexOf('@') < 1 || !biz || !goal) { note.textContent = 'Please fill in every field so I can get to know you.'; return; }
+      var idea = 'FOUNDER APPLICATION\nName: ' + name + '\n\nBusiness / what’s working:\n' + biz + '\n\nWhat they want to build or grow:\n' + goal;
+      btn.disabled = true; note.textContent = 'Sending…';
+      if (!UNDERSTUDY_API) { window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — founder application: ' + name) + '&body=' + encodeURIComponent(idea); note.textContent = 'Opening your email…'; return; }
+      fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/lead', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, name: name, idea: idea, summary: 'Founder application — ' + name, lane: 'founder-application' })
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        if (d.error) throw new Error(d.error);
+        form.innerHTML = '<div class="apply-done"><h3>Got it — thank you.</h3><p>I read every application myself. If it’s a fit, you’ll hear from me within a day or two. — Frank</p></div>';
+      }).catch(function () { note.textContent = "Couldn't send just now — you can also email me at frankeppsjr@gmail.com."; btn.disabled = false; });
+    });
+  })();
 
   // ===== Curious lane: discovery chat =====
   var chatMessages = [], chatStarted = false;
