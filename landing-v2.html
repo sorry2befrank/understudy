@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  landing-v2.html — a standalone, outcome-led alternative landing page for understudy.consulting.
+  DOES NOT touch index.html (the live page) or any other file. A sibling for Frank to diff and test.
+  Opens straight from disk (file://) and works standalone.
+
+  IDENTITY I BUILT TO: the instrument-maker's workbench — dark, warm, restrained, precise. Typography
+  and spacing first, color second (ink + bone + one gold --spot, steel as the ONLY secondary), motion
+  last: a single orchestrated reveal-on-scroll moment, nothing continuous, all of it off under
+  prefers-reduced-motion, no layout shift. Seeded from index.html's own tokens
+  (--ink / --bone / --dim / --spot / --steel) and evolved with conviction — hairline gold→steel section
+  rules and corner-tick ornaments on the doors. Image-free on purpose: no external assets beyond the two
+  permitted resources, so nothing can 404 when opened from disk.
+
+  THE ONE LEVER FOR THE HERO: the concrete OUTCOME, stated with no metaphor — "Build the thing you've
+  always wanted to exist" — then one sentence that promises a finished, owned product AND an understudy
+  that keeps building it, safely and under your control, behind ONE dominant CTA (Get a diagnosis — $150
+  → #quote). The founder door is present above the fold but deliberately quiet/secondary.
+
+  PRICING: $150 diagnosis is the ONLY advertised price (credited toward the fix). The founder door
+  advertises NO price — "a few founders at a time · personally selected." No /mo, no "locked for life."
+
+  DELIBERATELY LEFT OUT (a quiet true page beats a loud false one): the "6+ projects / 100%" stats bar,
+  the testimonial blockquote, the Voyage banner, the packages/pricing table, the FAQ, and the
+  mission / partners / vision bands — all vanity or unverifiable against the honesty law. Clients stay
+  anonymized (a live astrology SaaS its owner runs; a concierge matchmaking app rescued in ~48h; an
+  Atlanta barbershop's site + AI partner). The understudy platform is described as "built and tested" —
+  never "launched," never "in production for users," never with a user count.
+
+  *** STRIPE ON-PAGE CARD CHECKOUT IS CARRIED VERBATIM FROM index.html. ***
+  The <script src="https://js.stripe.com/v3/"></script> tag, the STRIPE_PK pk_live_ publishable key, the
+  Stripe(STRIPE_PK) init, the #uc-pay embedded-checkout overlay that STAYS ON THE PAGE (no redirect),
+  payFor()/openPay()/onPaid()/submitIntake() and the existing email fallback are copied unchanged. The
+  $150 diagnosis is payable BY CARD, ON THE PAGE — via #consult-btn (payFor(150,…)) and via every step
+  button the #quote engine renders — exactly as index.html does it today. Also carried verbatim: the
+  UNDERSTUDY_API constant, the #quote instant-plan engine + all three lanes + its lead submit, the
+  #apply founder form (ids ap-name / ap-email / ap-biz / ap-goal / ap-send / ap-note → POST
+  /api/understudy/lead with lane "founder-application", mailto fallback + success state), and the
+  build.html link.
+
+  EXTERNAL RESOURCES: exactly two — Google Fonts (Space Grotesk + Inter) and js.stripe.com/v3. Nothing else.
+-->
+<script>(function(){try{var t=localStorage.getItem('understudy-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Understudy — Build the thing you've always wanted to exist</title>
+<meta name="description" content="I build the product you've always wanted to exist — done right and yours to own — then give you an understudy: an AI that keeps building it with you, safely, under your control. Start with a $150 diagnosis, credited toward the build." />
+<meta name="theme-color" content="#0A0B10" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://understudy.consulting/" />
+<meta property="og:title" content="Understudy — Build the thing you've always wanted to exist" />
+<meta property="og:description" content="I build it for real and yours to own, then give you an AI teammate that keeps building it — safely, under your control. Start with a $150 diagnosis, credited toward the build." />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Understudy — Build the thing you've always wanted to exist" />
+<meta name="twitter:description" content="A finished product you own, plus an understudy that keeps building it with you. Start with a $150 diagnosis, credited toward the build." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+  :root {
+    --ink:      #0A0B10;
+    --panel:    #14161F;
+    --panel-2:  #1B1E29;
+    --line:     rgba(232,178,76,0.18);
+    --line-lit: rgba(232,178,76,0.46);
+    --spot:     #E8B24C;
+    --spot-lit: #F5D08A;
+    --steel:    #5E8FB8;
+    --steel-lit:#93BEE0;
+    --bone:     #ECE9E1;
+    --dim:      #9A9DA8;
+    --disp: "Space Grotesk", system-ui, sans-serif;
+    --body: "Inter", system-ui, sans-serif;
+    --max: 1080px;
+  }
+  /* light mode — toggled via [data-theme="light"] on <html> */
+  [data-theme="light"] {
+    --ink: #F4EFE4;
+    --panel: #FFFFFF;
+    --panel-2: #F3EDE1;
+    --line: rgba(60,48,24,0.16);
+    --line-lit: rgba(176,134,47,0.55);
+    --spot: #A9791C;
+    --spot-lit: #855E0E;
+    --steel: #3E6E96;
+    --steel-lit: #2C5880;
+    --bone: #1C1E27;
+    --dim: #5C5E69;
+  }
+  [data-theme="light"] header.site { background: rgba(248,244,236,0.82); }
+  [data-theme="light"] .btn:not(.ghost) { color: #FFFFFF; }
+  [data-theme="light"] .uc-pay-card { background: #FFFFFF; }
+  [data-theme="light"] body::before { opacity: 0.55; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--ink);
+    color: var(--bone);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  /* warm stage spotlight */
+  body::before {
+    content: "";
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 48% at 50% -8%, rgba(232,178,76,0.16), transparent 60%),
+      radial-gradient(ellipse 50% 40% at 85% 8%, rgba(232,178,76,0.05), transparent 70%);
+  }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 26px; position: relative; z-index: 1; }
+  a { color: inherit; text-decoration: none; }
+  .eyebrow { font-family: var(--disp); font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--spot); }
+
+  /* header */
+  header.site { position: sticky; top: 0; z-index: 20; backdrop-filter: blur(10px); background: rgba(10,11,16,0.72); border-bottom: 1px solid var(--line); }
+  .site .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .wordmark { font-family: var(--disp); font-weight: 700; letter-spacing: 0.04em; font-size: 19px; display: inline-flex; align-items: center; gap: 8px; }
+  .wordmark .star { color: var(--spot); }
+  .nav { display: flex; gap: 26px; align-items: center; }
+  .nav a { font-family: var(--disp); font-size: 13px; letter-spacing: 0.04em; color: var(--dim); transition: color .25s; }
+  .nav a:hover, .nav a:focus-visible { color: var(--spot-lit); }
+  @media (max-width: 680px) { .nav a:not(.btn) { display: none; } }
+
+  .btn {
+    font-family: var(--disp); font-weight: 600; font-size: 13.5px; letter-spacing: 0.02em;
+    padding: 12px 22px; border: 1px solid var(--spot); color: var(--ink); background: var(--spot);
+    border-radius: 8px; cursor: pointer; transition: background .25s, transform .2s, color .25s; display: inline-block;
+  }
+  .btn:hover, .btn:focus-visible { background: var(--spot-lit); transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--bone); }
+  .btn.ghost:hover, .btn.ghost:focus-visible { color: var(--spot-lit); border-color: var(--line-lit); }
+  .nav .btn { padding: 9px 16px; }
+  .theme-toggle { background: transparent; border: 1px solid var(--line); border-radius: 8px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--dim); padding: 0; transition: color .2s, border-color .2s; flex: none; }
+  .theme-toggle:hover, .theme-toggle:focus-visible { color: var(--spot-lit); border-color: var(--line-lit); }
+  .theme-toggle svg { width: 17px; height: 17px; display: block; }
+
+  section { padding: 76px 0; position: relative; }
+  .section-head { margin-bottom: 40px; }
+  .section-head h2 { font-family: var(--disp); font-weight: 700; font-size: clamp(26px, 4vw, 38px); letter-spacing: -0.01em; }
+  .section-head p { color: var(--dim); margin-top: 8px; max-width: 56ch; }
+
+  /* steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  @media (max-width: 760px) { .steps { grid-template-columns: 1fr; } }
+  .step { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 26px 24px; }
+  .step .k { font-family: var(--disp); font-weight: 700; color: var(--spot); font-size: 14px; letter-spacing: 0.04em; }
+  .step h4 { font-family: var(--disp); font-weight: 600; font-size: 19px; margin: 12px 0 8px; }
+  .step p { color: var(--dim); font-size: 15.5px; }
+
+  /* why */
+  .why { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 44px 38px; }
+  .why h2 { font-family: var(--disp); font-weight: 700; font-size: clamp(24px, 3.6vw, 34px); max-width: 22ch; line-height: 1.12; }
+  .why p { color: var(--dim); margin-top: 16px; max-width: 64ch; font-size: 16.5px; }
+  .why p strong { color: var(--bone); font-weight: 500; }
+
+  /* contact / quote */
+  .quote { text-align: center; }
+  .quote-box { max-width: 640px; margin: 26px auto 0; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 28px 26px; text-align: left; }
+  .quote-box label { font-family: var(--disp); font-size: 13px; color: var(--dim); letter-spacing: 0.03em; display: block; margin-bottom: 10px; }
+  .quote-box textarea { width: 100%; min-height: 120px; resize: vertical; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; color: var(--bone); font-family: var(--body); font-size: 15.5px; padding: 14px 16px; outline: none; transition: border-color .25s; }
+  .quote-box textarea:focus { border-color: var(--line-lit); }
+  .quote-box .btn { width: 100%; margin-top: 14px; text-align: center; border: none; }
+  .quote-note { color: var(--dim); font-size: 13px; margin-top: 12px; text-align: center; }
+
+  footer.site { border-top: 1px solid var(--line); padding: 30px 0; margin-top: 40px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; align-items: center; }
+  footer span, footer a { font-family: var(--disp); font-size: 12.5px; letter-spacing: 0.04em; color: var(--dim); }
+  footer a:hover { color: var(--spot-lit); }
+
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+  :focus-visible { outline: 2px solid var(--spot-lit); outline-offset: 3px; border-radius: 4px; }
+  @media (prefers-reduced-motion: reduce) {
+    * { scroll-behavior: auto !important; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .btn:hover, .door:hover, .cap:hover { transform: none; }
+  }
+
+  /* two lanes + discovery chat */
+  .lane-toggle { display: flex; gap: 10px; justify-content: center; margin: 0 auto 18px; max-width: 640px; flex-wrap: wrap; }
+  .lane-toggle button { font-family: var(--disp); font-weight: 600; font-size: 13.5px; letter-spacing: 0.02em; padding: 11px 20px; border-radius: 8px; border: 1px solid var(--line); background: transparent; color: var(--dim); cursor: pointer; transition: border-color .2s, color .2s, background .2s; }
+  .lane-toggle button.active { border-color: var(--spot); color: var(--bone); background: rgba(232,178,76,0.08); }
+  .lane-toggle button:hover { color: var(--spot-lit); }
+  .hidden { display: none !important; }
+  #founder-lane, #curious-lane { max-width: 640px; margin: 0 auto; }
+  #chat-log { display: flex; flex-direction: column; gap: 12px; margin-bottom: 14px; max-height: 440px; overflow-y: auto; }
+  .msg { padding: 11px 15px; border-radius: 13px; font-size: 15px; line-height: 1.5; max-width: 88%; }
+  .msg.ai { background: var(--panel-2); border: 1px solid rgba(94,143,184,0.45); color: var(--bone); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .msg.me { background: rgba(232,178,76,0.12); border: 1px solid var(--line-lit); color: var(--bone); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .chat-input-row { display: flex; gap: 10px; }
+  .chat-input-row input { flex: 1; background: var(--ink); border: 1px solid var(--line); border-radius: 10px; color: var(--bone); font-family: var(--body); font-size: 15px; padding: 12px 14px; outline: none; transition: border-color .2s; }
+  .chat-input-row input:focus { border-color: var(--line-lit); }
+  .chat-input-row .btn { padding: 12px 18px; }
+  .idea-card { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin-top: 10px; align-self: stretch; }
+  .idea-card h5 { font-family: var(--disp); font-weight: 600; font-size: 17px; color: var(--spot-lit); margin-bottom: 4px; }
+  .idea-card p { font-size: 14.5px; color: var(--bone); margin-bottom: 6px; }
+  .idea-card .why { color: var(--dim); font-size: 13.5px; margin-bottom: 12px; }
+  .idea-card .btn { padding: 9px 16px; font-size: 12.5px; }
+
+  /* explainer */
+  .explainer { max-width: 640px; margin: 0 auto; }
+  .explainer p { font-size: 17px; line-height: 1.6; margin-bottom: 14px; color: var(--bone); }
+  .explainer p:last-child { margin-bottom: 0; }
+
+  /* AI support widget */
+  .help-fab { position: fixed; bottom: 20px; right: 20px; z-index: 900; background: var(--spot); color: #1a1206; border: none; border-radius: 24px; padding: 12px 18px; font-family: var(--disp); font-weight: 600; font-size: 14px; cursor: pointer; box-shadow: 0 12px 32px -8px rgba(232,178,76,0.5); transition: transform .2s; }
+  .help-fab:hover { transform: translateY(-2px); }
+  .help-panel { position: fixed; bottom: 20px; right: 20px; z-index: 901; width: 360px; max-width: calc(100vw - 32px); height: 480px; max-height: calc(100vh - 40px); background: var(--panel); border: 1px solid var(--line-lit); border-radius: 16px; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7); display: none; flex-direction: column; overflow: hidden; }
+  .help-panel.open { display: flex; }
+  .help-head { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; border-bottom: 1px solid var(--line); font-family: var(--disp); font-weight: 600; font-size: 14px; }
+  .help-head button { background: none; border: none; color: var(--dim); font-size: 22px; cursor: pointer; line-height: 1; }
+  .help-head button:hover { color: var(--bone); }
+  .help-log { flex: 1; overflow-y: auto; padding: 14px 16px; display: flex; flex-direction: column; gap: 10px; }
+  .help-msg { padding: 10px 13px; border-radius: 12px; font-size: 14px; line-height: 1.5; max-width: 88%; }
+  .help-msg.ai { background: var(--panel-2); border: 1px solid rgba(94,143,184,0.45); align-self: flex-start; border-bottom-left-radius: 4px; }
+  .help-msg.me { background: rgba(232,178,76,0.12); border: 1px solid var(--line-lit); align-self: flex-end; border-bottom-right-radius: 4px; }
+  .help-input { display: flex; gap: 8px; padding: 12px; border-top: 1px solid var(--line); }
+  .help-input input { flex: 1; background: var(--ink); border: 1px solid var(--line); border-radius: 9px; color: var(--bone); font-family: var(--body); font-size: 14px; padding: 10px 12px; outline: none; }
+  .help-input input:focus { border-color: var(--line-lit); }
+  .help-input button { background: var(--spot); color: #1a1206; border: none; border-radius: 9px; padding: 0 16px; font-family: var(--disp); font-weight: 600; font-size: 13px; cursor: pointer; }
+  @media (max-width: 480px) { .help-panel { bottom: 0; right: 0; left: 0; width: 100%; max-width: 100%; height: 78vh; border-radius: 16px 16px 0 0; } .help-fab { bottom: 16px; right: 16px; } }
+
+  /* doors */
+  .doors { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  @media (max-width: 760px) { .doors { grid-template-columns: 1fr; } }
+  .door { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 30px 28px; display: flex; flex-direction: column; transition: border-color .3s, transform .3s; }
+  .door:hover { border-color: var(--line-lit); transform: translateY(-3px); }
+  .door::before, .door::after { content: ""; position: absolute; width: 12px; height: 12px; border: 1.5px solid var(--spot); opacity: .5; }
+  .door::before { top: 10px; left: 10px; border-right: 0; border-bottom: 0; }
+  .door::after { bottom: 10px; right: 10px; border-left: 0; border-top: 0; }
+  .door .k { font-family: var(--disp); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--spot); }
+  .door h3 { font-family: var(--disp); font-weight: 700; font-size: 24px; margin: 12px 0 6px; }
+  .door .price { font-family: var(--disp); color: var(--spot-lit); font-size: 15px; margin: 2px 0 14px; }
+  .door > p { color: var(--dim); font-size: 15px; }
+  .door ul { list-style: none; margin: 16px 0 22px; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .door li { position: relative; padding-left: 22px; font-size: 14.5px; }
+  .door li::before { content: "\2192"; position: absolute; left: 0; color: var(--spot); }
+  .door .btn { margin-top: auto; text-align: center; }
+
+  /* capability / proof cards */
+  .caps { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+  @media (max-width: 760px) { .caps { grid-template-columns: 1fr; } }
+  .cap { position: relative; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 26px 24px; transition: border-color .3s, transform .3s; }
+  .cap:hover { border-color: var(--line-lit); transform: translateY(-3px); }
+  .cap.wide { grid-column: 1 / -1; }
+  .cap .tag { font-family: var(--disp); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--spot); }
+  .cap h4 { font-family: var(--disp); font-weight: 600; font-size: 19px; margin: 11px 0 8px; }
+  .cap p { color: var(--dim); font-size: 14.5px; }
+  .live-strip { margin-top: 24px; font-size: 14px; color: var(--dim); }
+  .live-strip a { color: var(--spot); text-decoration: none; } .live-strip a:hover { color: var(--spot-lit); }
+
+  /* founder application */
+  #apply { padding-top: 20px; }
+  .apply-band { max-width: 680px; margin: 0 auto; background: var(--panel); border: 1px solid var(--line-lit); border-radius: 18px; padding: 34px 32px; }
+  @media (max-width: 560px) { .apply-band { padding: 26px 20px; } }
+  .apply-form { display: flex; flex-direction: column; gap: 16px; }
+  .apply-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .apply-grid { grid-template-columns: 1fr; } }
+  .apply-form label { display: flex; flex-direction: column; gap: 7px; font-family: var(--disp); font-size: 13px; color: var(--bone); letter-spacing: .01em; }
+  .apply-form input, .apply-form textarea { background: var(--ink); border: 1px solid var(--line); border-radius: 10px; color: var(--bone); font-family: var(--body); font-size: 15px; padding: 12px 14px; outline: none; transition: border-color .2s; width: 100%; }
+  .apply-form input:focus, .apply-form textarea:focus { border-color: var(--line-lit); }
+  .apply-form textarea { resize: vertical; }
+  .apply-form .btn { align-self: flex-start; margin-top: 4px; }
+  .apply-note { font-size: 13px; color: var(--dim); font-family: var(--body); margin: 0; }
+  .apply-done { text-align: center; padding: 18px 0; }
+  .apply-done h3 { font-family: var(--disp); color: var(--spot-lit); font-size: 22px; }
+  .apply-done p { color: var(--dim); margin-top: 8px; }
+
+  /* small-phone polish */
+  @media (max-width: 560px) {
+    .wrap { padding: 0 18px; }
+    section { padding: 56px 0; }
+    .section-head { margin-bottom: 26px; }
+    .quote-box { padding: 22px 17px; }
+    .step, .cap, .door { padding: 22px 19px; }
+    .msg { max-width: 92%; }
+  }
+
+  /* ===== landing-v2 refinements — instrument-maker's workbench ===== */
+  .hero-v2 { padding: clamp(84px, 13vh, 128px) 0 84px; position: relative; }
+  .hero-v2 .plate { display: inline-flex; align-items: center; gap: 11px; font-family: var(--disp); font-size: 11.5px; letter-spacing: .24em; text-transform: uppercase; color: var(--spot); }
+  .hero-v2 .plate::before { content: ""; width: 28px; height: 1px; background: linear-gradient(90deg, var(--spot), transparent); }
+  .hero-v2 h1 { font-family: var(--disp); font-weight: 700; font-size: clamp(38px, 6.4vw, 72px); line-height: 1.03; letter-spacing: -.022em; max-width: 16ch; margin: 20px 0 0; }
+  .hero-v2 h1 em { font-style: normal; color: var(--spot-lit); }
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .hero-v2 h1 em { background: linear-gradient(96deg, var(--spot-lit) 24%, var(--steel-lit)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+  }
+  .hero-v2 .lede { font-size: clamp(17px, 2.1vw, 20px); color: var(--dim); max-width: 60ch; margin: 22px 0 0; line-height: 1.6; }
+  .hero-v2 .lede strong { color: var(--bone); font-weight: 500; }
+  .cta-stack { display: flex; flex-direction: column; gap: 13px; align-items: flex-start; margin-top: 34px; }
+  .cta-line { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+  .btn.lg { padding: 16px 30px; font-size: 15px; border-radius: 10px; }
+  .cta-credit { font-family: var(--disp); font-size: 12.5px; letter-spacing: .03em; color: var(--dim); }
+  .link-quiet { font-family: var(--disp); font-size: 13.5px; letter-spacing: .02em; color: var(--dim); border-bottom: 1px solid var(--line); padding-bottom: 2px; transition: color .2s, border-color .2s; }
+  .link-quiet:hover, .link-quiet:focus-visible { color: var(--spot-lit); border-color: var(--line-lit); }
+  .hero-facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 30px; font-family: var(--disp); font-size: 12.5px; letter-spacing: .04em; color: var(--dim); }
+  .hero-facts span::before { content: "\2726"; color: var(--spot); margin-right: 7px; font-size: 10px; }
+  .build-line { margin-top: 22px; font-size: 13.5px; color: var(--dim); }
+  .build-line a { color: var(--spot); } .build-line a:hover { color: var(--spot-lit); }
+
+  /* hairline gold->steel section rule */
+  .rule-top::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--line-lit), transparent); }
+
+  /* three-up cap grid for "what you get" */
+  .caps.three { grid-template-columns: repeat(3, 1fr); }
+  @media (max-width: 820px) { .caps.three { grid-template-columns: 1fr; } }
+
+  /* dominant (diagnosis) door */
+  .door.primary { border-color: var(--line-lit); box-shadow: 0 0 0 1px var(--line-lit), 0 26px 64px -34px rgba(232,178,76,.34); }
+  .door.primary .btn { background: var(--spot); color: var(--ink); border-color: var(--spot); }
+  .door.primary .btn:hover, .door.primary .btn:focus-visible { background: var(--spot-lit); }
+  .door .price.free { color: var(--steel-lit); }
+
+  /* direct card-pay row inside #quote */
+  .pay-direct { max-width: 640px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; gap: 14px 20px; flex-wrap: wrap; background: linear-gradient(180deg, rgba(232,178,76,.08), var(--panel)); border: 1px solid var(--line-lit); border-radius: 14px; padding: 18px 22px; text-align: left; }
+  .pay-direct .pd-text { font-family: var(--disp); font-size: 14px; color: var(--bone); flex: 1; min-width: 200px; }
+  .pay-direct .pd-text small { display: block; color: var(--dim); font-size: 12.5px; font-family: var(--body); margin-top: 3px; }
+  .pay-direct .btn { white-space: nowrap; }
+
+  /* closing band */
+  .close-band { display: flex; align-items: center; justify-content: center; gap: 22px 34px; flex-wrap: wrap; text-align: center; background: linear-gradient(120deg, rgba(232,178,76,.13), rgba(94,143,184,.09)); border: 1px solid var(--line-lit); border-radius: 18px; padding: 40px 34px; }
+  .close-band h3 { font-family: var(--disp); font-weight: 700; font-size: clamp(23px, 3.4vw, 32px); line-height: 1.12; max-width: 22ch; }
+  .close-band h3 em { font-style: normal; color: var(--spot-lit); }
+  .close-band .cb-cta { display: flex; flex-direction: column; gap: 9px; align-items: center; }
+  @media (max-width: 560px) {
+    .cta-line { width: 100%; }
+    .btn.lg { width: 100%; text-align: center; }
+    .pay-direct { text-align: center; }
+    .pay-direct .btn { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#top" aria-label="Understudy — home"><span class="star" aria-hidden="true">&#10022;</span> Understudy</a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#get">What you get</a>
+      <a href="#how">How it works</a>
+      <a href="#proof">Proof</a>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
+      <a class="btn" href="#quote">Get a diagnosis</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero-v2" id="top">
+    <div class="wrap">
+      <span class="plate reveal">Understudy &middot; an AI build studio</span>
+      <h1 class="reveal">Build the thing you've always wanted to <em>exist.</em></h1>
+      <p class="lede reveal"><strong>I build it for real</strong> — done right, live, and yours to own — then hand you an <em style="font-style:normal;color:var(--steel-lit)">understudy</em>: an AI that learns your world and keeps building it with you, safely, under your control.</p>
+      <div class="cta-stack reveal">
+        <div class="cta-line">
+          <a class="btn lg" href="#quote">Get a diagnosis — $150 &rarr;</a>
+          <a class="link-quiet" href="#apply">or apply to be a founder &rarr;</a>
+        </div>
+        <span class="cta-credit">The $150 is credited toward the build. Fixed price, no lock-in.</span>
+      </div>
+      <div class="hero-facts reveal"><span>You own everything</span><span>Fixed prices</span><span>Pay one step at a time</span><span>You always lead</span></div>
+      <p class="build-line reveal">Know exactly what you want, and speak the tech? <a href="build.html">See the technical breakdown &rarr;</a></p>
+    </div>
+  </section>
+
+  <section id="get" class="rule-top">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">What you actually get</span>
+        <h2>Two real things — a finished product, and a teammate.</h2>
+        <p>No metaphors. Here's what's yours at the end.</p>
+      </div>
+      <div class="caps three">
+        <div class="cap reveal">
+          <span class="tag">The product</span>
+          <h4>A working thing, live and yours.</h4>
+          <p>Built for real and shipped to your own domain. You get the repo, the accounts, and a walkthrough — the code is yours to keep. No lock-in, ever.</p>
+        </div>
+        <div class="cap reveal">
+          <span class="tag">The understudy</span>
+          <h4>An AI that keeps building it.</h4>
+          <p>An agent that learns one job and does it — drafting, replying, sorting, following up. It checks with you before anything important, and you can stop it any time. Kill switch, budget caps, full audit log.</p>
+        </div>
+        <div class="cap reveal">
+          <span class="tag">The terms</span>
+          <h4>A plan and a price, up front.</h4>
+          <p>You see the plan and a fixed price before any build starts, then fund one small step at a time. I build and ship each step before you pay for the next.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" class="rule-top">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">How it works</span>
+        <h2>Three honest steps. No agency runaround.</h2>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><span class="k">01 &middot; Diagnose</span><h4>Start with a $150 diagnosis</h4><p>I dig into exactly what's broken or what you need, then hand you a clear plan and a fixed price. The $150 comes right off the build if we do it.</p></div>
+        <div class="step reveal"><span class="k">02 &middot; Build</span><h4>Small, priced steps</h4><p>I build and ship each step — live on your domain — before you fund the next. You only ever pay for what's in front of you.</p></div>
+        <div class="step reveal"><span class="k">03 &middot; Keep building</span><h4>Your own understudy</h4><p>If you want it, an AI that learns a role and runs it — with a critic vetting its work and a human gate before anything ships. You stay the lead.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="agent101" class="rule-top">
+    <div class="wrap">
+      <div class="section-head reveal" style="text-align:center">
+        <h2 style="margin:0 auto">New to AI agents? Here's the plain version.</h2>
+      </div>
+      <div class="explainer reveal">
+        <p>Think of an <strong>agent</strong> as an assistant that learns <em>one</em> job and does it for you — drafting your posts, handling routine replies, sorting your data, sending the follow-ups. The difference from "AI that just chats": an agent actually <strong>does the work.</strong></p>
+        <p>And you're always the boss. It <strong>checks with you before anything important</strong>, keeps a record of everything it does, and you can <strong>stop it any time.</strong> You stay the lead — the understudy just makes sure the show goes on.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="proof" class="rule-top">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Proof — real, anonymized on purpose</span>
+        <h2>What I've actually built.</h2>
+        <p>The three client systems below run today. The understudy platform is built and tested. Clients kept private.</p>
+      </div>
+      <div class="caps">
+        <div class="cap reveal">
+          <span class="tag">A paying product, end to end</span>
+          <h4>A live astrology SaaS its owner runs.</h4>
+          <p>A real domain engine with AI-written output and live payments. Its owner uses it every day and pays a monthly subscription to keep it running — and sends her own network my way.</p>
+        </div>
+        <div class="cap reveal">
+          <span class="tag">A rescue</span>
+          <h4>A matchmaking app, back in ~48 hours.</h4>
+          <p>A founder's concierge matchmaking app had quietly stopped matching people. I found the real cause — empty in the data, not the code — shipped the fix, and mapped her path onto a platform she'd own.</p>
+        </div>
+        <div class="cap reveal">
+          <span class="tag">A business + an AI partner</span>
+          <h4>An Atlanta barbershop's site and its AI.</h4>
+          <p>A full site with an AI partner behind it — booking, marketing, retention, and commerce — handled without the owner touching a dashboard.</p>
+        </div>
+        <div class="cap reveal">
+          <span class="tag">The understudy platform</span>
+          <h4>Built and tested: an agent that runs a role.</h4>
+          <p>Not a chatbot — an agent that learns one job, with a critic that vets every action and a human gate before anything ships. Kill switch, budget caps, and a full audit log are built in.</p>
+        </div>
+      </div>
+      <p class="live-strip reveal">A few builds you can click into right now: <a href="https://cosmic-blueprint.org" target="_blank" rel="noopener">Cosmic Blueprint &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://authors-codex.vercel.app" target="_blank" rel="noopener">Authors Codex &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://threemountaintops.world" target="_blank" rel="noopener">Three Mountaintops &rarr;</a></p>
+    </div>
+  </section>
+
+  <section id="doors" class="rule-top">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">Two ways in</span>
+        <h2>Start a project, or start a partnership.</h2>
+        <p>Come for a diagnosis and a clear plan. Or apply for an understudy of your own — and keep building.</p>
+      </div>
+      <div class="doors">
+        <div class="door primary reveal">
+          <div class="k">The build &middot; start today</div>
+          <h3>Get a diagnosis</h3>
+          <div class="price">$150 &middot; credited toward the fix</div>
+          <p>Something broken, or something to build? Start with a $150 diagnosis — I dig into exactly what's wrong or what you need and hand you a clear plan and a fixed price. The $150 comes right off the build if we do it.</p>
+          <ul>
+            <li>A new product, one feature, or a rescue of a live app</li>
+            <li>The diagnosis fee credits toward the work</li>
+            <li>Fixed prices — no agency runaround, no lock-in</li>
+            <li>Repo + walkthrough — the code and accounts are yours</li>
+          </ul>
+          <a class="btn" href="#quote">Start with a diagnosis &rarr;</a>
+        </div>
+        <div class="door reveal">
+          <div class="k">The ongoing understudy &middot; by application</div>
+          <h3>Apply to be a founder</h3>
+          <div class="price free">A few founders at a time &middot; personally selected</div>
+          <p>For people <em>already making money</em> — a real practice or product that's earning — who don't yet have the tools to grow it. You get your own understudy: an AI that learns your work and helps you build across everything you make, until it can safely build <em>for</em> you.</p>
+          <ul>
+            <li>Your own private console &amp; knowledge base</li>
+            <li>It captures your ideas and turns them into plans</li>
+            <li>Nothing goes live until you've seen it and said yes</li>
+            <li>A live product <em>and</em> a partner that keeps building</li>
+          </ul>
+          <a class="btn ghost" href="#apply">Apply to join &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote" class="quote rule-top">
+    <div class="wrap">
+      <div class="section-head reveal" style="text-align:center;">
+        <span class="eyebrow" style="display:block;margin-bottom:8px;">Get a diagnosis — $150</span>
+        <h2 style="margin:0 auto;">See what it costs — instantly.</h2>
+        <p style="margin:8px auto 0;">Describe what you want and get a tailored, start-small plan in seconds — then pay the first step by card, right here. The $150 credits toward the build.</p>
+      </div>
+
+      <div class="pay-direct reveal">
+        <div class="pd-text">Prefer to just start? Pay the $150 diagnosis by card.<small>Secure checkout, on this page — credited toward your build.</small></div>
+        <a class="btn" id="consult-btn" href="mailto:frankeppsjr@gmail.com?subject=Understudy%20%E2%80%94%20book%20a%20diagnosis">Pay $150 by card &rarr;</a>
+      </div>
+
+      <div class="lane-toggle reveal">
+        <button id="lane-founder" class="active" type="button">I know what I want</button>
+        <button id="lane-curious" type="button">Help me figure it out</button>
+        <button id="lane-site" type="button">I have a site</button>
+      </div>
+
+      <div id="founder-lane" class="quote-box reveal">
+        <label for="idea">Your idea — what do you want to build, and what should it do?</label>
+        <textarea id="idea" placeholder="e.g. A web app where coaches book clients and an AI summarizes each session…"></textarea>
+        <button class="btn" id="send">Get my instant quote →</button>
+        <p class="quote-note">Instant, free, no obligation — or it lands straight in my inbox.</p>
+      </div>
+
+      <div id="curious-lane" class="quote-box reveal hidden">
+        <div id="chat-log"></div>
+        <div class="chat-input-row">
+          <input id="chat-input" type="text" placeholder="Type your answer…" autocomplete="off" />
+          <button class="btn" id="chat-send" type="button">Send</button>
+        </div>
+        <p class="quote-note">A few quick questions and I'll suggest ideas that fit you.</p>
+      </div>
+
+      <div id="site-lane" class="quote-box reveal hidden">
+        <label for="site-url">Your website — I'll read it and tell you what I'd improve or build first.</label>
+        <input id="site-url" type="url" placeholder="https://yoursite.com" autocomplete="off" style="width:100%;background:var(--ink);border:1px solid var(--line);border-radius:10px;color:var(--bone);font-family:var(--body);font-size:15.5px;padding:13px 16px;outline:none;margin-bottom:10px" />
+        <textarea id="site-goal" placeholder="Anything frustrating you, or a goal? (optional) — e.g. 'I want more bookings' or 'it feels slow'" style="min-height:70px"></textarea>
+        <button class="btn" id="site-send">Evaluate my site →</button>
+        <p class="quote-note">I'll read your live site and propose a start-small plan — instant, free, no obligation.</p>
+      </div>
+
+      <div id="quote-result" class="reveal" style="max-width:640px;margin:18px auto 0;"></div>
+    </div>
+  </section>
+
+  <section id="apply" class="rule-top">
+    <div class="wrap">
+      <div class="apply-band reveal">
+        <div class="section-head" style="margin-bottom:20px">
+          <span class="eyebrow">Apply to be a founder</span>
+          <h2>A few founders at a time.</h2>
+          <p>It's just me, so I take a handful of founders and give each one real time. The best fit: you're <strong>already making money</strong> — a practice or product that's earning — and you're missing the tools to grow it. Tell me about you; I read every one myself.</p>
+        </div>
+        <form id="apply-form" class="apply-form" autocomplete="on">
+          <div class="apply-grid">
+            <label>Your name<input id="ap-name" type="text" required></label>
+            <label>Email<input id="ap-email" type="email" required></label>
+          </div>
+          <label>What do you do, and what's already working? <span style="color:var(--dim)">(your business, and how it makes money)</span>
+            <textarea id="ap-biz" rows="3" required placeholder="e.g. I run readings — ~40 paying clients a month, all by DM, no real site yet…"></textarea></label>
+          <label>What do you want to build or grow?
+            <textarea id="ap-goal" rows="3" required placeholder="The thing you can't get to on your own."></textarea></label>
+          <button class="btn" id="ap-send" type="submit">Send my application &rarr;</button>
+          <p class="apply-note" id="ap-note">Free to apply. I read every one personally and reply within a day or two. No obligation.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="rule-top" style="padding-top:60px">
+    <div class="wrap">
+      <div class="close-band reveal">
+        <h3>Your dream deserves a <em>partner.</em></h3>
+        <div class="cb-cta">
+          <a class="btn lg" href="#quote">Get a diagnosis — $150 &rarr;</a>
+          <span class="cta-credit">Credited toward the build &middot; or <a class="link-quiet" href="#apply" style="border:none;padding:0">apply to be a founder &rarr;</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <span><span style="color:var(--spot)">&#10022;</span> understudy — built &amp; run by Frank Epps &middot; <em style="font-style:normal;color:var(--steel-lit)">Build together.</em></span>
+    <a href="mailto:frankeppsjr@gmail.com">frankeppsjr@gmail.com</a>
+  </div>
+</footer>
+
+<!-- AI support widget -->
+<button id="help-fab" class="help-fab" type="button" aria-label="Open support chat">&#10022; Help</button>
+<div id="help-panel" class="help-panel" role="dialog" aria-label="Understudy support" aria-hidden="true">
+  <div class="help-head">
+    <span><span style="color:var(--spot)">&#10022;</span> Understudy support</span>
+    <button id="help-close" type="button" aria-label="Close">&times;</button>
+  </div>
+  <div id="help-log" class="help-log"></div>
+  <div class="help-input">
+    <input id="help-text" type="text" placeholder="Ask anything…" autocomplete="off" />
+    <button id="help-send" type="button">Send</button>
+  </div>
+</div>
+
+<!-- Stripe embedded checkout — keeps payment on-page (no redirect) -->
+<style>
+  .uc-pay-overlay { position: fixed; inset: 0; z-index: 1000; display: none; align-items: flex-start; justify-content: center; padding: 30px 16px; overflow-y: auto; background: rgba(8,9,13,0.82); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+  .uc-pay-overlay.open { display: flex; }
+  .uc-pay-card { position: relative; width: 100%; max-width: 540px; background: #1b1e27; border: 1px solid var(--line); border-radius: 14px; padding: 20px; box-shadow: 0 30px 80px -20px rgba(0,0,0,0.7); }
+  .uc-pay-x { position: absolute; top: 8px; right: 14px; background: none; border: none; color: var(--dim); font-size: 26px; line-height: 1; cursor: pointer; }
+  .uc-pay-x:hover { color: var(--bone); }
+  #uc-pay-title { font-family: var(--disp); font-size: 18px; font-weight: 600; color: var(--bone); margin-bottom: 8px; padding-right: 26px; }
+  #uc-pay-status { color: var(--dim); font-size: 14px; line-height: 1.5; }
+  #uc-pay-status:not(:empty) { margin-bottom: 12px; }
+  @media (max-width: 560px) { .uc-pay-overlay { padding: 12px 8px; } .uc-pay-card { padding: 16px 14px; } }
+</style>
+<div id="uc-pay" class="uc-pay-overlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="uc-pay-title">
+  <div class="uc-pay-card">
+    <button type="button" class="uc-pay-x" id="uc-pay-close" aria-label="Close">&times;</button>
+    <div id="uc-pay-title">Secure checkout</div>
+    <div id="uc-pay-status"></div>
+    <div id="uc-checkout"></div>
+  </div>
+</div>
+
+<script>
+  // Live engine on Render. Empty string would gracefully fall back to email.
+  var UNDERSTUDY_API = "https://three-mountaintops-engine.onrender.com";
+  // Paste your Stripe Payment Link here to take the consultation fee upfront. Empty = email to book.
+  var UNDERSTUDY_CONSULT_LINK = "";
+  // Stripe PUBLISHABLE key (safe to expose) — LIVE. Empty = email fallback.
+  var STRIPE_PK = "pk_live_51TVoa9EODdnbv1UtrlCExV2P3PXRxDfwOWnTBEn2B8WZQF6xTNlBe4LRpkrOxFxsJlL3S7HsIeRDwfCNKXtJeXIB00q3Ri4MHS";
+
+  // AI support widget — floating chat that answers questions + escalates to Frank
+  (function () {
+    var fab = document.getElementById('help-fab'), panel = document.getElementById('help-panel');
+    var log = document.getElementById('help-log'), input = document.getElementById('help-text');
+    var send = document.getElementById('help-send'), closeB = document.getElementById('help-close');
+    if (!fab) return;
+    var msgs = [], started = false;
+    function add(who, text) {
+      var d = document.createElement('div'); d.className = 'help-msg ' + (who === 'me' ? 'me' : 'ai');
+      d.innerHTML = esc(text).replace(/\n/g, '<br>'); log.appendChild(d); log.scrollTop = log.scrollHeight; return d;
+    }
+    function open() {
+      panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false'); fab.style.display = 'none';
+      if (!started) { started = true; add('ai', "Hi! I'm Understudy's support teammate. Ask me anything — how it works, pricing, payments, or what an AI agent actually does. For account-specific things I'll point you to Frank."); }
+      setTimeout(function () { input.focus(); }, 50);
+    }
+    function close() { panel.classList.remove('open'); panel.setAttribute('aria-hidden', 'true'); fab.style.display = ''; }
+    fab.addEventListener('click', open); closeB.addEventListener('click', close);
+    function sendMsg() {
+      var t = input.value.trim(); if (!t) return; input.value = '';
+      add('me', t); msgs.push({ role: 'user', content: t });
+      if (!UNDERSTUDY_API) { add('ai', "I can't reach support right now — email frankeppsjr@gmail.com and Frank will help."); return; }
+      var typing = add('ai', '…');
+      fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/support', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: msgs })
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        if (d.error) throw new Error(d.error);
+        typing.innerHTML = esc(d.reply).replace(/\n/g, '<br>'); msgs.push({ role: 'assistant', content: d.reply });
+      }).catch(function () { typing.textContent = "Hmm, I couldn't answer that one — email frankeppsjr@gmail.com and Frank will follow up."; });
+    }
+    send.addEventListener('click', sendMsg);
+    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') sendMsg(); });
+  })();
+
+  // theme toggle (light/dark) — initial theme is already applied in <head> to avoid a flash
+  (function () {
+    var KEY = 'understudy-theme', root = document.documentElement, btn = document.getElementById('theme-toggle');
+    var sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg>';
+    var moon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5z"/></svg>';
+    function isLight() { return root.getAttribute('data-theme') === 'light'; }
+    function paint() { if (btn) btn.innerHTML = isLight() ? moon : sun; } // show the mode you'll switch TO
+    paint();
+    if (btn) btn.addEventListener('click', function () {
+      var next = isLight() ? 'dark' : 'light';
+      if (next === 'light') root.setAttribute('data-theme', 'light'); else root.removeAttribute('data-theme');
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+      paint();
+    });
+  })();
+
+  // scroll reveal
+  (function () {
+    var els = document.querySelectorAll('.reveal');
+    if (!('IntersectionObserver' in window)) { els.forEach(function (e) { e.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
+    }, { threshold: 0.12 });
+    els.forEach(function (e) { io.observe(e); });
+  })();
+
+  var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+
+  function mailtoIdea(idea) {
+    var body = encodeURIComponent(idea || '(describe your idea here)');
+    window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — my idea') + '&body=' + body;
+  }
+
+  function renderQuote(q, idea) {
+    var money = function (n) { return '$' + Number(n || 0).toLocaleString('en-US'); };
+    var head = function (t) { return '<div style="font-family:var(--disp);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;color:var(--spot);margin:14px 0 8px">' + t + '</div>'; };
+    var steps = (q.steps || []);
+    var startPrice = q.startPrice || (steps[0] && steps[0].price) || 150;
+    var phases = steps.map(function (s, i) {
+      var first = i === 0;
+      return '<div style="border:1px solid ' + (first ? 'var(--line-lit)' : 'var(--line)') + ';border-radius:10px;padding:13px 15px;margin-bottom:10px;background:var(--ink)">' +
+        '<div style="display:flex;justify-content:space-between;gap:12px;align-items:baseline">' +
+          '<div style="font-family:var(--disp);font-weight:600;color:var(--bone);font-size:15px">' + (first ? '<span style="color:var(--spot)">Start &#9656; </span>' : (i + 1) + '. ') + esc(s.name || ('Step ' + (i + 1))) + '</div>' +
+          '<div style="font-family:var(--disp);font-weight:700;color:var(--spot-lit);white-space:nowrap">' + money(s.price) + '</div>' +
+        '</div>' +
+        '<div style="color:var(--dim);font-size:14px;margin-top:5px">' + esc(s.delivers || '') + '</div>' +
+        (s.hoursLabel ? '<div style="color:var(--dim);font-size:12.5px;margin-top:5px;font-family:var(--disp)">' + esc(s.hoursLabel) + ' of work</div>' : '') +
+        '<button type="button" class="uc-pay btn ' + (first ? '' : 'ghost') + '" style="width:100%;margin-top:11px;padding:12px;font-size:13.5px">' + (first ? 'Start now — ' + money(s.price) : 'Add this step — ' + money(s.price)) + ' &rarr;</button>' +
+      '</div>';
+    }).join('');
+    var startBody = encodeURIComponent("I'd like to start with Phase 1 of:\n" + idea);
+    document.getElementById('quote-result').innerHTML =
+      '<div class="quote-box" style="text-align:left">' +
+        (q.greeting ? '<p style="margin:0 0 6px">' + esc(q.greeting) + '</p>' : '') +
+        (q.fullVision ? '<p style="color:var(--dim);font-size:14.5px;margin-bottom:4px"><strong style="color:var(--spot-lit)">The full vision:</strong> ' + esc(q.fullVision) + '</p>' : '') +
+        '<div style="text-align:center;background:linear-gradient(180deg,rgba(232,178,76,0.10),var(--ink));border:1px solid var(--line-lit);border-radius:12px;padding:16px;margin:10px 0 6px">' +
+          '<div style="font-family:var(--disp);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--spot)">You can start today for</div>' +
+          '<div style="font-family:var(--disp);font-weight:700;font-size:34px;color:var(--spot-lit);line-height:1.1;margin:2px 0">' + money(startPrice) + '</div>' +
+          '<div style="color:var(--dim);font-size:13.5px">No big upfront bill. Fund one small step, I build &amp; ship it, then you decide the next.</div>' +
+        '</div>' +
+        head('Your path — small steps, pay as you go') +
+        phases +
+        '<div style="color:var(--dim);font-size:12.5px;text-align:center;margin-bottom:6px">You only ever pay for the next step — I\'ll always work with your budget.</div>' +
+        (q.startRecommendation ? head('Where to start') + '<p style="color:var(--bone);font-size:14.5px;margin-bottom:10px">' + esc(q.startRecommendation) + '</p>' : '') +
+        (q.note ? '<p style="color:var(--dim);font-size:14px;font-style:italic;margin-bottom:14px">' + esc(q.note) + '</p>' : '') +
+        '<div style="text-align:center;margin-top:2px"><a style="font-family:var(--disp);font-size:13px;color:var(--dim)" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — a question before I start") + '&body=' + startBody + '">Prefer to talk it through first? Email me &rarr;</a></div>' +
+        '<div style="margin-top:14px;border-top:1px solid var(--line);padding-top:14px">' +
+          '<label style="font-family:var(--disp);font-size:13px;color:var(--dim);display:block;margin-bottom:8px">Want me to save this and follow up? Drop your email.</label>' +
+          '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+            '<input id="lead-email" type="email" placeholder="you@email.com" style="flex:1;min-width:170px;background:var(--ink);border:1px solid var(--line);border-radius:8px;color:var(--bone);font-family:var(--body);font-size:14.5px;padding:10px 12px;outline:none">' +
+            '<button class="btn ghost" id="lead-save" type="button" style="padding:10px 16px">Save &amp; notify me</button>' +
+          '</div>' +
+          '<div id="lead-msg" style="font-size:13px;color:var(--dim);margin-top:8px"></div>' +
+        '</div>' +
+      '</div>';
+    var _ls = document.getElementById('lead-save');
+    if (_ls) _ls.addEventListener('click', function () { submitLead(idea, 'Start ' + money(startPrice) + (q.fullVision ? ' — ' + q.fullVision : '')); });
+    var _pays = document.getElementById('quote-result').querySelectorAll('.uc-pay');
+    Array.prototype.forEach.call(_pays, function (b, i) {
+      var s = (q.steps || [])[i] || {};
+      b.addEventListener('click', function () { payFor(Number(s.price) || 0, s.name || ('Step ' + (i + 1)), idea, 'step'); });
+    });
+  }
+
+  // ===== Stripe embedded checkout — stays on the page (no redirect) =====
+  var _stripe = (window.Stripe && STRIPE_PK) ? Stripe(STRIPE_PK) : null;
+  var _ucCheckout = null;
+  var _payCtx = {}; // remembers what was just paid for, to prefill the intake form
+  function _ucOv() { return document.getElementById('uc-pay'); }
+  function openPay(title) {
+    document.getElementById('uc-pay-title').textContent = title || 'Secure checkout';
+    document.getElementById('uc-pay-status').textContent = '';
+    document.getElementById('uc-checkout').innerHTML = '';
+    _ucOv().classList.add('open'); _ucOv().setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closePay() {
+    if (_ucCheckout) { try { _ucCheckout.destroy(); } catch (e) {} _ucCheckout = null; }
+    _ucOv().classList.remove('open'); _ucOv().setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  function payStatus(m) { var s = document.getElementById('uc-pay-status'); if (s) s.textContent = m || ''; }
+  function payFor(amount, label, idea, kind) {
+    var email = ''; var le = document.getElementById('lead-email'); if (le && le.value) email = le.value.trim();
+    _payCtx = { amount: amount, label: label, idea: idea, kind: kind, email: email };
+    openPay(label || 'Secure checkout');
+    var mail = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — ' + (label || 'payment')) + '&body=' + encodeURIComponent("I'd like to pay for: " + (label || 'a phase') + (idea ? "\n\nProject: " + idea : ""));
+    if (!window.Stripe || !_stripe || !UNDERSTUDY_API) {
+      document.getElementById('uc-checkout').innerHTML = '<a class="btn" style="display:inline-block;text-decoration:none" href="' + mail + '">Email me to pay &rarr;</a>';
+      payStatus("Secure checkout couldn't load here (often an ad-blocker, or a cached page — try a hard refresh). In the meantime:");
+      return;
+    }
+    payStatus('Loading secure checkout…');
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/checkout', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ amount: amount, label: label, idea: idea, email: email, kind: kind || 'phase' })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.error) throw new Error(d.error);
+      return _stripe.initEmbeddedCheckout({ clientSecret: d.clientSecret, onComplete: function () { onPaid(label); } });
+    }).then(function (checkout) { _ucCheckout = checkout; payStatus(''); checkout.mount('#uc-checkout'); })
+      .catch(function () { payStatus("Couldn't start checkout. Email me at frankeppsjr@gmail.com and I'll send a secure link."); });
+  }
+  // Field helper for the intake form.
+  function _ucField(idv, labelText, type, val, req) {
+    return '<label style="font-family:var(--disp);font-size:12.5px;color:var(--dim);display:block">' + esc(labelText) + (req ? ' <span style="color:var(--spot)">*</span>' : '') +
+      '<input id="' + idv + '" type="' + type + '" value="' + esc(val || '') + '" autocomplete="off" style="width:100%;margin-top:6px;background:var(--ink);border:1px solid var(--line);border-radius:8px;color:var(--bone);font-family:var(--body);font-size:14.5px;padding:10px 12px;outline:none"></label>';
+  }
+
+  // After a successful payment: collect a short intake brief so a payment becomes a ready-to-start client.
+  function onPaid(label) {
+    if (_ucCheckout) { try { _ucCheckout.destroy(); } catch (e) {} _ucCheckout = null; }
+    var ctx = _payCtx || {};
+    document.getElementById('uc-pay-title').textContent = 'Payment received ✦';
+    payStatus('');
+    document.getElementById('uc-checkout').innerHTML =
+      '<p style="color:var(--bone);font-size:14.5px;margin-bottom:4px">Thank you — your payment' + (label ? ' for <strong>' + esc(label) + '</strong>' : '') + ' came through. ✦</p>' +
+      '<p style="color:var(--dim);font-size:13px;margin-bottom:14px">One quick step so I start with everything I need — then I\'ll email you within a day to kick off.</p>' +
+      '<div style="display:grid;gap:10px">' +
+        _ucField('ui-name', 'Your name', 'text', '', true) +
+        _ucField('ui-biz', 'Business or project (optional)', 'text', '', false) +
+        _ucField('ui-email', 'Best email', 'email', ctx.email, false) +
+        _ucField('ui-phone', 'Phone (optional)', 'tel', '', false) +
+        '<label style="font-family:var(--disp);font-size:12.5px;color:var(--dim);display:block">What do you want built?' +
+          '<textarea id="ui-details" style="width:100%;min-height:82px;margin-top:6px;resize:vertical;background:var(--ink);border:1px solid var(--line);border-radius:8px;color:var(--bone);font-family:var(--body);font-size:14.5px;padding:10px 12px;outline:none">' + esc(ctx.idea || '') + '</textarea></label>' +
+        _ucField('ui-timeline', 'How soon do you need it? (optional)', 'text', '', false) +
+      '</div>' +
+      '<button type="button" id="ui-submit" class="btn" style="width:100%;margin-top:14px;border:none">Send my details &rarr;</button>' +
+      '<div id="ui-msg" style="font-size:13px;color:var(--dim);margin-top:10px;text-align:center"></div>' +
+      '<button type="button" id="ui-skip" style="display:block;margin:8px auto 0;background:none;border:none;color:var(--dim);font-family:var(--disp);font-size:12px;cursor:pointer;text-decoration:underline">Skip — just email me the details</button>';
+    document.getElementById('ui-submit').addEventListener('click', function () { submitIntake(ctx); });
+    document.getElementById('ui-skip').addEventListener('click', function () { intakeDone("Perfect — I'll email you within a day to kick things off. — Frank"); });
+    var n = document.getElementById('ui-name'); if (n) n.focus();
+  }
+
+  function submitIntake(ctx) {
+    var name = (document.getElementById('ui-name').value || '').trim();
+    var msg = document.getElementById('ui-msg');
+    if (!name) { msg.textContent = "Please add your name so I know who I'm building for."; document.getElementById('ui-name').focus(); return; }
+    var btn = document.getElementById('ui-submit'); if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    var payload = {
+      name: name,
+      business: (document.getElementById('ui-biz').value || '').trim(),
+      email: (document.getElementById('ui-email').value || '').trim(),
+      phone: (document.getElementById('ui-phone').value || '').trim(),
+      details: (document.getElementById('ui-details').value || '').trim(),
+      timeline: (document.getElementById('ui-timeline').value || '').trim(),
+      paidFor: (ctx && ctx.label) || '', amount: (ctx && ctx.amount) || 0
+    };
+    if (!UNDERSTUDY_API) { intakeDone("Got it — I'll email you within a day. — Frank"); return; }
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/intake', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.error) throw new Error(d.error);
+      intakeDone("You're all set, " + esc(name.split(' ')[0]) + " ✦ I've got your brief and I'll email you within a day to kick off. — Frank");
+    }).catch(function () {
+      if (btn) { btn.disabled = false; btn.textContent = 'Send my details →'; }
+      msg.innerHTML = "Couldn't send just now — email me at <a style='color:var(--spot)' href='mailto:frankeppsjr@gmail.com'>frankeppsjr@gmail.com</a> and we'll start.";
+    });
+  }
+
+  function intakeDone(html) {
+    if (_ucCheckout) { try { _ucCheckout.destroy(); } catch (e) {} _ucCheckout = null; }
+    document.getElementById('uc-pay-title').textContent = "You're all set ✦";
+    payStatus('');
+    document.getElementById('uc-checkout').innerHTML = '<p style="color:var(--bone);font-size:15px;line-height:1.55">' + html + '</p>' +
+      '<button type="button" id="ui-close" class="btn ghost" style="width:100%;margin-top:16px">Close</button>';
+    var c = document.getElementById('ui-close'); if (c) c.addEventListener('click', closePay);
+  }
+  (function () {
+    var x = document.getElementById('uc-pay-close'); if (x) x.addEventListener('click', closePay);
+    var ov = _ucOv(); if (ov) ov.addEventListener('click', function (e) { if (e.target === ov) closePay(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov && ov.classList.contains('open')) closePay(); });
+    var cb = document.getElementById('consult-btn');
+    if (cb && _stripe) cb.addEventListener('click', function (e) { e.preventDefault(); payFor(150, 'Understudy consultation (credited to your build)', '', 'consult'); });
+  })();
+
+  // Lead capture: save the email + idea so a quote is never lost.
+  var currentLane = 'founder';
+  function submitLead(idea, summary) {
+    var emailEl = document.getElementById('lead-email'), msg = document.getElementById('lead-msg'), btn = document.getElementById('lead-save');
+    var email = (emailEl && emailEl.value || '').trim();
+    if (!email || email.indexOf('@') < 1) { if (msg) msg.textContent = 'Please enter a valid email.'; return; }
+    if (btn) btn.disabled = true; if (msg) msg.textContent = 'Saving…';
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/lead', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, idea: idea, summary: summary, lane: currentLane })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      if (d.error) throw new Error(d.error);
+      if (msg) msg.textContent = "Got it — I'll be in touch. Talk soon! ✦";
+      if (emailEl) emailEl.disabled = true; if (btn) btn.style.display = 'none';
+    }).catch(function () { if (msg) msg.textContent = "Couldn't save just now — you can also email me directly."; if (btn) btn.disabled = false; });
+  }
+
+  // Get a quote: hit the API if configured; otherwise (or on failure) fall back to email.
+  document.getElementById('send').addEventListener('click', function () {
+    var idea = document.getElementById('idea').value.trim();
+    if (!idea) { document.getElementById('idea').focus(); return; }
+    currentLane = 'founder';
+    if (!UNDERSTUDY_API) { mailtoIdea(idea); return; }
+    var btn = document.getElementById('send'), label = btn.textContent, out = document.getElementById('quote-result');
+    btn.disabled = true; btn.textContent = 'Thinking…';
+    out.innerHTML = '<p style="color:var(--dim);text-align:center">Scoping your idea…</p>';
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/quote', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: idea })
+    }).then(function (r) { return r.json(); }).then(function (q) {
+      if (q.error) throw new Error(q.error);
+      renderQuote(q, idea);
+    }).catch(function () {
+      out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t reach the quote engine — sending your idea to my inbox instead.</p>';
+      setTimeout(function () { mailtoIdea(idea); }, 1000);
+    }).finally(function () { btn.disabled = false; btn.textContent = label; });
+  });
+
+  // Founder application — free; lands in Frank's inbox (he vets + invites). Reuses /lead.
+  (function () {
+    var form = document.getElementById('apply-form');
+    if (!form) return;
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name = (document.getElementById('ap-name').value || '').trim();
+      var email = (document.getElementById('ap-email').value || '').trim();
+      var biz = (document.getElementById('ap-biz').value || '').trim();
+      var goal = (document.getElementById('ap-goal').value || '').trim();
+      var note = document.getElementById('ap-note'), btn = document.getElementById('ap-send');
+      if (!name || !email || email.indexOf('@') < 1 || !biz || !goal) { note.textContent = 'Please fill in every field so I can get to know you.'; return; }
+      var idea = 'FOUNDER APPLICATION\nName: ' + name + '\n\nBusiness / what’s working:\n' + biz + '\n\nWhat they want to build or grow:\n' + goal;
+      btn.disabled = true; note.textContent = 'Sending…';
+      if (!UNDERSTUDY_API) { window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — founder application: ' + name) + '&body=' + encodeURIComponent(idea); note.textContent = 'Opening your email…'; return; }
+      fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/lead', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, name: name, idea: idea, summary: 'Founder application — ' + name, lane: 'founder-application' })
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        if (d.error) throw new Error(d.error);
+        form.innerHTML = '<div class="apply-done"><h3>Got it — thank you.</h3><p>I read every application myself. If it’s a fit, you’ll hear from me within a day or two. — Frank</p></div>';
+      }).catch(function () { note.textContent = "Couldn't send just now — you can also email me at frankeppsjr@gmail.com."; btn.disabled = false; });
+    });
+  })();
+
+  // ===== Curious lane: discovery chat =====
+  var chatMessages = [], chatStarted = false;
+  var OPENER = "I'm not sure what to build yet — help me figure it out.";
+
+  function addMsg(who, text) {
+    var log = document.getElementById('chat-log');
+    var d = document.createElement('div');
+    d.className = 'msg ' + (who === 'me' ? 'me' : 'ai');
+    d.innerHTML = esc(text).replace(/\n/g, '<br>').replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    log.appendChild(d); log.scrollTop = log.scrollHeight;
+    return d;
+  }
+
+  function quoteForIdea(idea) {
+    currentLane = 'curious';
+    var out = document.getElementById('quote-result');
+    out.innerHTML = '<p style="color:var(--dim);text-align:center">Scoping that idea…</p>';
+    var desc = idea.title + ' — ' + idea.pitch + (idea.shape ? ' (' + idea.shape + ')' : '');
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/quote', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ idea: desc })
+    }).then(function (r) { return r.json(); }).then(function (q) {
+      if (q.error) throw new Error(q.error);
+      renderQuote(q, desc);
+      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }).catch(function () { out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t reach the engine — try again in a moment.</p>'; });
+  }
+
+  function renderIdeas(data) {
+    if (data.reflection) addMsg('ai', data.reflection);
+    var log = document.getElementById('chat-log');
+    (data.ideas || []).forEach(function (idea) {
+      var card = document.createElement('div');
+      card.className = 'idea-card';
+      card.innerHTML = '<h5>' + esc(idea.title) + '</h5><p>' + esc(idea.pitch) + '</p>' +
+        (idea.whyYou ? '<div class="why">' + esc(idea.whyYou) + '</div>' : '') +
+        '<button class="btn" type="button">Quote this idea →</button>';
+      card.querySelector('button').addEventListener('click', function () { quoteForIdea(idea); });
+      log.appendChild(card);
+    });
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function sendChat(userText) {
+    if (userText) { addMsg('me', userText); chatMessages.push({ role: 'user', content: userText }); }
+    var input = document.getElementById('chat-input'), sb = document.getElementById('chat-send');
+    input.disabled = true; sb.disabled = true;
+    var thinking = addMsg('ai', '…');
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/discover', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: chatMessages })
+    }).then(function (r) { return r.json(); }).then(function (d) {
+      thinking.remove();
+      if (d.error) throw new Error(d.error);
+      if (d.done) { renderIdeas(d); var row = document.querySelector('#curious-lane .chat-input-row'); if (row) row.style.display = 'none'; }
+      else { addMsg('ai', d.question); chatMessages.push({ role: 'assistant', content: d.question }); }
+    }).catch(function () { thinking.remove(); addMsg('ai', 'Sorry — I hit a snag. Mind trying that again?'); })
+      .finally(function () { input.disabled = false; sb.disabled = false; input.focus(); });
+  }
+
+  function startChat() {
+    if (chatStarted) return; chatStarted = true;
+    if (!UNDERSTUDY_API) { addMsg('ai', 'This guided chat needs the live engine — for now, switch to "I know what I want," or email me your idea.'); return; }
+    chatMessages = [{ role: 'user', content: OPENER }];
+    sendChat(null);
+  }
+
+  function showLane(which) {
+    var lanes = { founder: 'founder-lane', curious: 'curious-lane', site: 'site-lane' };
+    var btns = { founder: 'lane-founder', curious: 'lane-curious', site: 'lane-site' };
+    Object.keys(lanes).forEach(function (k) {
+      document.getElementById(lanes[k]).classList.toggle('hidden', k !== which);
+      document.getElementById(btns[k]).classList.toggle('active', k === which);
+    });
+    document.getElementById('quote-result').innerHTML = '';
+  }
+  document.getElementById('lane-founder').addEventListener('click', function () { showLane('founder'); });
+  document.getElementById('lane-curious').addEventListener('click', function () { showLane('curious'); startChat(); });
+  document.getElementById('lane-site').addEventListener('click', function () { showLane('site'); });
+  document.getElementById('site-send').addEventListener('click', function () {
+    var url = document.getElementById('site-url').value.trim();
+    var goal = document.getElementById('site-goal').value.trim();
+    if (!url) { document.getElementById('site-url').focus(); return; }
+    if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+    currentLane = 'site';
+    var btn = this, label = btn.textContent, out = document.getElementById('quote-result');
+    if (!UNDERSTUDY_API) { window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — improve my site') + '&body=' + encodeURIComponent('My site: ' + url + (goal ? '\n\n' + goal : '')); return; }
+    btn.disabled = true; btn.textContent = 'Looking at your site…';
+    out.innerHTML = '<p style="color:var(--dim);text-align:center">Reading your site and scoping improvements…</p>';
+    fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/audit', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: url, goal: goal })
+    }).then(function (r) { return r.json(); }).then(function (q) {
+      if (q.error) throw new Error(q.error);
+      renderQuote(q, 'improvements for ' + url);
+      out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }).catch(function (e) {
+      out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t read that site (' + esc(e.message || '') + '). Double-check the URL, or email me and I\'ll take a look: <a style="color:var(--spot)" href="mailto:frankeppsjr@gmail.com">frankeppsjr@gmail.com</a></p>';
+    }).finally(function () { btn.disabled = false; btn.textContent = label; });
+  });
+  document.getElementById('chat-send').addEventListener('click', function () {
+    var v = document.getElementById('chat-input').value.trim();
+    if (!v) return; document.getElementById('chat-input').value = ''; sendChat(v);
+  });
+  document.getElementById('chat-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('chat-send').click(); }
+  });
+
+  // Point the consultation button at your Stripe Payment Link once you've made it.
+  if (UNDERSTUDY_CONSULT_LINK) { var cb = document.getElementById('consult-btn'); if (cb) { cb.href = UNDERSTUDY_CONSULT_LINK; cb.target = '_blank'; cb.rel = 'noopener'; } }
+</script>
+</body>
+</html>
