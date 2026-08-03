@@ -1,0 +1,25 @@
+# This repo is PUBLIC (GitHub Pages, understudy.consulting). Only the site ships.
+# Verified 2026-08-03: `gh repo view sorry2befrank/understudy --json isPrivate` -> false.
+# Anything internal — briefs, strategy, pricing rationale, the Understudy's own workspace —
+# must be ignored BEFORE it is ever created. Add new internal docs here first.
+
+# Internal planning docs
+*-PLAN.md
+PLAN.md
+notes/
+
+# Architect / Executive work orders and briefs (pricing strategy, positioning internals,
+# client-permission warnings — never for public eyes)
+BRIEF-*.md
+_BRIEF-*.md
+_FOR-CODEX-*.md
+_NOTE-*.md
+WORK-ORDERS/
+
+# The Understudy's own workspace, incl. candid session reviews
+UNDERSTUDY.md
+_UNDERSTUDY/
+
+# Local tooling / scratch
+.remember/
+.playwright-mcp/

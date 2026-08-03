@@ -4,8 +4,8 @@
 <script>(function(){try{var t=localStorage.getItem('understudy-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Understudy — Build Together</title>
-<meta name="description" content="An AI teammate for your business. I build your MVP and the AI that runs it — working alongside you, not instead of you. Fixed price, fixed timeline." />
+<title>Understudy — AI systems for small businesses, built by an engineer</title>
+<meta name="description" content="I build the software and AI systems small businesses actually run on. Eleven years in aerospace, defense, and robotics. Start with a $150 diagnosis: a written plan and a fixed price." />
 <meta name="theme-color" content="#0A0B10" />
 <link rel="icon" href="img/understudy-logo.png" />
 <meta property="og:type" content="website" />
@@ -99,7 +99,8 @@
   .btn:hover, .btn:focus-visible { background: var(--spot-lit); transform: translateY(-2px); }
   .btn.ghost { background: transparent; color: var(--bone); }
   .btn.ghost:hover, .btn.ghost:focus-visible { color: var(--spot-lit); border-color: var(--line-lit); }
-  .nav .btn { padding: 9px 16px; }
+  .nav .btn { padding: 9px 16px; white-space: nowrap; }
+  @media (max-width: 680px) { .nav .btn { padding: 9px 13px; font-size: 12.5px; text-transform: capitalize; } .nav-long { display: none; } }
   .theme-toggle { background: transparent; border: 1px solid var(--line); border-radius: 8px; width: 36px; height: 36px; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--dim); padding: 0; transition: color .2s, border-color .2s; flex: none; }
   .theme-toggle:hover, .theme-toggle:focus-visible { color: var(--spot-lit); border-color: var(--line-lit); }
   .theme-toggle svg { width: 17px; height: 17px; display: block; }
@@ -380,6 +381,36 @@
   .apply-done { text-align: center; padding: 18px 0; }
   .apply-done h3 { font-family: var(--disp); color: var(--spot-lit); font-size: 22px; }
   .apply-done p { color: var(--dim); margin-top: 8px; }
+  /* ---- Operator / credibility (business-page pass) ---- */
+  .operator{padding:56px 0 10px}
+  .op-card{display:grid;grid-template-columns:190px 1fr;gap:32px;align-items:start;
+    background:linear-gradient(180deg,var(--panel) 0%,var(--panel-2) 100%);
+    border:1px solid var(--line);border-radius:16px;padding:32px}
+  .op-portrait{width:190px;height:190px;border-radius:14px;object-fit:cover;display:block;
+    border:1px solid var(--line-lit)}
+  .op-name{font-family:var(--disp);font-size:20px;font-weight:700;color:var(--bone);margin:14px 0 2px}
+  .op-role{font-size:13px;color:var(--dim);line-height:1.5}
+  .op-body h2{margin:6px 0 12px}
+  .op-body>p{color:var(--bone);opacity:.9;line-height:1.72;margin:0 0 18px;max-width:62ch}
+  .op-creds{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:4px}
+  .op-cred{background:rgba(255,255,255,0.022);border:1px solid var(--line);
+    border-radius:11px;padding:15px 16px}
+  .op-cred .k{display:block;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--spot);font-weight:600;margin-bottom:7px}
+  .op-cred p{margin:0;font-size:13.5px;line-height:1.62;color:var(--dim)}
+  .op-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px}
+  .op-stat{text-align:center;padding:16px 10px;border:1px solid var(--line);border-radius:11px;
+    background:rgba(255,255,255,0.018)}
+  .op-stat b{display:block;font-family:var(--disp);font-size:25px;font-weight:700;
+    color:var(--spot-lit);line-height:1.1;font-variant-numeric:tabular-nums}
+  .op-stat span{display:block;margin-top:6px;font-size:11.5px;color:var(--dim);line-height:1.45}
+  @media (max-width:860px){
+    .op-card{grid-template-columns:1fr;gap:22px;padding:24px}
+    .op-portrait{width:128px;height:128px}
+    .op-creds{grid-template-columns:1fr}
+    .op-stats{grid-template-columns:repeat(2,1fr)}
+  }
+
 </style>
 </head>
 <body>
@@ -392,7 +423,7 @@
       <a href="#how">How it works</a>
       <a href="#work">Work</a>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
-      <a class="btn" href="#quote">Get a quote</a>
+      <a class="btn" href="#consult"><span class="nav-long">Get a </span>diagnosis</a>
     </nav>
   </div>
 </header>
@@ -430,6 +461,54 @@
           <p id="voyage-proof-title">Scroll through a universe one person built &mdash; three suns, live projects, thirty days.</p>
         </div>
         <a class="btn" href="https://voyage.understudy.consulting/">&#9656; Take the Voyage</a>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="operator" id="operator">
+    <div class="wrap">
+      <div class="op-card reveal">
+        <div>
+          <img class="op-portrait" src="img/frank.jpg"
+               alt="Frank Epps, the engineer behind Understudy" width="190" height="190" loading="lazy" />
+          <div class="op-name">Frank Epps</div>
+          <div class="op-role">Systems integrator &middot; the only person who touches your build</div>
+        </div>
+        <div class="op-body">
+          <span class="eyebrow">Who you're actually hiring</span>
+          <h2>Eleven years building systems where failure is expensive.</h2>
+          <p>Before I built software for founders, I spent about eleven years in aerospace and defense &mdash;
+             where a mistake costs a program, not a rollback. Today I work in robotics, writing the internal
+             systems that keep a humanoid-robotics operation running. That is the standard I bring to a small
+             business: it works under load, it is tested, and it is yours to keep.</p>
+          <div class="op-creds">
+            <div class="op-cred">
+              <span class="k">Robotics</span>
+              <p>The internal Python tooling behind a humanoid-robotics operation &mdash; inventory, scheduling,
+                 and work management. Automated a field-data pipeline and cut roughly a month of manual work
+                 down to about a week.</p>
+            </div>
+            <div class="op-cred">
+              <span class="k">Aerospace &amp; defense</span>
+              <p>About eleven years in environments with real consequences, including Blue Origin and the
+                 U.S. Air Force &mdash; where I learned that &ldquo;shipped&rdquo; and &ldquo;correct&rdquo;
+                 have to mean the same thing.</p>
+            </div>
+            <div class="op-cred">
+              <span class="k">Shipped</span>
+              <p>Production web apps, real-time financial tooling built on live market data, and autonomous
+                 agent systems that run behind human approval gates &mdash; designed, built, and delivered
+                 solo, end to end.</p>
+            </div>
+          </div>
+          <div class="op-stats">
+            <div class="op-stat"><b>14</b><span>production applications shipped</span></div>
+            <div class="op-stat"><b>~11</b><span>years aerospace &amp; defense</span></div>
+            <div class="op-stat"><b>48h</b><span>fastest live-app rescue, start to fix</span></div>
+            <div class="op-stat"><b>100%</b><span>of the code ends up yours</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -563,9 +642,9 @@
     <div class="wrap">
       <div class="consult-band reveal">
         <div class="ctext">
-          <span class="eyebrow">Not sure yet? Start here</span>
-          <h3>Work with me — a consultation</h3>
-          <p>We shape your idea together: I help you scope it, map the phases, and figure out what your budget gets you first. Paid upfront — and it credits toward your build if you move forward.</p>
+          <span class="eyebrow">The front door &middot; start here</span>
+          <h3>Start with a paid diagnosis</h3>
+          <p>Time on your actual problem. I dig into what is broken or what you need, and you leave with a written plan, a real scope, and a fixed price — whether or not you build with me. The fee credits toward the work if you go ahead.</p>
         </div>
         <div class="cright">
           <div class="price">$150 <small>credited toward your build</small></div>
@@ -618,7 +697,7 @@
           <p>A multi-agent system running live — budget caps, a kill switch, a full audit log, and a critic that rejects its own work when it's wrong. You're always the lead; the understudy makes sure the show goes on.</p>
         </div>
       </div>
-      <p class="live-strip reveal">A few builds you can click into right now: <a href="https://cosmic-blueprint.org" target="_blank" rel="noopener">Cosmic Blueprint &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://authors-codex.vercel.app" target="_blank" rel="noopener">Authors Codex &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://threemountaintops.world" target="_blank" rel="noopener">Three Mountaintops &rarr;</a></p>
+      <p class="live-strip reveal">Builds of my own you can click into right now: <a href="https://authors-codex.vercel.app" target="_blank" rel="noopener">Authors Codex &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://threemountaintops.world" target="_blank" rel="noopener">Three Mountaintops &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://voyage.understudy.consulting/" target="_blank" rel="noopener">The Voyage &rarr;</a><br><span style="color:var(--dim);font-size:13px">Client work stays unnamed unless a client asks to be named &mdash; that policy is part of what you&rsquo;re buying.</span></p>
     </div>
   </section>
 
@@ -667,7 +746,7 @@
             <li>Responsive, deployed to your domain</li>
             <li>Repo + walkthrough — you own it all</li>
           </ul>
-          <a class="btn ghost" href="#quote">Start a quote</a>
+          <a class="btn ghost" href="#consult">Start with a diagnosis &rarr;</a>
         </div>
         <div class="pkg feature reveal">
           <span class="tag">The understudy</span>
@@ -681,7 +760,7 @@
             <li>Safety rails: kill switch, budget caps, full audit log</li>
             <li>You inherit &amp; own it; monthly support keeps it sharp</li>
           </ul>
-          <a class="btn" href="#quote">Start a quote</a>
+          <a class="btn" href="#consult">Start with a diagnosis &rarr;</a>
         </div>
         <div class="pkg reveal">
           <h3>AI Feature</h3>
@@ -694,7 +773,7 @@
             <li>Server-side keys + an eval harness</li>
             <li>Standalone, or added to your app</li>
           </ul>
-          <a class="btn ghost" href="#quote">Start a quote</a>
+          <a class="btn ghost" href="#consult">Start with a diagnosis &rarr;</a>
         </div>
       </div>
     </div>
@@ -704,7 +783,7 @@
     <div class="wrap">
       <div class="section-head reveal"><h2>Straight answers</h2></div>
       <div class="faq reveal">
-        <details><summary>How does paying work?</summary><p>You start for $150 and pay step by step — each step has a clear price before I begin it, based on an honest hours estimate at $75/hr. No big upfront bill, no surprise invoices, ever. You only ever fund the next step.</p></details>
+        <details><summary>How does paying work?</summary><p>You start with the $150 diagnosis and pay step by step. Every step is quoted as a fixed price before I begin it, so you approve the number first. No big upfront bill, no hourly meter, and no surprise invoices — you only ever fund the next step.</p></details>
         <details><summary>Do I own everything?</summary><p>Completely — the code, the accounts, and the agent. I hand it over with a walkthrough so you can run it. No lock-in.</p></details>
         <details><summary>Is it safe to let an AI agent run?</summary><p>It never acts unsupervised by default. Human approval, a kill switch, budget caps, and a full audit log are built in. The understudy supports the lead — it doesn't replace you.</p></details>
         <details><summary>What if my idea doesn't fit a package?</summary><p>The quote tells you honestly. If it's bigger, we scope it before you commit — and I'll tell you if you <em>shouldn't</em> build it, or if I'm not the right fit.</p></details>
