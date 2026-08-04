@@ -85,8 +85,6 @@
   .nav { display: flex; gap: 26px; align-items: center; }
   .nav a { font-family: var(--disp); font-size: 13px; letter-spacing: 0.04em; color: var(--dim); transition: color .25s; }
   .nav a:hover, .nav a:focus-visible { color: var(--spot-lit); }
-  @media (max-width: 680px) { .nav a:not(.btn) { display: none; } }
-
   .btn {
     font-family: var(--disp); font-weight: 600; font-size: 13.5px; letter-spacing: 0.02em;
     padding: 12px 22px; border: 1px solid var(--spot); color: var(--ink); background: var(--spot);
@@ -295,18 +293,18 @@
     .pay-direct .btn { width: 100%; }
   }
 </style>
+<link rel="stylesheet" href="site-nav.css" />
 </head>
 <body>
 
 <header class="site">
   <div class="wrap">
-    <a class="wordmark" href="#top" aria-label="Understudy — home"><span class="star" aria-hidden="true">&#10022;</span> Understudy</a>
-    <nav class="nav" aria-label="Primary">
-      <a href="#get">What you get</a>
-      <a href="#how">How it works</a>
-      <a href="#proof">Proof</a>
+    <a class="brand" href="index.html" aria-label="Understudy Consulting home"><img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="42" height="42" /><span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">CONSULTING</span></span></a>
+    <nav class="nav site-nav" aria-label="Primary navigation">
+      <div class="nav-links" id="site-nav-menu"><a href="index.html" aria-current="page">Home</a><a href="work.html">Work</a><a href="systems.html">Systems</a><a href="founders.html">Founders</a></div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
-      <a class="btn" href="book.html">Get a diagnosis</a>
+      <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu" aria-label="Open navigation menu"><span class="nav-menu-icon" aria-hidden="true"></span></button>
+      <a class="btn nav-cta" href="book.html">Start Here</a>
     </nav>
   </div>
 </header>
@@ -981,5 +979,6 @@
   });
 
 </script>
+<script src="site-nav.js"></script>
 </body>
 </html>

@@ -89,8 +89,6 @@
   .nav { display: flex; gap: 26px; align-items: center; }
   .nav a { font-family: var(--disp); font-size: 13px; letter-spacing: 0.04em; color: var(--dim); transition: color .25s; }
   .nav a:hover, .nav a:focus-visible { color: var(--spot-lit); }
-  @media (max-width: 680px) { .nav a:not(.btn) { display: none; } }
-
   .btn {
     font-family: var(--disp); font-weight: 600; font-size: 13.5px; letter-spacing: 0.02em;
     padding: 12px 22px; border: 1px solid var(--spot); color: var(--ink); background: var(--spot);
@@ -413,26 +411,30 @@
 
 </style>
 <link rel="stylesheet" href="rebrand.css" />
+<link rel="stylesheet" href="site-nav.css" />
 </head>
 <body>
 
 <header class="site">
   <div class="wrap">
-    <a class="brand" href="#top" aria-label="Understudy Consulting home">
+    <a class="brand" href="index.html" aria-label="Understudy Consulting home">
       <img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="42" height="42" />
       <span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">CONSULTING</span></span>
     </a>
-    <nav class="nav" aria-label="Primary navigation">
-      <a href="#services">Services</a>
-      <a href="work.html">Work</a>
-      <a href="#systems">Systems</a>
-      <a href="#faq">FAQ</a>
+    <nav class="nav site-nav" aria-label="Primary navigation">
+      <div class="nav-links" id="site-nav-menu">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="work.html">Work</a>
+        <a href="systems.html">Systems</a>
+        <a href="founders.html">Founders</a>
+      </div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
-      <button id="help-fab" class="help-fab" type="button" aria-label="Open support chat">Help</button>
-      <a class="btn" href="book.html">Start here</a>
+      <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu" aria-label="Open navigation menu"><span class="nav-menu-icon" aria-hidden="true"></span></button>
+      <a class="btn nav-cta" href="book.html">Start Here</a>
     </nav>
   </div>
 </header>
+<button id="help-fab" class="help-fab" type="button" aria-label="Open support chat">Help</button>
 
 <main id="top">
   <section class="rebrand-hero">
@@ -547,31 +549,8 @@
 
   <section class="systems" id="systems">
     <div class="wrap">
-      <div class="section-head-new reveal"><div><span class="eyebrow">The systems I run on myself</span><h2>The platform, the console, and the builder.</h2></div><p>I do not sell automation I have only seen in a demo. I run this architecture on my own business, inside strict limits, and keep the human release gate visible.</p></div>
-      <div class="system-grid">
-        <article class="system-panel reveal"><span class="eyebrow">Platform</span><h3>The Orrery</h3><p>Turns business goals into organized work: studying the organization, creating work orders, assigning specialists, tracking evidence, recording lessons, and reporting decisions to the owner.</p></article>
-        <article class="system-panel reveal"><span class="eyebrow">Command console</span><h3>The Armillary</h3><p>One place to see what the workforce is doing, what finished, what is blocked, what it learned, and where a human must approve the next move.</p></article>
-        <article class="system-panel reveal"><span class="eyebrow">Application builder</span><h3>Personal App Engine</h3><p>A single-user tool I built and use: a plain-language request becomes a real Next.js project inside a zero-egress Docker sandbox, then pauses for human review before release.</p></article>
-      </div>
-      <div class="lanes reveal">
-        <div class="lane"><b>Director / Creation</b><span>Develops owner-supplied source material into books, campaigns, creative systems, and intellectual property.</span></div>
-        <div class="lane"><b>Executive / Provision</b><span>Focuses on revenue, operations, contracting, delivery, recurring workflows, and business growth.</span></div>
-        <div class="lane"><b>Psychopomp / Definition</b><span>Handles research, interpretation, consistency, meaning, and alignment with the organization’s identity.</span></div>
-      </div>
-      <div class="section-head-new reveal"><div><span class="eyebrow">Application and automation building</span><h2>From a plain-language idea to a reviewed working preview.</h2></div><p>The Orrery can coordinate this process; the Personal App Engine proves the hardened build mechanics. Release remains paused for approval.</p></div>
-      <div class="build-flow reveal">
-        <div class="flow-step"><b>01</b><span>Plain-language idea</span></div><div class="flow-step"><b>02</b><span>Application prototype</span></div><div class="flow-step"><b>03</b><span>Sandboxed build</span></div><div class="flow-step"><b>04</b><span>Streamed progress</span></div>
-        <div class="flow-step"><b>05</b><span>Working preview</span></div><div class="flow-step"><b>06</b><span>Test and verify</span></div><div class="flow-step"><b>07</b><span>Paused for approval</span></div><div class="flow-step"><b>08</b><span>Time and cost measured</span></div>
-      </div>
-      <div class="evidence-table reveal">
-        <div class="evidence-row"><b>12 agent definitions</b><span>Three leadership personas, one read-only overseer, and eight crew manifests with explicit tool allowlists.</span></div>
-        <div class="evidence-row"><b>16-stage nightly chain</b><span>Runs on a schedule and produces a machine-written completion record and morning brief.</span></div>
-        <div class="evidence-row"><b>More than 900 citations checked</b><span>A separate program opens the cited file and verifies the named line; one bad citation rejects the entire report. Nine reports have been rejected.</span></div>
-        <div class="evidence-row"><b>63 independent adjudications</b><span>A second agent grades the first agent’s honesty on an earned-trust ladder.</span></div>
-        <div class="evidence-row"><b>90 proposals, 6 promotions</b><span>Agents can draft next-day playbooks, but every promotion was approved by a human.</span></div>
-        <div class="evidence-row"><b>474 Personal App Engine tests</b><span>Zero-egress sandboxing, encrypted secrets, default-deny commands, and structural refusal of automatic money, command, and secret use.</span></div>
-      </div>
-      <p class="system-caution reveal"><strong>The through-line:</strong> the campaign engine, the Orrery, and the Personal App Engine solve the same hard problem from three directions — letting an agent work near a person’s files, money, and site without granting unearned authority. The system does the looking, checking, and drafting. A human ships.</p>
+      <div class="section-head-new reveal"><div><span class="eyebrow">The systems I run on myself</span><h2>The system I trust with my own work.</h2></div><p>I run a governed autonomous agent system on my own business. The Orrery organizes work across three leadership lanes, the Armillary exposes evidence and approval points, and a read-only overseer performs weekly cross-domain synthesis. The Personal App Engine proves the same default-deny, sandboxed approach for building software. Human approval remains the release boundary.</p></div>
+      <div class="work-summary reveal"><p>The platform, command console, measured evidence, and application-building boundaries now have their own page.</p><a class="btn ghost" href="systems.html">See the systems &rarr;</a></div>
     </div>
   </section>
 
@@ -1071,5 +1050,6 @@
   });
 
 </script>
+<script src="site-nav.js"></script>
 </body>
 </html>

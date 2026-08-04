@@ -13,6 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Montserrat:wght@300;400;500;600&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="rebrand.css" />
   <link rel="stylesheet" href="interior.css?v=2" />
+  <link rel="stylesheet" href="site-nav.css" />
 </head>
 <body>
   <header class="site">
@@ -21,13 +22,16 @@
         <img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="42" height="42" />
         <span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">CONSULTING</span></span>
       </a>
-      <nav class="nav" aria-label="Primary navigation">
-        <a href="index.html#services">Services</a>
-        <a href="work.html" aria-current="page">Work</a>
-        <a href="index.html#systems">Systems</a>
-        <a href="index.html#faq">FAQ</a>
+      <nav class="nav site-nav" aria-label="Primary navigation">
+        <div class="nav-links" id="site-nav-menu">
+          <a href="index.html">Home</a>
+          <a href="work.html" aria-current="page">Work</a>
+          <a href="systems.html">Systems</a>
+          <a href="founders.html">Founders</a>
+        </div>
         <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
-        <a class="btn" href="book.html">Book diagnosis</a>
+        <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu" aria-label="Open navigation menu"><span class="nav-menu-icon" aria-hidden="true"></span></button>
+        <a class="btn nav-cta" href="book.html">Start Here</a>
       </nav>
     </div>
   </header>
@@ -171,5 +175,6 @@
     (function(){var KEY='understudy-theme',root=document.documentElement,btn=document.getElementById('theme-toggle');var sun='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg>';var moon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5z"/></svg>';function light(){return root.getAttribute('data-theme')==='light'}function paint(){btn.innerHTML=light()?moon:sun}paint();btn.addEventListener('click',function(){var next=light()?'dark':'light';if(next==='light')root.setAttribute('data-theme','light');else root.removeAttribute('data-theme');try{localStorage.setItem(KEY,next)}catch(e){}paint()})})();
     (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(el){el.classList.add('in')});return}var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}})},{threshold:.08});els.forEach(function(el){io.observe(el)})})();
   </script>
+  <script src="site-nav.js"></script>
 </body>
 </html>

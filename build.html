@@ -34,7 +34,6 @@
   .nav{display:flex;gap:24px;align-items:center}
   .nav a{font-family:var(--disp);font-size:13px;letter-spacing:0.04em;color:var(--dim);transition:color .25s}
   .nav a:hover{color:var(--spot-lit)}
-  @media(max-width:680px){.nav a:not(.btn){display:none}}
   .theme-toggle{background:transparent;border:1px solid var(--line);border-radius:8px;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--dim);padding:0;transition:color .2s,border-color .2s;flex:none}
   .theme-toggle:hover{color:var(--spot-lit);border-color:var(--line-lit)}
   .theme-toggle svg{width:17px;height:17px;display:block}
@@ -78,17 +77,17 @@
   footer a:hover{color:var(--spot-lit)}
   @media (max-width: 560px) { .wrap { padding: 0 18px; } section { padding: 56px 0; } }
 </style>
+<link rel="stylesheet" href="site-nav.css" />
 </head>
 <body>
 <header class="site">
   <div class="wrap">
-    <span class="wordmark"><img class="wordmark-logo" src="img/understudy-mark.png" alt="" /> Understudy <span style="color:var(--dim);font-weight:400;font-size:13px">/ technical</span></span>
-    <nav class="nav">
-      <a href="index.html">← Beginner view</a>
-      <a href="#stack">Stack</a>
-      <a href="#packages">Packages</a>
+    <a class="brand" href="index.html" aria-label="Understudy Consulting home"><img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="42" height="42" /><span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">TECHNICAL</span></span></a>
+    <nav class="nav site-nav" aria-label="Primary navigation">
+      <div class="nav-links" id="site-nav-menu"><a href="index.html">Home</a><a href="work.html">Work</a><a href="systems.html">Systems</a><a href="founders.html">Founders</a></div>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
-      <a class="btn" href="#quote">Get a quote</a>
+      <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu" aria-label="Open navigation menu"><span class="nav-menu-icon" aria-hidden="true"></span></button>
+      <a class="btn nav-cta" href="book.html">Start Here</a>
     </nav>
   </div>
 </header>
@@ -297,5 +296,6 @@
       .finally(function () { btn.disabled = false; btn.textContent = label; });
   });
 </script>
+<script src="site-nav.js"></script>
 </body>
 </html>
