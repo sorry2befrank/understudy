@@ -4,22 +4,22 @@
 <script>(function(){try{var t=localStorage.getItem('understudy-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Understudy — AI systems for small businesses, built by an engineer</title>
-<meta name="description" content="I build the software and AI systems small businesses actually run on. Eleven years in aerospace, defense, and robotics. Start with a $150 diagnosis: a written plan and a fixed price." />
-<meta name="theme-color" content="#0A0B10" />
-<link rel="icon" href="img/understudy-logo.png" />
+<title>Understudy Consulting — AI systems, apps, and automation</title>
+<meta name="description" content="Hire Frank Epps to build, repair, or automate the systems your business runs on. Start with a $150 diagnosis, credited toward the work." />
+<meta name="theme-color" content="#0C0C0D" />
+<link rel="icon" href="img/understudy-roundel.svg" type="image/svg+xml" />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://understudy.consulting/" />
-<meta property="og:title" content="Understudy — Build Together" />
-<meta property="og:description" content="An AI teammate for your business. I build your MVP and the AI that runs it — alongside you, not instead of you." />
+<meta property="og:title" content="Understudy Consulting — Build, repair, and automate" />
+<meta property="og:description" content="AI systems, site and app rescue, complete builds, and operator agents — designed and built by Frank Epps." />
 <meta property="og:image" content="https://understudy.consulting/img/understudy-logo.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Understudy — Build Together" />
-<meta name="twitter:description" content="An AI teammate for your business — I build your MVP and the AI that runs it, alongside you." />
+<meta name="twitter:title" content="Understudy Consulting — Build, repair, and automate" />
+<meta name="twitter:description" content="AI systems, site and app rescue, complete builds, and operator agents — designed and built by Frank Epps." />
 <meta name="twitter:image" content="https://understudy.consulting/img/understudy-logo.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
 <script src="https://js.stripe.com/v3/"></script>
 <style>
   :root {
@@ -412,455 +412,283 @@
   }
 
 </style>
+<link rel="stylesheet" href="rebrand.css" />
 </head>
 <body>
 
 <header class="site">
   <div class="wrap">
-    <span class="wordmark"><img class="wordmark-logo" src="img/understudy-mark.png" alt="" /> Understudy</span>
-    <nav class="nav">
-      <a href="#founders">Founders</a>
-      <a href="#how">How it works</a>
+    <a class="brand" href="#top" aria-label="Understudy Consulting home">
+      <img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="42" height="42" />
+      <span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">CONSULTING</span></span>
+    </a>
+    <nav class="nav" aria-label="Primary navigation">
+      <a href="#services">Services</a>
       <a href="#work">Work</a>
+      <a href="#systems">Systems</a>
+      <a href="#faq">FAQ</a>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
-      <a class="btn" href="#consult"><span class="nav-long">Get a </span>diagnosis</a>
+      <button id="help-fab" class="help-fab" type="button" aria-label="Open support chat">Help</button>
+      <a class="btn" href="#consult">Start here</a>
     </nav>
   </div>
 </header>
 
-<main>
-  <section class="hero">
+<main id="top">
+  <section class="rebrand-hero">
     <div class="wrap">
-      <div class="hero-grid">
-        <div class="hero-copy">
-          <span class="eyebrow reveal">Your vision &middot; your understudy</span>
-          <h1 class="reveal">Don't just build a thing.<br>Build your <em>universe.</em></h1>
-          <p class="lede reveal"><strong>Understudy is two things in one.</strong> Get a product built — done right and yours to own — or get your own <em style="font-style:normal;color:var(--steel-lit)">understudy</em>: an AI that learns your world and helps you build the next thing, and the next, safely under your control.</p>
-          <div class="cta-row reveal">
-            <a class="btn" href="#apply">&#10022; Apply to be a founder</a>
-            <a class="btn ghost" href="#consult">Get a diagnosis &rarr;</a>
-          </div>
-          <div class="hero-trust reveal"><span>Instant quote</span><span>Pay as you go</span><span>You own everything</span><span>You always lead</span></div>
-          <p class="reveal" style="margin-top:16px;font-size:13.5px;color:var(--dim)">Know exactly what you want, and speak the tech? <a href="build.html" style="color:var(--spot)">See the technical breakdown &rarr;</a></p>
-        </div>
-        <div class="hero-art reveal">
-          <picture>
-            <source media="(max-width: 860px)" srcset="img/understudy-logo.png" />
-            <img src="img/hero.jpg" alt="A person and an AI walking together between two pillars toward a sunrise" />
-          </picture>
+      <div class="hero-copy-new">
+        <svg class="hero-monogram reveal" width="150" height="130" viewBox="0 0 150 130" role="img" aria-label="Understudy Consulting">
+          <defs><linearGradient id="usg-hero" x1="0" y1="0" x2="0.25" y2="1"><stop offset="0%" stop-color="#F2E0AE"/><stop offset="42%" stop-color="#C9A45C"/><stop offset="100%" stop-color="#8E6F33"/></linearGradient></defs>
+          <text x="8" y="104" font-family="Cinzel, Georgia, serif" font-weight="600" font-size="118" fill="url(#usg-hero)">U</text>
+          <text x="62" y="104" font-family="Cinzel, Georgia, serif" font-weight="600" font-size="118" fill="url(#usg-hero)">S</text>
+        </svg>
+        <span class="eyebrow reveal">Strategy. Clarity. Impact.</span>
+        <h1 class="reveal">I build the systems your business runs on.</h1>
+        <p class="lede reveal">Hire me to automate the work that drains your week, repair the app that is already live, build the site or product itself, or train an operator agent that works inside boundaries you control.</p>
+        <div class="hero-action reveal">
+          <a class="btn" href="#consult">Start with a $150 diagnosis</a>
+          <small>You leave with a written plan, a real scope, and a fixed price. The fee comes off the work if we build together.</small>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="voyage-proof" aria-labelledby="voyage-proof-title">
+  <section class="services" id="services">
     <div class="wrap">
-      <div class="voyage-card reveal">
-        <div class="vtext">
-          <span class="eyebrow">THE PROOF, RENDERED</span>
-          <p id="voyage-proof-title">Scroll through a universe one person built &mdash; three suns, live projects, thirty days.</p>
-        </div>
-        <a class="btn" href="https://voyage.understudy.consulting/">&#9656; Take the Voyage</a>
+      <div class="section-head-new">
+        <div><span class="eyebrow">Four ways I help</span><h2>Find the problem that sounds like yours.</h2></div>
+        <p>Every engagement starts through the same $150 diagnosis. I inspect the real system, write down what I found, and price the next step before work begins.</p>
+      </div>
+      <div class="service-grid">
+        <article class="service-card primary reveal">
+          <span class="service-number">01 / AGENT INSTALL</span>
+          <h3>Automation that earns its place</h3>
+          <p class="buyer-problem">“I am paying people, or paying myself in hours, to do things a computer should already be doing.”</p>
+          <ul><li>A written map of recurring work and where automation is honest</li><li>One agent installed on the most expensive task first</li><li>Approval gates on anything that sends, posts, spends, or reaches a customer</li><li>An action log, spending cap, kill switch, and handoff</li></ul>
+          <div class="service-meta"><span>Timeline<strong>About 2–3 weeks after scope</strong></span><span>Price shape<strong>$150 diagnosis, then fixed scope</strong></span></div>
+          <a class="btn ghost" href="#consult">Diagnose the workflow</a>
+        </article>
+        <article class="service-card reveal">
+          <span class="service-number">02 / APP &amp; SITE RESCUE</span>
+          <h3>Fix what is already live</h3>
+          <p class="buyer-problem">“People are using it, something is broken, and I need the real answer — not a rebuild pitch.”</p>
+          <ul><li>I open the real app and inspect the real data before quoting</li><li>A plain-language finding, fixed price, and prioritized repair plan</li><li>The fix built on a preview or development copy</li><li>Nothing ships until you have watched it work</li></ul>
+          <div class="service-meta"><span>Timeline<strong>Diagnosis within 48 hours of access</strong></span><span>Typical fix<strong>$800–1,500</strong></span></div>
+          <a class="btn ghost" href="#consult">Diagnose the break</a>
+        </article>
+        <article class="service-card reveal">
+          <span class="service-number">03 / SITE &amp; APP BUILD</span>
+          <h3>The thing itself, with AI built in</h3>
+          <p class="buyer-problem">“I want to talk to the person building it, own the result, and know the price before work starts.”</p>
+          <ul><li>A written scope and fixed price before code begins</li><li>A production build in accounts and on a domain you own</li><li>AI grounded in your content, with server-side keys and evaluation</li><li>Payments, real phone-width checks, repo, and walkthrough</li></ul>
+          <div class="service-meta"><span>Timeline<strong>Small-business builds about 2–3 weeks</strong></span><span>Small-business build<strong>$1,500–2,500</strong></span></div>
+          <a class="btn ghost" href="#consult">Scope the build</a>
+        </article>
+        <article class="service-card primary reveal">
+          <span class="service-number">04 / OPERATOR AGENT + RETAINER</span>
+          <h3>A recurring role, without the blind trust</h3>
+          <p class="buyer-problem">“I cannot do this every day, but I am not handing my business to a robot I cannot watch.”</p>
+          <ul><li>One defined function trained on your voice, offers, prices, and rules</li><li>A separate checker that rejects weak work before it reaches you</li><li>Supervised operation first; authority grows only when you approve it</li><li>Monthly tuning, safety monitoring, and a one-page activity report</li></ul>
+          <div class="service-meta"><span>Build<strong>Re-quoted after scoping</strong></span><span>Monthly<strong>$300–1,000</strong></span></div>
+          <a class="btn ghost" href="#consult">Diagnose the role</a>
+        </article>
       </div>
     </div>
   </section>
 
-
-  <section class="operator" id="operator">
-    <div class="wrap">
-      <div class="op-card reveal">
-        <div>
-          <img class="op-portrait" src="img/frank.jpg"
-               alt="Frank Epps, the engineer behind Understudy" width="190" height="190" loading="lazy" />
-          <div class="op-name">Frank Epps</div>
-          <div class="op-role">Systems integrator &middot; the only person who touches your build</div>
-        </div>
-        <div class="op-body">
-          <span class="eyebrow">Who you're actually hiring</span>
-          <h2>Eleven years building systems where failure is expensive.</h2>
-          <p>Before I built software for founders, I spent about eleven years in aerospace and defense &mdash;
-             where a mistake costs a program, not a rollback. Today I work in robotics, writing the internal
-             systems that keep a humanoid-robotics operation running. That is the standard I bring to a small
-             business: it works under load, it is tested, and it is yours to keep.</p>
-          <div class="op-creds">
-            <div class="op-cred">
-              <span class="k">Robotics</span>
-              <p>The internal Python tooling behind a humanoid-robotics operation &mdash; inventory, scheduling,
-                 and work management. Automated a field-data pipeline and cut roughly a month of manual work
-                 down to about a week.</p>
-            </div>
-            <div class="op-cred">
-              <span class="k">Aerospace &amp; defense</span>
-              <p>About eleven years in environments with real consequences, including Blue Origin and the
-                 U.S. Air Force &mdash; where I learned that &ldquo;shipped&rdquo; and &ldquo;correct&rdquo;
-                 have to mean the same thing.</p>
-            </div>
-            <div class="op-cred">
-              <span class="k">Shipped</span>
-              <p>Production web apps, real-time financial tooling built on live market data, and autonomous
-                 agent systems that run behind human approval gates &mdash; designed, built, and delivered
-                 solo, end to end.</p>
-            </div>
-          </div>
-          <div class="op-stats">
-            <div class="op-stat"><b>14</b><span>production applications shipped</span></div>
-            <div class="op-stat"><b>~11</b><span>years aerospace &amp; defense</span></div>
-            <div class="op-stat"><b>48h</b><span>fastest live-app rescue, start to fix</span></div>
-            <div class="op-stat"><b>100%</b><span>of the code ends up yours</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="manifesto">
-    <div class="wrap">
-      <div class="mission reveal">
-        <h2>Every great dream deserves a great teammate.</h2>
-        <p>Understudy exists to help you build the business you imagine — with an AI that works <em>alongside</em> you, each of you doing what you do best toward the same vision. The future isn't humans versus AI. It's humans and AI, <strong>building together.</strong></p>
-      </div>
-    </div>
-  </section>
-
-  <section id="founders">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">Two ways in</span>
-        <h2>Start a project, or start a partnership.</h2>
-        <p>Come for a diagnosis and a clear plan. Or apply for an understudy of your own — and keep building.</p>
-      </div>
-      <div class="doors">
-        <div class="door founder reveal">
-          <div class="k">The ongoing understudy &middot; by application</div>
-          <h3>Apply to be a founder</h3>
-          <div class="price">A few founders at a time &middot; personally selected</div>
-          <p>For people <em>already making money</em> — a real practice or product that's earning — who don't yet have the tools to grow it. You get your own understudy: an AI that learns your work and helps you build across everything you make, until it can safely build <em>for</em> you.</p>
-          <ul>
-            <li>Your own private console &amp; knowledge base</li>
-            <li>It captures your ideas and turns them into plans</li>
-            <li>Nothing goes live until you've seen it and said yes</li>
-            <li>A live product <em>and</em> a partner that keeps building</li>
-          </ul>
-          <a class="btn" href="#apply">Apply to join &rarr;</a>
-        </div>
-        <div class="door reveal">
-          <div class="k">The build</div>
-          <h3>Get a diagnosis</h3>
-          <div class="price">$150 &middot; credited toward the fix</div>
-          <p>Something broken, or something to build? Start with a $150 diagnosis — I dig into exactly what's wrong or what you need and hand you a clear plan and a fixed price. The $150 comes right off the build if we do it.</p>
-          <ul>
-            <li>A new product, one feature, or a rescue of a live app</li>
-            <li>The diagnosis fee credits toward the work</li>
-            <li>Fixed prices, no agency runaround, no lock-in</li>
-            <li>Repo + walkthrough — the code and accounts are yours</li>
-          </ul>
-          <a class="btn ghost" href="#consult">Start with a diagnosis &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="apply">
-    <div class="wrap">
-      <div class="apply-band reveal">
-        <div class="section-head" style="margin-bottom:20px">
-          <span class="eyebrow">Apply to be a founder</span>
-          <h2>A few founders at a time.</h2>
-          <p>It's just me, so I take a handful of founders and give each one real time. The best fit: you're <strong>already making money</strong> — a practice or product that's earning — and you're missing the tools to grow it. Tell me about you; I read every one myself.</p>
-        </div>
-        <form id="apply-form" class="apply-form" autocomplete="on">
-          <div class="apply-grid">
-            <label>Your name<input id="ap-name" type="text" required></label>
-            <label>Email<input id="ap-email" type="email" required></label>
-          </div>
-          <label>What do you do, and what's already working? <span style="color:var(--dim)">(your business, and how it makes money)</span>
-            <textarea id="ap-biz" rows="3" required placeholder="e.g. I run readings — ~40 paying clients a month, all by DM, no real site yet…"></textarea></label>
-          <label>What do you want to build or grow?
-            <textarea id="ap-goal" rows="3" required placeholder="The thing you can't get to on your own."></textarea></label>
-          <button class="btn" id="ap-send" type="submit">Send my application &rarr;</button>
-          <p class="apply-note" id="ap-note">Free to apply. I read every one personally and reply within a day or two. No obligation.</p>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <section class="partners-sec" style="padding-top:0">
-    <div class="wrap">
-      <div class="partners">
-        <div class="partner reveal">
-          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.9"/><path d="M21.5 20a6.5 6.5 0 0 0-5-6.3"/></svg></span>
-          <h4>We Partner With You</h4>
-          <p>You bring the vision. I bring the strategy, the build, and the AI.</p>
-        </div>
-        <div class="partner reveal">
-          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.6 1.2 6 4.6 6 8.6L13.5 16 8 10.5 12 3z"/><path d="M8 10.5 5 12l2.8.6"/><path d="M13.5 16 12 19l-.6-2.8"/><path d="M6.6 15.4c-1.4 1-1.9 3.9-1.9 3.9s2.9-.5 3.9-1.9"/><circle cx="13" cy="9" r="1.2"/></svg></span>
-          <h4>We Build <em>Together</em></h4>
-          <p>Small, transparent steps that ship something real at every stage.</p>
-        </div>
-        <div class="partner reveal">
-          <span class="ic ai"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3l1.7 4.3L17 9l-4.3 1.7L11 15l-1.7-4.3L5 9l4.3-1.7z"/><path d="M18.3 14l.9 2.2 2.3.9-2.3.9-.9 2.1-.9-2.1-2.2-.9 2.2-.9z"/></svg></span>
-          <h4>We Help It Run</h4>
-          <p>AI teammates that handle the busywork and support your growth.</p>
-        </div>
-        <div class="partner reveal">
-          <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><rect x="5" y="11" width="3" height="6" rx="0.6"/><rect x="10.5" y="6.5" width="3" height="10.5" rx="0.6"/><rect x="16" y="13" width="3" height="4" rx="0.6"/></svg></span>
-          <h4>You Achieve More</h4>
-          <p>Move faster, scale smarter, focus on what only you can do.</p>
-        </div>
-      </div>
+  <section class="front-door" id="consult">
+    <div class="wrap reveal">
+      <div><h2>The $150 front door</h2><p>This is a working diagnosis, not a sales call. You leave with a written plan, a real scope, and a fixed price whether or not you hire me. If we build together, the full fee is credited to the work.</p></div>
+      <div><div class="door-price">$150</div><a class="btn" id="consult-btn" href="https://buy.stripe.com/9B66oH8Rm9p8fm04924Rq0j" target="_blank" rel="noopener">Book the diagnosis</a></div>
     </div>
   </section>
 
   <section id="how">
     <div class="wrap">
-      <div class="section-head reveal">
-        <h2>How it works</h2>
-        <p>Three steps, no agency runaround.</p>
-      </div>
-      <div class="steps">
-        <div class="step reveal"><span class="k">01 · Describe</span><h4>Tell me your idea</h4><p>Type what you want to build. You get a clear plan, the right package, the timeline, and a fixed price — up front.</p></div>
-        <div class="step reveal"><span class="k">02 · Cast</span><h4>Pick a package</h4><p>Transparent, scoped pricing. You know exactly what you're getting — and what isn't included — before you pay a cent.</p></div>
-        <div class="step reveal"><span class="k">03 · Run</span><h4>I build it & hand it over</h4><p>Live on your domain, fully yours. And if you want it, an understudy — an agent that learns a function and runs the show.</p></div>
+      <div class="section-head-new reveal"><div><span class="eyebrow">How it works</span><h2>A small burden on you. A clear record from me.</h2></div><p>The work begins with your actual business, not a generic discovery worksheet.</p></div>
+      <div class="process-grid">
+        <article class="process-step reveal"><span class="k">01 / DIAGNOSE</span><h3>I inspect the real thing</h3><p>You show me the system, workflow, or idea. I trace the problem and write down what is worth doing first.</p></article>
+        <article class="process-step reveal"><span class="k">02 / SCOPE</span><h3>You approve the number</h3><p>You receive the deliverables, timeline, ownership terms, and a fixed price. No step starts before you approve it.</p></article>
+        <article class="process-step reveal"><span class="k">03 / I DRIVE</span><h3>One 20-minute call</h3><p>I drive the setup. You only log in when I point at a screen. You review a working preview before anything ships.</p></article>
       </div>
     </div>
   </section>
 
-  <section id="agent101">
+  <section class="operator-new" id="operator">
+    <div class="wrap operator-layout">
+      <div class="portrait-frame reveal"><img src="img/frank.jpg" alt="Frank Epps, the engineer behind Understudy Consulting" width="480" height="640" loading="lazy" /></div>
+      <div class="operator-copy reveal">
+        <span class="eyebrow">Who you are actually hiring</span>
+        <h2>One operator, from diagnosis through handoff.</h2>
+        <p>I am Frank Epps. I design and build the work myself: the interface, the integrations, the safety boundaries, the deployment, and the documentation you keep afterward.</p>
+        <div class="cred-list">
+          <div class="cred-row"><b>Robotics now</b><span>Internal Python tooling for inventory, scheduling, work management, and a field-data pipeline at a humanoid robotics startup.</span></div>
+          <div class="cred-row"><b>Measured result</b><span>That field-data automation reduced about a month of manual work to about a week.</span></div>
+          <div class="cred-row"><b>Before software</b><span>Approximately 11 years across aerospace and defense, including Blue Origin and the U.S. Air Force.</span></div>
+          <div class="cred-row"><b>Your ownership</b><span>The code, accounts, domain, and operating knowledge are handed to you. I do not hold the build hostage.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="capabilities" id="work">
     <div class="wrap">
-      <div class="section-head reveal" style="text-align:center">
-        <h2 style="margin:0 auto">New to AI agents? Here's the plain version.</h2>
+      <div class="section-head-new reveal">
+        <div><span class="eyebrow">Capabilities + complete inventory</span><h2>26 builds and working systems, grouped by what they prove.</h2></div>
+        <p>The unit of proof is simple: I built it and it works. Personal tools and client work both count; client identities do not. No revenue claim is attached to any capability.</p>
       </div>
-      <div class="explainer reveal">
-        <p>Think of an <strong>agent</strong> as an assistant that learns <em>one</em> job and does it for you — drafting your posts, handling routine replies, sorting your data, sending the follow-ups. The difference from "AI that just chats": an agent actually <strong>does the work.</strong></p>
-        <p>And you're always the boss. It <strong>checks with you before anything important</strong>, keeps a record of everything it does, and you can <strong>stop it any time.</strong> You stay the lead — the understudy just makes sure the show goes on.</p>
-        <p style="color:var(--dim)">Not sure what you'd even build? That's the normal place to start — pick <strong style="color:var(--spot-lit)">"Help me figure it out"</strong> above and we'll find it together.</p>
+      <div class="cap-menu">
+        <article class="capability reveal"><span class="eyebrow">01</span><h3>AI operations</h3><p>I can design command centers, specialist workforces, approval queues, action logs, and cross-department reporting.</p></article>
+        <article class="capability reveal"><span class="eyebrow">02</span><h3>Apps and portals</h3><p>I can turn a plain-language idea into a tested internal tool, customer portal, or production application.</p></article>
+        <article class="capability reveal"><span class="eyebrow">03</span><h3>Live-system rescue</h3><p>I can trace failures through the real data state, repair on a preview copy, and prove the result before release.</p></article>
+        <article class="capability reveal"><span class="eyebrow">04</span><h3>Knowledge systems</h3><p>I can build retrieval, semantic search, structured writing systems, and cited answers over a private corpus.</p></article>
+        <article class="capability reveal"><span class="eyebrow">05</span><h3>Real-time data</h3><p>I can connect live APIs, quantitative models, backtests, event streams, and decision-support interfaces.</p></article>
+        <article class="capability reveal"><span class="eyebrow">06</span><h3>Business automation</h3><p>I can automate intake, delivery, posting, booking, follow-up, reporting, and the handoffs between them.</p></article>
+      </div>
+
+      <div class="featured-grid">
+        <article class="build-card reveal"><img src="img/authors-codex.png" alt="Authors Codex novelist workspace" loading="lazy" /><div class="build-card-body"><h3>Authors Codex</h3><p>Relational manuscript, character, world, and mapping data with AI intake and grounded retrieval.</p><a href="https://authors-codex.vercel.app" target="_blank" rel="noopener">Open the live build</a></div></article>
+        <article class="build-card reveal"><img src="img/pulse-desk.png" alt="Pulse Desk options intelligence interface" loading="lazy" /><div class="build-card-body"><h3>Pulse Desk</h3><p>Schwab market data, Black-Scholes, 0DTE scoring, backtesting, and EV/Kelly contract ranking.</p></div></article>
+        <article class="build-card reveal"><img src="img/michael.png" alt="Michael multi-system synthesis interface" loading="lazy" /><div class="build-card-body"><h3>Michael</h3><p>Several unrelated personal-data systems made coherent through one interface and an AI synthesis layer.</p><a href="https://michael-rust.vercel.app" target="_blank" rel="noopener">Open the live build</a></div></article>
+        <article class="build-card reveal"><img src="img/three-mountaintops.png" alt="Three Mountaintops membership platform" loading="lazy" /><div class="build-card-body"><h3>Three Mountaintops</h3><p>One signed membership session gates a codex, browser game, Godot/WASM game, images, and lore-grounded chat.</p><a href="https://threemountaintops.world" target="_blank" rel="noopener">Open the live build</a></div></article>
+        <article class="build-card reveal"><img src="img/content-engine-1.png" alt="AI content production interface" loading="lazy" /><div class="build-card-body"><h3>AI Content Engine</h3><p>A strategist drafts, an independent critic evaluates, and a human approves before scheduled publishing.</p></div></article>
+        <article class="build-card reveal"><img src="img/authors-codex-tools.png" alt="Grounded search and writing tools" loading="lazy" /><div class="build-card-body"><h3>Ask Your World</h3><p>Semantic search and cited answers over a private writing corpus using retrieval and pgvector.</p><a href="https://authors-codex.vercel.app" target="_blank" rel="noopener">Open the live build</a></div></article>
+      </div>
+
+      <div class="catalog">
+        <section class="catalog-group reveal" aria-labelledby="catalog-ai"><div><h3 id="catalog-ai">AI operations &amp; safe building</h3><p>Seven working systems</p></div><div class="build-list">
+          <div class="build-row"><span class="num">01</span><b>The Orrery</b><span>Operations platform that turns goals into organized, measurable work across specialized digital teams.</span></div>
+          <div class="build-row"><span class="num">02</span><b>The Armillary</b><span>Central command console for progress, blockers, evidence, lessons, and human approvals.</span></div>
+          <div class="build-row"><span class="num">03</span><b>Night-shift agent fleet</b><span>Twelve defined agents, scoped permissions, scheduled reporting, independent checking, and written undo records.</span></div>
+          <div class="build-row"><span class="num">04</span><b>Personal App Engine</b><span>Plain-language request to a real Next.js project, zero-egress Docker preview, self-inspection, and human review.</span></div>
+          <div class="build-row"><span class="num">05</span><b>Understudy Campaign Engine</b><span>Multi-tenant client console with tenant isolation, metered AI calls, sandboxed generated code, and release approval.</span></div>
+          <div class="build-row"><span class="num">06</span><b>Quote &amp; Intake Engine</b><span>Guided discovery, site review, phased estimates, Stripe checkout, lead capture, and post-payment intake.</span></div>
+          <div class="build-row"><span class="num">07</span><b>AI Content Engine</b><span>Tool-using strategist, separate critic, evaluation gate, human approval, and scheduled publishing.</span></div>
+        </div></section>
+        <section class="catalog-group reveal" aria-labelledby="catalog-knowledge"><div><h3 id="catalog-knowledge">Products &amp; knowledge systems</h3><p>Seven working systems</p></div><div class="build-list">
+          <div class="build-row"><span class="num">08</span><b>Authors Codex</b><span>A full novelist workspace with linked relational story data, mapping, manuscripts, and AI intake.</span></div>
+          <div class="build-row"><span class="num">09</span><b>Ask Your World</b><span>Semantic search and cited answers over a private writing corpus using retrieval and pgvector.</span></div>
+          <div class="build-row"><span class="num">10</span><b>Michael</b><span>Multi-system modeling and AI synthesis with a privacy-preserving crisis-safety gate.</span></div>
+          <div class="build-row"><span class="num">11</span><b>Sacred Breath</b><span>A progressive web app for structured breathing and fasting practice.</span></div>
+          <div class="build-row"><span class="num">12</span><b>Content Studio</b><span>Structured wellness-content generation and video analysis with an editing surface.</span></div>
+          <div class="build-row"><span class="num">13</span><b>Interfaith Library</b><span>Search, side-by-side comparison, concept maps, and guided exploration across a structured corpus.</span></div>
+          <div class="build-row"><span class="num">14</span><b>Multi-provider AI workspace</b><span>Chat history, tools, document uploads, citations, media workflows, and optional web search.</span></div>
+        </div></section>
+        <section class="catalog-group reveal" aria-labelledby="catalog-data"><div><h3 id="catalog-data">Markets &amp; real-time data</h3><p>Two working systems</p></div><div class="build-list">
+          <div class="build-row"><span class="num">15</span><b>Trade Ledger</b><span>Live market data, Black-Scholes analysis, pattern detection, and AI-written trade reviews.</span></div>
+          <div class="build-row"><span class="num">16</span><b>Pulse Desk</b><span>Real-time Schwab data, five signal families, quantitative pricing, backtests, and contract ranking.</span></div>
+        </div></section>
+        <section class="catalog-group reveal" aria-labelledby="catalog-business"><div><h3 id="catalog-business">Commerce &amp; business automation</h3><p>Six working systems</p></div><div class="build-list">
+          <div class="build-row"><span class="num">17</span><b>Personal Subscription Product</b><span>A live product with authentication, billing, rate-limited APIs, and AI synthesis.</span></div>
+          <div class="build-row"><span class="num">18</span><b>Subscription SaaS</b><span>An anonymized three-tier product with Stripe, row-level security, serverless APIs, and a custom chart engine.</span></div>
+          <div class="build-row"><span class="num">19</span><b>Compatibility Engine Rescue</b><span>An anonymized live matchmaking system diagnosed, rebuilt, and shipped to production in about 48 hours.</span></div>
+          <div class="build-row"><span class="num">20</span><b>Local Service Operating Site</b><span>An anonymized site plus an AI partner designed for posting, booking, review requests, and rebooking.</span></div>
+          <div class="build-row"><span class="num">21</span><b>Album Autoposter</b><span>An always-on workflow that moves new iCloud Shared Album photos into Instagram and Facebook publishing.</span></div>
+          <div class="build-row"><span class="num">22</span><b>Local Business Preview Library</b><span>A public collection of tailored concept sites built for real Atlanta businesses.</span></div>
+        </div></section>
+        <section class="catalog-group reveal" aria-labelledby="catalog-worlds"><div><h3 id="catalog-worlds">Worlds &amp; interactive systems</h3><p>Four working systems</p></div><div class="build-list">
+          <div class="build-row"><span class="num">23</span><b>Three Mountaintops</b><span>Membership, content gating, spoiler-safe builds, image generation, games, and lore-grounded chat.</span></div>
+          <div class="build-row"><span class="num">24</span><b>The Path</b><span>A Godot 4 and C# narrative RPG exported to the web and bridged to membership access.</span></div>
+          <div class="build-row"><span class="num">25</span><b>The Voyage</b><span>A live 3D universe of real projects rendered with React Three Fiber and a reduced-motion fallback.</span></div>
+          <div class="build-row"><span class="num">26</span><b>Platewright</b><span>A repeatable publishing tool that turns structured lore specifications into consistent visual plates.</span></div>
+        </div></section>
       </div>
     </div>
   </section>
 
-  <section id="consult">
+  <section class="systems" id="systems">
     <div class="wrap">
-      <div class="consult-band reveal">
-        <div class="ctext">
-          <span class="eyebrow">The front door &middot; start here</span>
-          <h3>Start with a paid diagnosis</h3>
-          <p>Time on your actual problem. I dig into what is broken or what you need, and you leave with a written plan, a real scope, and a fixed price — whether or not you build with me. The fee credits toward the work if you go ahead.</p>
-        </div>
-        <div class="cright">
-          <div class="price">$150 <small>credited toward your build</small></div>
-          <a class="btn" id="consult-btn" href="https://buy.stripe.com/9B66oH8Rm9p8fm04924Rq0j" target="_blank" rel="noopener">Book a consultation &rarr;</a>
-        </div>
+      <div class="section-head-new reveal"><div><span class="eyebrow">The systems I run on myself</span><h2>The platform, the console, and the builder.</h2></div><p>I do not sell automation I have only seen in a demo. I run this architecture on my own business, inside strict limits, and keep the human release gate visible.</p></div>
+      <div class="system-grid">
+        <article class="system-panel reveal"><span class="eyebrow">Platform</span><h3>The Orrery</h3><p>Turns business goals into organized work: studying the organization, creating work orders, assigning specialists, tracking evidence, recording lessons, and reporting decisions to the owner.</p></article>
+        <article class="system-panel reveal"><span class="eyebrow">Command console</span><h3>The Armillary</h3><p>One place to see what the workforce is doing, what finished, what is blocked, what it learned, and where a human must approve the next move.</p></article>
+        <article class="system-panel reveal"><span class="eyebrow">Application builder</span><h3>Personal App Engine</h3><p>A single-user tool I built and use: it creates a real Next.js project in a zero-egress Docker sandbox, inspects it with Playwright, attempts repair, and pauses for review.</p></article>
       </div>
+      <div class="lanes reveal">
+        <div class="lane"><b>Director / Creation</b><span>Develops owner-supplied source material into books, campaigns, creative systems, and intellectual property.</span></div>
+        <div class="lane"><b>Executive / Provision</b><span>Focuses on revenue, operations, contracting, delivery, recurring workflows, and business growth.</span></div>
+        <div class="lane"><b>Psychopomp / Definition</b><span>Handles research, interpretation, consistency, meaning, and alignment with the organization’s identity.</span></div>
+      </div>
+      <div class="section-head-new reveal"><div><span class="eyebrow">Application and automation building</span><h2>From a plain-language idea to a reviewed working preview.</h2></div><p>The Orrery can coordinate this process; the Personal App Engine proves the hardened build mechanics. Release remains paused for approval.</p></div>
+      <div class="build-flow reveal">
+        <div class="flow-step"><b>01</b><span>Plain-language idea</span></div><div class="flow-step"><b>02</b><span>Application prototype</span></div><div class="flow-step"><b>03</b><span>Sandboxed build</span></div><div class="flow-step"><b>04</b><span>Streamed progress</span></div>
+        <div class="flow-step"><b>05</b><span>Working preview</span></div><div class="flow-step"><b>06</b><span>Test and verify</span></div><div class="flow-step"><b>07</b><span>Paused for approval</span></div><div class="flow-step"><b>08</b><span>Time and cost measured</span></div>
+      </div>
+      <div class="evidence-table reveal">
+        <div class="evidence-row"><b>12 agent definitions</b><span>Three leadership personas, one read-only overseer, and eight crew manifests with explicit tool allowlists.</span></div>
+        <div class="evidence-row"><b>16-stage nightly chain</b><span>Runs on a schedule and produces a machine-written completion record and morning brief.</span></div>
+        <div class="evidence-row"><b>More than 900 citations checked</b><span>A separate program opens the cited file and verifies the named line; one bad citation rejects the entire report. Nine reports have been rejected.</span></div>
+        <div class="evidence-row"><b>63 independent adjudications</b><span>A second agent grades the first agent’s honesty on an earned-trust ladder.</span></div>
+        <div class="evidence-row"><b>90 proposals, 6 promotions</b><span>Agents can draft next-day playbooks, but every promotion was approved by a human.</span></div>
+        <div class="evidence-row"><b>474 Personal App Engine tests</b><span>Zero-egress sandboxing, encrypted secrets, default-deny commands, and structural refusal of automatic money, command, and secret use.</span></div>
+      </div>
+      <p class="system-caution reveal"><strong>The through-line:</strong> the campaign engine, the Orrery, and the Personal App Engine solve the same hard problem from three directions — letting an agent work near a person’s files, money, and site without granting unearned authority. The system does the looking, checking, and drafting. A human ships.</p>
     </div>
   </section>
 
-  <section id="why">
-    <div class="wrap reveal">
-      <div class="why">
-        <span class="eyebrow">Why Understudy</span>
-        <h2>An understudy learns the role — and supports the lead.</h2>
-        <p>Every founder needs one: something that learns a part of the job and can run it without you. That's the hard, valuable part of AI — not generating text, but doing real work <strong>safely, evaluated, and under your control.</strong> I've shipped exactly that: an autonomous multi-agent system running live, with a critic that vets every action and a human gate before anything ships. You're always the lead. The understudy just makes sure the show goes on. And because I use my own agents to help build, the prices stay fixed and fair.</p>
-      </div>
-    </div>
-  </section>
-
-  <section id="work">
+  <section id="outcomes">
     <div class="wrap">
-      <div class="section-head reveal">
-        <h2>What I actually build</h2>
-        <p>Every one of these is a live system I built and shipped this year. Clients kept private on purpose.</p>
+      <div class="section-head-new reveal"><div><span class="eyebrow">Anonymized outcomes</span><h2>The result matters. Client identities stay private.</h2></div><p>These are shipped outcomes, described without names, brands, testimonials, or revenue claims.</p></div>
+      <div class="outcomes-grid">
+        <article class="outcome reveal"><span class="eyebrow">Live app rescue</span><h3>Compatibility logic rebuilt in about 48 hours</h3><p>The reported failure looked like matching logic. The real cause lived in empty data. I diagnosed it, rebuilt the engine, verified it, and shipped it to production.</p></article>
+        <article class="outcome reveal"><span class="eyebrow">Local service operation</span><h3>A site plus an AI operating partner</h3><p>The build connected the customer-facing site to workflows for posting, booking, review requests, and rebooking — designed so the owner only logs in when pointed at a screen.</p></article>
+        <article class="outcome reveal"><span class="eyebrow">Subscription product</span><h3>Product, billing, and access built end to end</h3><p>A complete subscription SaaS with authentication, tiered payments, row-level security, serverless APIs, and AI-generated output.</p></article>
       </div>
-      <div class="caps">
-        <div class="cap isnew wide reveal">
-          <span class="tag">Rescue a live app</span>
-          <h4>Your product half-works. I make it work.</h4>
-          <p>A founder's live matchmaking app had quietly stopped matching people. I came in, found the real cause — empty in the data, not the code — shipped the fix, and mapped her path off a platform she was renting onto one she'd own. Diagnose honestly, fix what's broken, hand you the keys.</p>
-        </div>
-        <div class="cap reveal">
-          <span class="tag">A paying product, end to end</span>
-          <h4>Built it, shipped it, she pays for it.</h4>
-          <p>A subscription product for a creator — a real domain engine, AI-written output, live payments. Its owner uses it every day, pays a monthly subscription, and sends her own network my way.</p>
-        </div>
-        <div class="cap isnew reveal">
-          <span class="tag">Your own understudy</span>
-          <h4>The rare part: an AI that runs a role.</h4>
-          <p>Not a chatbot — an agent that learns one job and does it, with a critic vetting every action and a human gate before anything ships. I've built a founder her own, live, and I'm building the studio that makes one for anyone.</p>
-        </div>
-        <div class="cap reveal">
-          <span class="tag">A business + an AI partner</span>
-          <h4>A site that runs itself, quietly.</h4>
-          <p>A full site for a local business with an AI partner behind it — booking, marketing, retention, and commerce, all handled without the owner touching a dashboard.</p>
-        </div>
-        <div class="cap reveal">
-          <span class="tag">An autonomous system, in production</span>
-          <h4>Agents that do real work, safely.</h4>
-          <p>A multi-agent system running live — budget caps, a kill switch, a full audit log, and a critic that rejects its own work when it's wrong. You're always the lead; the understudy makes sure the show goes on.</p>
-        </div>
-      </div>
-      <p class="live-strip reveal">Builds of my own you can click into right now: <a href="https://authors-codex.vercel.app" target="_blank" rel="noopener">Authors Codex &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://threemountaintops.world" target="_blank" rel="noopener">Three Mountaintops &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://voyage.understudy.consulting/" target="_blank" rel="noopener">The Voyage &rarr;</a><br><span style="color:var(--dim);font-size:13px">Client work stays unnamed unless a client asks to be named &mdash; that policy is part of what you&rsquo;re buying.</span></p>
+      <p class="privacy-note reveal">Client work stays unnamed unless a client asks to be named. That policy is part of what you are buying.</p>
     </div>
   </section>
 
-  <section class="vision-band">
+  <section class="pricing-new" id="pricing">
     <div class="wrap">
-      <div class="section-head reveal">
-        <span class="eyebrow">The idea behind it</span>
-        <h2>You're not building one thing. You're building a universe.</h2>
-        <p>Everything you make orbits three lights. An understudy helps you tend all three — so your work grows into something whole, not scattered.</p>
-      </div>
-      <div class="peaks">
-        <div class="peak reveal"><span class="dot" style="background:#B39A6B"></span><h4>What provides</h4><p>The business, the offer, the engine that keeps the lights on.</p></div>
-        <div class="peak reveal"><span class="dot" style="background:#8EA3BF"></span><h4>Who you are</h4><p>Your voice, your purpose, the ground the rest is built on.</p></div>
-        <div class="peak reveal"><span class="dot" style="background:#A98FB8"></span><h4>What you make</h4><p>The craft, the art, the work only you can create.</p></div>
-      </div>
+      <div class="section-head-new reveal"><div><span class="eyebrow">Pricing ladder</span><h2>One paid entry. Every later number approved first.</h2></div><p>No hourly meter. No silent scope expansion. Larger products and operator agents are priced after the diagnosis because their scope genuinely varies.</p></div>
+      <table class="price-table reveal">
+        <thead><tr><th>Stage</th><th>Price</th><th>What it means</th></tr></thead>
+        <tbody><tr><td>Diagnosis</td><td>$150</td><td>A written automation map, technical finding, or scoped build plan. Fully credited if we continue.</td></tr><tr><td>Live app or site rescue</td><td>$800–1,500 typical fix</td><td>Fixed after the diagnosis. Rebuilds or migrations are quoted separately.</td></tr><tr><td>Small-business site + AI</td><td>$1,500–2,500</td><td>A production site and its scoped AI partner. Larger products are re-quoted in phases.</td></tr><tr><td>Operator agent build</td><td>Scoped after diagnosis</td><td>A recurring business function with approval gates, escalation, auditing, and supervised handoff.</td></tr></tbody>
+      </table>
+      <div class="retainer-band reveal"><div><h3>The Understudy Retainer</h3><p>The agent stays tuned, safety-monitored, and current as models and business rules change. You receive a one-page monthly record of what it did, what it escalated, and what changed. Cancel any month; you keep the agent, code, and accounts. Cancellation stops the service, not your ownership.</p></div><div class="retainer-price">$300–1,000 / month</div></div>
     </div>
   </section>
 
-  <section id="reviews">
+  <section class="faq-new" id="faq">
     <div class="wrap">
-      <div class="section-head reveal"><h2>What clients say</h2></div>
-      <div class="reviews">
-        <blockquote class="review reveal">
-          <p>"He ships real, working software — not half-done demos. He took my idea and turned it into something live that people actually use. I'd work with him again."</p>
-          <cite>&mdash; A founder I built a live product for &middot; now a paying subscriber</cite>
-        </blockquote>
-      </div>
+      <div class="section-head-new reveal"><div><span class="eyebrow">Straight answers</span><h2>Before you spend anything.</h2></div><p>The diagnosis exists to reduce uncertainty, including the possibility that the right answer is not to build.</p></div>
+      <details class="reveal"><summary>What if the diagnosis says I do not need what I asked for?</summary><p>I say so. You still keep the written finding and the practical next step. The $150 buys the answer, not a commitment to hire me.</p></details>
+      <details class="reveal"><summary>Do I own the finished work?</summary><p>Yes. The code, accounts, domain, and operating documentation are yours. You receive a walkthrough at handoff.</p></details>
+      <details class="reveal"><summary>Is it safe to let an agent act for my business?</summary><p>I use explicit permissions, approval gates, spending caps, a kill switch, an append-only action log, and a separate checker. I do not ship unattended money-spending autonomy.</p></details>
+      <details class="reveal"><summary>What happens if I cancel the monthly service?</summary><p>The ongoing tuning and monitoring stop. You keep the agent, code, and accounts. There is no ownership hostage.</p></details>
+      <details class="reveal"><summary>How much work will setup create for me?</summary><p>The onboarding promise is one 20-minute call. I drive; you log in only when I point at a screen and review the working result before release.</p></details>
+      <details class="reveal"><summary>Can you work with my current platform?</summary><p>Often, yes. I have worked across custom code and no-code systems. The diagnosis determines whether a direct repair, integration, or migration is the honest path.</p></details>
     </div>
   </section>
 
-  <section id="packages">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <h2>Where founders start</h2>
-        <p>Every project begins the same way — one small step for <strong style="color:var(--spot-lit)">$150</strong>. These are the shapes a build usually grows into, but you only ever pay for the next step.</p>
-      </div>
-      <div class="pkgs">
-        <div class="pkg reveal">
-          <h3>MVP Launch</h3>
-          <div class="price">Start from $150 <small>pay as you go</small></div>
-          <div class="meta">Typical full build ≈ $3,000 · ~2–3 weeks</div>
-          <ul>
-            <li>Next.js + Supabase web app</li>
-            <li>Auth &amp; secure data (RLS)</li>
-            <li>Up to 3 core features</li>
-            <li>Responsive, deployed to your domain</li>
-            <li>Repo + walkthrough — you own it all</li>
-          </ul>
-          <a class="btn ghost" href="#consult">Start with a diagnosis &rarr;</a>
-        </div>
-        <div class="pkg feature reveal">
-          <span class="tag">The understudy</span>
-          <h3>Operator Agent</h3>
-          <div class="price">Start from $150 <small>pay as you go</small></div>
-          <div class="meta">Typical full build ≈ $6,000 + monthly · ~3–5 weeks</div>
-          <p class="role">An autonomous agent that runs one function — content, support, or ops.</p>
-          <ul>
-            <li>Tool-using agent + a Critic that vets its work</li>
-            <li>Human-in-the-loop — it never goes on without your cue</li>
-            <li>Safety rails: kill switch, budget caps, full audit log</li>
-            <li>You inherit &amp; own it; monthly support keeps it sharp</li>
-          </ul>
-          <a class="btn" href="#consult">Start with a diagnosis &rarr;</a>
-        </div>
-        <div class="pkg reveal">
-          <h3>AI Feature</h3>
-          <div class="price">Start from $150 <small>pay as you go</small></div>
-          <div class="meta">Typical full build ≈ $1,500 · ~1–2 weeks</div>
-          <ul>
-            <li>One Claude-powered feature, done right</li>
-            <li>Assistant, structured generation, or</li>
-            <li>RAG — “chat with your docs,” with citations</li>
-            <li>Server-side keys + an eval harness</li>
-            <li>Standalone, or added to your app</li>
-          </ul>
-          <a class="btn ghost" href="#consult">Start with a diagnosis &rarr;</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="faq">
-    <div class="wrap">
-      <div class="section-head reveal"><h2>Straight answers</h2></div>
-      <div class="faq reveal">
-        <details><summary>How does paying work?</summary><p>You start with the $150 diagnosis and pay step by step. Every step is quoted as a fixed price before I begin it, so you approve the number first. No big upfront bill, no hourly meter, and no surprise invoices — you only ever fund the next step.</p></details>
-        <details><summary>Do I own everything?</summary><p>Completely — the code, the accounts, and the agent. I hand it over with a walkthrough so you can run it. No lock-in.</p></details>
-        <details><summary>Is it safe to let an AI agent run?</summary><p>It never acts unsupervised by default. Human approval, a kill switch, budget caps, and a full audit log are built in. The understudy supports the lead — it doesn't replace you.</p></details>
-        <details><summary>What if my idea doesn't fit a package?</summary><p>The quote tells you honestly. If it's bigger, we scope it before you commit — and I'll tell you if you <em>shouldn't</em> build it, or if I'm not the right fit.</p></details>
-        <details><summary>What about ongoing help?</summary><p>Every build ships with handoff docs and a walkthrough. Operator Agents come with an optional monthly retainer for support, safety monitoring, and tuning.</p></details>
-      </div>
+  <section class="final-contact" id="contact">
+    <div class="wrap contact-layout">
+      <div class="contact-copy reveal"><span class="eyebrow">Start with the real problem</span><h2>Show me where the business is losing time.</h2><p>Book the $150 diagnosis now, or leave a short note if you are not ready to pay today. I will read it myself.</p><a class="btn" href="#consult">Book the diagnosis</a></div>
+      <form class="contact-form reveal" id="contact-form" autocomplete="on">
+        <div class="contact-grid"><label>Name<input id="contact-name" name="name" type="text" required autocomplete="name" /></label><label>Email<input id="contact-email" name="email" type="email" required autocomplete="email" /></label></div>
+        <label>One line about the business<textarea id="contact-business" name="business" required placeholder="What is running, and where is it getting stuck?"></textarea></label>
+        <button class="btn" id="contact-send" type="submit">Send the note</button>
+        <p class="contact-note" id="contact-note">Prefer email? <a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></p>
+      </form>
     </div>
   </section>
 
   <section id="quote" class="quote">
     <div class="wrap">
-      <div class="section-head reveal" style="text-align:center;">
-        <h2 style="margin:0 auto;">See what it costs — instantly.</h2>
-        <p style="margin:8px auto 0;">New idea, not sure yet, or already have a site? Pick a lane — you'll get a tailored, start-small plan in seconds.</p>
-      </div>
-      <div class="lane-toggle reveal">
-        <button id="lane-founder" class="active" type="button">I know what I want</button>
-        <button id="lane-curious" type="button">Help me figure it out</button>
-        <button id="lane-site" type="button">I have a site</button>
-      </div>
-
-      <div id="founder-lane" class="quote-box reveal">
-        <label for="idea">Your idea — what do you want to build, and what should it do?</label>
-        <textarea id="idea" placeholder="e.g. A web app where coaches book clients and an AI summarizes each session…"></textarea>
-        <button class="btn" id="send">Get my instant quote →</button>
-        <p class="quote-note">Instant, free, no obligation — or it lands straight in my inbox.</p>
-      </div>
-
-      <div id="curious-lane" class="quote-box reveal hidden">
-        <div id="chat-log"></div>
-        <div class="chat-input-row">
-          <input id="chat-input" type="text" placeholder="Type your answer…" autocomplete="off" />
-          <button class="btn" id="chat-send" type="button">Send</button>
-        </div>
-        <p class="quote-note">A few quick questions and I'll suggest ideas that fit you.</p>
-      </div>
-
-      <div id="site-lane" class="quote-box reveal hidden">
-        <label for="site-url">Your website — I'll read it and tell you what I'd improve or build first.</label>
-        <input id="site-url" type="url" placeholder="https://yoursite.com" autocomplete="off" style="width:100%;background:var(--ink);border:1px solid var(--line);border-radius:10px;color:var(--bone);font-family:var(--body);font-size:15.5px;padding:13px 16px;outline:none;margin-bottom:10px" />
-        <textarea id="site-goal" placeholder="Anything frustrating you, or a goal? (optional) — e.g. 'I want more bookings' or 'it feels slow'" style="min-height:70px"></textarea>
-        <button class="btn" id="site-send">Evaluate my site →</button>
-        <p class="quote-note">I'll read your live site and propose a start-small plan — instant, free, no obligation.</p>
-      </div>
-
-      <div id="quote-result" class="reveal" style="max-width:640px;margin:18px auto 0;"></div>
-    </div>
-  </section>
-
-  <section style="padding-top:0">
-    <div class="wrap">
-      <div class="cta-band reveal">
-        <img src="img/understudy-logo.png" alt="Understudy" />
-        <div class="ctext">
-          <h3>Your dream deserves a <em>partner.</em></h3>
-          <p>Start today for $150 and take the first real step toward building it.</p>
-        </div>
-        <a class="btn" href="#quote">Get your instant quote &rarr;</a>
-      </div>
-      <div class="stats reveal">
-        <div class="stat"><div class="n">6+</div><div class="l">Projects Shipped</div></div>
-        <div class="stat"><div class="n">100%</div><div class="l">Custom Built</div></div>
-        <div class="stat"><div class="n">Secure</div><div class="l">On-Page Payments</div></div>
-        <div class="stat"><div class="n">AI</div><div class="l">Powered Partnership</div></div>
-      </div>
+      <div class="section-head-new reveal"><div><span class="eyebrow">Explore before the diagnosis</span><h2>Put the problem into words.</h2></div><p>Use the guided tool to organize what you need. Any estimate is a starting point; the paid diagnosis produces the fixed scope.</p></div>
+      <div class="lane-toggle reveal"><button id="lane-founder" class="active" type="button">I know the problem</button><button id="lane-curious" type="button">Help me choose</button><button id="lane-site" type="button">Review my site</button></div>
+      <div id="founder-lane" class="quote-box reveal"><label for="idea">What do you want to build, fix, or automate?</label><textarea id="idea" placeholder="For example: our booking follow-up is manual and customers fall through the cracks."></textarea><button class="btn" id="send">Build a starting plan</button><p class="quote-note">A starting estimate, not a final scope.</p></div>
+      <div id="curious-lane" class="quote-box reveal hidden"><div id="chat-log"></div><div class="chat-input-row"><input id="chat-input" type="text" placeholder="Type your answer" autocomplete="off" /><button class="btn" id="chat-send" type="button">Send</button></div><p class="quote-note">A few questions to find the most useful first move.</p></div>
+      <div id="site-lane" class="quote-box reveal hidden"><label for="site-url">Website address</label><input id="site-url" type="url" placeholder="https://yoursite.com" autocomplete="url" /><textarea id="site-goal" placeholder="What is frustrating you, or what should the site do better?"></textarea><button class="btn" id="site-send" type="button">Evaluate the site</button><p class="quote-note">The live site is read to propose a starting point.</p></div>
+      <div id="quote-result" class="reveal" style="max-width:700px;margin:20px auto 0"></div>
     </div>
   </section>
 </main>
 
-<footer class="site">
-  <div class="wrap">
-    <span><span style="color:var(--spot)">✦</span> understudy — built &amp; run by Frank Epps · <em style="font-style:normal;color:var(--steel-lit)">Build together.</em></span>
-    <a href="mailto:frankeppsjr@gmail.com">frankeppsjr@gmail.com</a>
-  </div>
-</footer>
+<footer class="site"><div class="wrap"><span>Understudy Consulting · built and run by Frank Epps</span><a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></div></footer>
 
 <!-- AI support widget -->
-<button id="help-fab" class="help-fab" type="button" aria-label="Open support chat">✦ Help</button>
 <div id="help-panel" class="help-panel" role="dialog" aria-label="Understudy support" aria-hidden="true">
   <div class="help-head">
     <span><span style="color:var(--spot)">✦</span> Understudy support</span>
@@ -923,14 +751,14 @@
     function sendMsg() {
       var t = input.value.trim(); if (!t) return; input.value = '';
       add('me', t); msgs.push({ role: 'user', content: t });
-      if (!UNDERSTUDY_API) { add('ai', "I can't reach support right now — email frankeppsjr@gmail.com and Frank will help."); return; }
+      if (!UNDERSTUDY_API) { add('ai', "I can't reach support right now — email frank@marqueeweb.com and Frank will help."); return; }
       var typing = add('ai', '…');
       fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/support', {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: msgs })
       }).then(function (r) { return r.json(); }).then(function (d) {
         if (d.error) throw new Error(d.error);
         typing.innerHTML = esc(d.reply).replace(/\n/g, '<br>'); msgs.push({ role: 'assistant', content: d.reply });
-      }).catch(function () { typing.textContent = "Hmm, I couldn't answer that one — email frankeppsjr@gmail.com and Frank will follow up."; });
+      }).catch(function () { typing.textContent = "Hmm, I couldn't answer that one — email frank@marqueeweb.com and Frank will follow up."; });
     }
     send.addEventListener('click', sendMsg);
     input.addEventListener('keydown', function (e) { if (e.key === 'Enter') sendMsg(); });
@@ -966,7 +794,7 @@
 
   function mailtoIdea(idea) {
     var body = encodeURIComponent(idea || '(describe your idea here)');
-    window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — my idea') + '&body=' + body;
+    window.location.href = 'mailto:frank@marqueeweb.com?subject=' + encodeURIComponent('Understudy — my idea') + '&body=' + body;
   }
 
   function renderQuote(q, idea) {
@@ -1001,7 +829,7 @@
         '<div style="color:var(--dim);font-size:12.5px;text-align:center;margin-bottom:6px">You only ever pay for the next step — I\'ll always work with your budget.</div>' +
         (q.startRecommendation ? head('Where to start') + '<p style="color:var(--bone);font-size:14.5px;margin-bottom:10px">' + esc(q.startRecommendation) + '</p>' : '') +
         (q.note ? '<p style="color:var(--dim);font-size:14px;font-style:italic;margin-bottom:14px">' + esc(q.note) + '</p>' : '') +
-        '<div style="text-align:center;margin-top:2px"><a style="font-family:var(--disp);font-size:13px;color:var(--dim)" href="mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent("Understudy — a question before I start") + '&body=' + startBody + '">Prefer to talk it through first? Email me &rarr;</a></div>' +
+        '<div style="text-align:center;margin-top:2px"><a style="font-family:var(--disp);font-size:13px;color:var(--dim)" href="mailto:frank@marqueeweb.com?subject=' + encodeURIComponent("Understudy — a question before I start") + '&body=' + startBody + '">Prefer to talk it through first? Email me &rarr;</a></div>' +
         '<div style="margin-top:14px;border-top:1px solid var(--line);padding-top:14px">' +
           '<label style="font-family:var(--disp);font-size:13px;color:var(--dim);display:block;margin-bottom:8px">Want me to save this and follow up? Drop your email.</label>' +
           '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
@@ -1042,7 +870,7 @@
     var email = ''; var le = document.getElementById('lead-email'); if (le && le.value) email = le.value.trim();
     _payCtx = { amount: amount, label: label, idea: idea, kind: kind, email: email };
     openPay(label || 'Secure checkout');
-    var mail = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — ' + (label || 'payment')) + '&body=' + encodeURIComponent("I'd like to pay for: " + (label || 'a phase') + (idea ? "\n\nProject: " + idea : ""));
+    var mail = 'mailto:frank@marqueeweb.com?subject=' + encodeURIComponent('Understudy — ' + (label || 'payment')) + '&body=' + encodeURIComponent("I'd like to pay for: " + (label || 'a phase') + (idea ? "\n\nProject: " + idea : ""));
     if (!window.Stripe || !_stripe || !UNDERSTUDY_API) {
       document.getElementById('uc-checkout').innerHTML = '<a class="btn" style="display:inline-block;text-decoration:none" href="' + mail + '">Email me to pay &rarr;</a>';
       payStatus("Secure checkout couldn't load here (often an ad-blocker, or a cached page — try a hard refresh). In the meantime:");
@@ -1056,7 +884,7 @@
       if (d.error) throw new Error(d.error);
       return _stripe.initEmbeddedCheckout({ clientSecret: d.clientSecret, onComplete: function () { onPaid(label); } });
     }).then(function (checkout) { _ucCheckout = checkout; payStatus(''); checkout.mount('#uc-checkout'); })
-      .catch(function () { payStatus("Couldn't start checkout. Email me at frankeppsjr@gmail.com and I'll send a secure link."); });
+      .catch(function () { payStatus("Couldn't start checkout. Email me at frank@marqueeweb.com and I'll send a secure link."); });
   }
   // Field helper for the intake form.
   function _ucField(idv, labelText, type, val, req) {
@@ -1112,7 +940,7 @@
       intakeDone("You're all set, " + esc(name.split(' ')[0]) + " ✦ I've got your brief and I'll email you within a day to kick off. — Frank");
     }).catch(function () {
       if (btn) { btn.disabled = false; btn.textContent = 'Send my details →'; }
-      msg.innerHTML = "Couldn't send just now — email me at <a style='color:var(--spot)' href='mailto:frankeppsjr@gmail.com'>frankeppsjr@gmail.com</a> and we'll start.";
+      msg.innerHTML = "Couldn't send just now — email me at <a style='color:var(--spot)' href='mailto:frank@marqueeweb.com'>frank@marqueeweb.com</a> and we'll start.";
     });
   }
 
@@ -1183,14 +1011,14 @@
       if (!name || !email || email.indexOf('@') < 1 || !biz || !goal) { note.textContent = 'Please fill in every field so I can get to know you.'; return; }
       var idea = 'FOUNDER APPLICATION\nName: ' + name + '\n\nBusiness / what’s working:\n' + biz + '\n\nWhat they want to build or grow:\n' + goal;
       btn.disabled = true; note.textContent = 'Sending…';
-      if (!UNDERSTUDY_API) { window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — founder application: ' + name) + '&body=' + encodeURIComponent(idea); note.textContent = 'Opening your email…'; return; }
+      if (!UNDERSTUDY_API) { window.location.href = 'mailto:frank@marqueeweb.com?subject=' + encodeURIComponent('Understudy — founder application: ' + name) + '&body=' + encodeURIComponent(idea); note.textContent = 'Opening your email…'; return; }
       fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/lead', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email, name: name, idea: idea, summary: 'Founder application — ' + name, lane: 'founder-application' })
       }).then(function (r) { return r.json(); }).then(function (d) {
         if (d.error) throw new Error(d.error);
         form.innerHTML = '<div class="apply-done"><h3>Got it — thank you.</h3><p>I read every application myself. If it’s a fit, you’ll hear from me within a day or two. — Frank</p></div>';
-      }).catch(function () { note.textContent = "Couldn't send just now — you can also email me at frankeppsjr@gmail.com."; btn.disabled = false; });
+      }).catch(function () { note.textContent = "Couldn't send just now — you can also email me at frank@marqueeweb.com."; btn.disabled = false; });
     });
   })();
 
@@ -1278,7 +1106,7 @@
     if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
     currentLane = 'site';
     var btn = this, label = btn.textContent, out = document.getElementById('quote-result');
-    if (!UNDERSTUDY_API) { window.location.href = 'mailto:frankeppsjr@gmail.com?subject=' + encodeURIComponent('Understudy — improve my site') + '&body=' + encodeURIComponent('My site: ' + url + (goal ? '\n\n' + goal : '')); return; }
+    if (!UNDERSTUDY_API) { window.location.href = 'mailto:frank@marqueeweb.com?subject=' + encodeURIComponent('Understudy — improve my site') + '&body=' + encodeURIComponent('My site: ' + url + (goal ? '\n\n' + goal : '')); return; }
     btn.disabled = true; btn.textContent = 'Looking at your site…';
     out.innerHTML = '<p style="color:var(--dim);text-align:center">Reading your site and scoping improvements…</p>';
     fetch(UNDERSTUDY_API.replace(/\/$/, '') + '/api/understudy/audit', {
@@ -1288,7 +1116,7 @@
       renderQuote(q, 'improvements for ' + url);
       out.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }).catch(function (e) {
-      out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t read that site (' + esc(e.message || '') + '). Double-check the URL, or email me and I\'ll take a look: <a style="color:var(--spot)" href="mailto:frankeppsjr@gmail.com">frankeppsjr@gmail.com</a></p>';
+      out.innerHTML = '<p style="color:var(--dim);text-align:center">Couldn\'t read that site (' + esc(e.message || '') + '). Double-check the URL, or email me and I\'ll take a look: <a style="color:var(--spot)" href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></p>';
     }).finally(function () { btn.disabled = false; btn.textContent = label; });
   });
   document.getElementById('chat-send').addEventListener('click', function () {
