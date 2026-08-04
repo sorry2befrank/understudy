@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('understudy-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Site Diagnosis — Understudy Consulting</title>
+  <meta name="description" content="Choose a time and pay to confirm a $150 site diagnosis with Frank Epps." />
+  <meta name="theme-color" content="#0C0C0D" />
+  <link rel="icon" href="img/understudy-roundel.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Montserrat:wght@300;400;500;600&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="rebrand.css" />
+  <link rel="stylesheet" href="interior.css?v=2" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Understudy Consulting home">
+        <img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="42" height="42" />
+        <span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">CONSULTING</span></span>
+      </a>
+      <nav class="nav" aria-label="Booking navigation">
+        <a href="index.html">Home</a>
+        <a href="work.html">Work</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="booking-intro">
+      <div class="wrap">
+        <div class="reveal"><span class="eyebrow">The $150 front door</span><h1>Book a site diagnosis.</h1><p>Choose a 30-minute appointment below, then pay to confirm the time. You leave with a written finding, a real scope, and a fixed price. If we build together, the diagnosis fee comes off the work.</p></div>
+        <div class="booking-facts reveal"><span><strong>30 minutes</strong> with Frank</span><span><strong>$150</strong> paid after you choose a time</span><span><strong>Confirmed</strong> only when payment succeeds</span></div>
+      </div>
+    </section>
+
+    <section class="booking-embed" aria-label="Choose a diagnosis appointment">
+      <div class="wrap">
+        <div class="cal-frame reveal">
+          <div id="my-cal-inline-30min"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site"><div class="wrap"><span>Understudy Consulting · built and run by Frank Epps</span><a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></div></footer>
+
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    Cal("init", "30min", {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns["30min"]("inline", {
+      elementOrSelector:"#my-cal-inline-30min",
+      config: {"layout":"month_view","useSlotsViewOnSmallScreen":"true"},
+      calLink: "frank-epps-ujdwu4/30min"
+    });
+    Cal.ns["30min"]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <script>
+    (function(){var KEY='understudy-theme',root=document.documentElement,btn=document.getElementById('theme-toggle');var sun='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg>';var moon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5z"/></svg>';function light(){return root.getAttribute('data-theme')==='light'}function paint(){btn.innerHTML=light()?moon:sun}paint();btn.addEventListener('click',function(){var next=light()?'dark':'light';if(next==='light')root.setAttribute('data-theme','light');else root.removeAttribute('data-theme');try{localStorage.setItem(KEY,next)}catch(e){}paint()})})();
+    (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(el){el.classList.add('in')});return}var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}})},{threshold:.08});els.forEach(function(el){io.observe(el)})})();
+  </script>
+</body>
+</html>
