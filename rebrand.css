@@ -227,7 +227,6 @@ footer.site span, footer.site a { color: #a9a394; }
   .services { padding-top: 18px; }
   .brand-type { display: none; }
   .nav { gap: 8px; }
-  .nav a:not(.btn) { display: none; }
   .rebrand-hero { min-height: calc(100svh - 142px); padding: 34px 0 42px; }
   .rebrand-hero::before { inset: 0; opacity: 0.36; background: linear-gradient(90deg, rgba(12, 12, 13, 0.96), rgba(12, 12, 13, 0.58)), url("img/frank.jpg") 62% 30% / cover no-repeat; }
   [data-theme="light"] .rebrand-hero::before { opacity: 0.2; }

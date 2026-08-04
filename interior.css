@@ -62,7 +62,6 @@ footer.site .wrap { min-height: 74px; display: flex; align-items: center; justif
   header.site .wrap { gap: 10px; }
   .brand-type { display: none; }
   .nav { gap: 8px; }
-  .nav a:not(.btn) { display: none; }
   .nav .btn { padding: 9px 12px; font-size: 12px; }
   .page-hero { padding: 58px 0 52px; }
   .page-hero h1 { font-size: 40px; }
