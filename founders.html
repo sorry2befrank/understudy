@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('understudy-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understudy Founders — Build the universe together</title>
+  <meta name="description" content="A separate founder partnership for people co-developing the Understudy universe with Frank Epps." />
+  <meta name="theme-color" content="#0C0C0D" />
+  <link rel="icon" href="img/understudy-roundel.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--ink:#0C0C0D;--ink-2:#131314;--panel:#17171A;--gold:#C9A45C;--gold-lit:#E9D3A0;--line:rgba(201,164,92,.18);--line-lit:rgba(201,164,92,.45);--bone:#E8E1D5;--dim:#9C978A;--disp:"Cinzel",Georgia,serif;--body:"Montserrat",system-ui,sans-serif;--alt:"Lato",system-ui,sans-serif}
+    [data-theme="light"]{--ink:#F5F2EB;--ink-2:#ECE7DD;--panel:#FFF;--gold:#C9A45C;--gold-lit:#765821;--line:rgba(85,66,28,.18);--line-lit:rgba(85,66,28,.46);--bone:#191919;--dim:#5C584F}
+    *{box-sizing:border-box;margin:0;padding:0;letter-spacing:0!important}
+    html{scroll-behavior:smooth}
+    body{background:var(--ink);color:var(--bone);font-family:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1120px,100%);margin:0 auto;padding:0 28px}
+    h1,h2,h3{font-family:var(--disp);font-weight:600}
+    .eyebrow{font-size:12px;text-transform:uppercase;color:var(--gold-lit);font-weight:600}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 20px;border:1px solid var(--gold);border-radius:4px;background:var(--gold);color:#111;font-family:var(--body);font-weight:600;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--bone);border-color:var(--line-lit)}
+    :focus-visible{outline:3px solid var(--gold-lit);outline-offset:3px;border-radius:3px}
+    header{position:sticky;top:0;z-index:20;background:rgba(12,12,13,.95);border-bottom:1px solid var(--line)}
+    [data-theme="light"] header{background:rgba(245,242,235,.95)}
+    header .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:inline-flex;align-items:center;gap:10px}.brand img{width:42px;height:42px}.brand-type{display:grid;line-height:1}.brand-name{font:600 16px var(--disp);color:var(--gold-lit)}.brand-sub{font:400 9px var(--disp);color:var(--gold);margin-top:5px}
+    .nav{display:flex;align-items:center;gap:18px}.nav a{font-size:12px;color:var(--dim)}
+    .theme-toggle{width:38px;height:38px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--bone);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+    .theme-toggle svg{width:18px;height:18px}
+    .hero{min-height:min(740px,calc(100svh - 72px));display:flex;align-items:center;position:relative;overflow:hidden;isolation:isolate;background:#0C0C0D}
+    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,12,13,.98),rgba(12,12,13,.7) 52%,rgba(12,12,13,.25)),url("img/hero.jpg") center/cover no-repeat;z-index:-1}
+    [data-theme="light"] .hero{background:#F5F2EB}.hero .copy{max-width:720px;padding:80px 0}.hero h1{font-size:60px;line-height:1.05;max-width:13ch;margin:12px 0 20px}.hero p{font-family:var(--alt);font-size:20px;max-width:650px}.hero .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px}
+    section{padding:82px 0}.hero{padding:0}.section-head{display:grid;grid-template-columns:1fr minmax(280px,470px);gap:36px;align-items:end;margin-bottom:36px}.section-head h2{font-size:38px;line-height:1.15;margin-top:8px}.section-head p{color:var(--dim)}
+    .founder-offer{background:var(--ink-2)}
+    .offer-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.offer{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:28px}.offer h3{font-size:23px;margin:10px 0}.offer p,.offer li{color:var(--dim)}.offer ul{list-style:none;display:grid;gap:8px;margin-top:18px}.offer li{position:relative;padding-left:18px}.offer li::before{content:"+";position:absolute;left:0;color:var(--gold-lit)}
+    .voyage{padding:0;background:#080809;color:#E8E1D5}.voyage .wrap{min-height:260px;display:grid;grid-template-columns:1fr auto;gap:36px;align-items:center}.voyage h2{font-size:34px}.voyage p{color:#9C978A;margin-top:8px;max-width:680px}
+    .vision-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}.vision{padding:28px;border-right:1px solid var(--line)}.vision:last-child{border-right:0}.vision h3{font-size:20px;margin-bottom:8px}.vision p{color:var(--dim)}
+    .subscribe{background:var(--ink)}.subscribe-shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,420px);gap:56px;align-items:center}.subscribe h2{font-size:38px;line-height:1.15;margin:10px 0 14px}.subscribe p{color:var(--dim)}.subscribe-status{border-left:3px solid var(--gold);padding:24px;background:var(--panel)}.subscribe-status h3{font-size:21px;margin-bottom:8px}.subscribe-status .btn{width:100%;margin-top:18px}.btn:disabled{cursor:not-allowed;opacity:.58;background:transparent;color:var(--dim);border-color:var(--line-lit)}
+    .apply{background:var(--ink-2)}.apply-shell{display:grid;grid-template-columns:.8fr 1.2fr;gap:58px;align-items:start}.apply-copy h2{font-size:40px;line-height:1.15;margin:10px 0 16px}.apply-copy p{color:var(--dim)}
+    .apply-form{display:grid;gap:14px}.apply-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.apply-form label{font-size:13px;font-weight:600}.apply-form input,.apply-form textarea{width:100%;margin-top:6px;background:var(--ink);border:1px solid var(--line);border-radius:4px;color:var(--bone);font:15px var(--body);padding:13px 14px;outline:0}.apply-form textarea{resize:vertical;min-height:96px}.apply-note{color:var(--dim);font-size:12px}.apply-done{border-left:3px solid var(--gold);padding:20px 24px;background:var(--panel)}.apply-done h3{font-size:22px;margin-bottom:7px}.apply-done p{color:var(--dim)}
+    footer{background:#080809;color:#E8E1D5;border-top:1px solid rgba(201,164,92,.18)}footer .wrap{min-height:76px;display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:12px}footer a{color:#E9D3A0}
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}.reveal.in{opacity:1;transform:none}
+    @media(max-width:760px){.wrap{padding:0 20px}.nav a:not(.btn){display:none}.brand-type{display:none}.hero h1{font-size:42px}.hero p{font-size:18px}.section-head,.offer-grid,.apply-shell,.subscribe-shell{grid-template-columns:1fr}.vision-grid{grid-template-columns:1fr}.vision{border-right:0;border-bottom:1px solid var(--line)}.vision:last-child{border-bottom:0}.voyage .wrap{grid-template-columns:1fr;padding-top:38px;padding-bottom:38px}.apply-grid{grid-template-columns:1fr}footer .wrap{align-items:flex-start;flex-direction:column;justify-content:center}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1!important;transform:none!important;transition:none!important}*{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Understudy Consulting"><img src="img/understudy-roundel.svg" alt="" width="42" height="42" /><span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">FOUNDERS</span></span></a>
+      <nav class="nav" aria-label="Founders navigation"><a href="#founders">Program</a><a href="#subscribe">Subscribe</a><a href="#apply">Apply</a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button><a class="btn" href="#apply">Apply</a></nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero" id="founders">
+      <div class="wrap"><div class="copy"><span class="eyebrow reveal">A separate founder partnership</span><h1 class="reveal">Build the universe, not only the first product.</h1><p class="reveal">This program is for a small number of founders who want to co-develop the Understudy universe with Frank: the products, operating systems, and AI workforce around what they are already building.</p><div class="actions reveal"><a class="btn" href="#apply">Apply to be a founder</a><a class="btn ghost" href="work.html#screens">Review the work</a></div></div></div>
+    </section>
+    <section class="founder-offer">
+      <div class="wrap"><div class="section-head reveal"><div><span class="eyebrow">The relationship</span><h2>A partnership, not a consulting package.</h2></div><p>Consulting buyers hire Frank for an outcome. Founders help develop the wider Understudy system and receive a private operating environment around their work.</p></div><div class="offer-grid"><article class="offer reveal"><span class="eyebrow">Best fit</span><h3>You already have something real</h3><p>A practice, product, or body of work is already moving. You want the systems around it to become coherent and compounding.</p><ul><li>Your own private console and knowledge base</li><li>Ideas captured and turned into plans</li><li>Working previews before anything releases</li><li>A live product and an operating partner that keeps learning</li></ul></article><article class="offer reveal"><span class="eyebrow">The boundary</span><h3>Few at a time, selected deliberately</h3><p>This is not the open consulting door. Frank reads every application and invites only the relationships he can serve with real attention.</p><ul><li>No automatic acceptance</li><li>No unattended release authority</li><li>No claim that AI replaces the founder</li><li>The founder remains the source of direction and final approval</li></ul></article></div></div>
+    </section>
+    <section class="voyage"><div class="wrap reveal"><div><span class="eyebrow">The proof, rendered</span><h2>Review the systems behind the offer.</h2><p>The work page shows the real products, operating systems, and interfaces that make “building a universe” concrete.</p></div><a class="btn" href="work.html#screens">Review the work</a></div></section>
+    <section><div class="wrap"><div class="section-head reveal"><div><span class="eyebrow">Three lights</span><h2>The whole system stays in view.</h2></div><p>Understudy organizes a founder’s world so the work that provides, defines, and creates can reinforce one another.</p></div><div class="vision-grid"><article class="vision reveal"><h3>What provides</h3><p>The business, offer, delivery, and operating engine that keeps the lights on.</p></article><article class="vision reveal"><h3>Who you are</h3><p>Your voice, purpose, standards, and the ground every decision returns to.</p></article><article class="vision reveal"><h3>What you make</h3><p>The craft, product, story, and original work only you can create.</p></article></div></div></section>
+    <section class="subscribe" id="subscribe">
+      <div class="wrap subscribe-shell"><div class="reveal"><span class="eyebrow">Founders subscription</span><h2>A private operating relationship for invited founders.</h2><p>Applications remain free. Accepted founders will receive the subscription details directly once the founding rate and payment link are finalized.</p></div><div class="subscribe-status reveal"><h3>Subscription opening soon</h3><p>The signup control will activate after Frank publishes the final terms. No payment is collected here today.</p><button class="btn" type="button" disabled aria-disabled="true">Subscription link coming soon</button></div></div>
+    </section>
+    <section class="apply" id="apply">
+      <div class="wrap apply-shell"><div class="apply-copy reveal"><span class="eyebrow">Apply to be a founder</span><h2>Tell Frank what is already alive.</h2><p>The strongest fit is a founder with a real practice, product, or audience and a clear desire to build the systems around it. Free to apply. Frank reads every submission himself.</p></div>
+        <form id="apply-form" class="apply-form reveal" autocomplete="on" action="mailto:frank@marqueeweb.com" method="post" enctype="text/plain">
+          <div class="apply-grid"><label>Your name<input id="ap-name" name="name" type="text" required autocomplete="name" /></label><label>Email<input id="ap-email" name="email" type="email" required autocomplete="email" /></label></div>
+          <label>What do you do, and what is already working?<textarea id="ap-biz" name="business" rows="3" required placeholder="Describe the practice, product, or work already in motion."></textarea></label>
+          <label>What do you want to build or grow?<textarea id="ap-goal" name="goal" rows="3" required placeholder="The part you cannot reach alone."></textarea></label>
+          <button class="btn" id="ap-send" type="submit">Send my application</button>
+          <p class="apply-note" id="ap-note">Free to apply. Frank reads every submission personally.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap"><span>Understudy Founders · a separate partnership led by Frank Epps</span><a href="/">Understudy Consulting</a></div></footer>
+  <script>
+    (function(){var KEY='understudy-theme',btn=document.getElementById('theme-toggle');function light(){return document.documentElement.getAttribute('data-theme')==='light'}function icon(){btn.innerHTML=light()?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>'}icon();btn.addEventListener('click',function(){var n=light()?'dark':'light';document.documentElement.toggleAttribute('data-theme',n==='light');if(n==='light')document.documentElement.setAttribute('data-theme','light');localStorage.setItem(KEY,n);icon()})})();
+    (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in')});return}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});els.forEach(function(e){io.observe(e)})})();
+    var UNDERSTUDY_API='https://three-mountaintops-engine.onrender.com';
+    (function(){var form=document.getElementById('apply-form');if(!form)return;form.addEventListener('submit',function(e){e.preventDefault();var name=(document.getElementById('ap-name').value||'').trim();var email=(document.getElementById('ap-email').value||'').trim();var biz=(document.getElementById('ap-biz').value||'').trim();var goal=(document.getElementById('ap-goal').value||'').trim();var note=document.getElementById('ap-note'),btn=document.getElementById('ap-send');if(!name||!email||email.indexOf('@')<1||!biz||!goal){note.textContent='Please fill in every field so Frank can get to know you.';return}var idea='FOUNDER APPLICATION\nName: '+name+'\n\nBusiness / what is working:\n'+biz+'\n\nWhat they want to build or grow:\n'+goal;btn.disabled=true;note.textContent='Sending…';if(!UNDERSTUDY_API){window.location.href='mailto:frank@marqueeweb.com?subject='+encodeURIComponent('Understudy — founder application: '+name)+'&body='+encodeURIComponent(idea+'\n\nReply to: '+email);note.textContent='Opening your email…';return}fetch(UNDERSTUDY_API.replace(/\/$/,'')+'/api/understudy/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,name:name,idea:idea,summary:'Founder application — '+name,lane:'founder-application'})}).then(function(r){return r.json()}).then(function(d){if(d.error)throw new Error(d.error);form.innerHTML='<div class="apply-done"><h3>Got it — thank you.</h3><p>Frank reads every application himself. If it is a fit, he will reply directly.</p></div>'}).catch(function(){note.innerHTML='Could not send just now. Email <a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a>.';btn.disabled=false})})})();
+  </script>
+</body>
+</html>

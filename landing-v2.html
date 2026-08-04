@@ -1,47 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--
-  landing-v2.html — a standalone, outcome-led alternative landing page for understudy.consulting.
-  DOES NOT touch index.html (the live page) or any other file. A sibling for Frank to diff and test.
-  Opens straight from disk (file://) and works standalone.
-
-  IDENTITY I BUILT TO: the instrument-maker's workbench — dark, warm, restrained, precise. Typography
-  and spacing first, color second (ink + bone + one gold --spot, steel as the ONLY secondary), motion
-  last: a single orchestrated reveal-on-scroll moment, nothing continuous, all of it off under
-  prefers-reduced-motion, no layout shift. Seeded from index.html's own tokens
-  (--ink / --bone / --dim / --spot / --steel) and evolved with conviction — hairline gold→steel section
-  rules and corner-tick ornaments on the doors. Image-free on purpose: no external assets beyond the two
-  permitted resources, so nothing can 404 when opened from disk.
-
-  THE ONE LEVER FOR THE HERO: the concrete OUTCOME, stated with no metaphor — "Build the thing you've
-  always wanted to exist" — then one sentence that promises a finished, owned product AND an understudy
-  that keeps building it, safely and under your control, behind ONE dominant CTA (Get a diagnosis — $150
-  → #quote). The founder door is present above the fold but deliberately quiet/secondary.
-
-  PRICING: $150 diagnosis is the ONLY advertised price (credited toward the fix). The founder door
-  advertises NO price — "a few founders at a time · personally selected." No /mo, no "locked for life."
-
-  DELIBERATELY LEFT OUT (a quiet true page beats a loud false one): the "6+ projects / 100%" stats bar,
-  the testimonial blockquote, the Voyage banner, the packages/pricing table, the FAQ, and the
-  mission / partners / vision bands — all vanity or unverifiable against the honesty law. Clients stay
-  anonymized (a live astrology SaaS its owner runs; a concierge matchmaking app rescued in ~48h; an
-  Atlanta barbershop's site + AI partner). The understudy platform is described as "built and tested" —
-  never "launched," never "in production for users," never with a user count.
-
-  *** STRIPE ON-PAGE CARD CHECKOUT IS CARRIED VERBATIM FROM index.html. ***
-  The <script src="https://js.stripe.com/v3/"></script> tag, the STRIPE_PK pk_live_ publishable key, the
-  Stripe(STRIPE_PK) init, the #uc-pay embedded-checkout overlay that STAYS ON THE PAGE (no redirect),
-  payFor()/openPay()/onPaid()/submitIntake() and the existing email fallback are copied unchanged. The
-  $150 diagnosis is payable BY CARD, ON THE PAGE — via #consult-btn (payFor(150,…)) and via every step
-  button the #quote engine renders — exactly as index.html does it today. Also carried verbatim: the
-  UNDERSTUDY_API constant, the #quote instant-plan engine + all three lanes + its lead submit, the
-  #apply founder form (ids ap-name / ap-email / ap-biz / ap-goal / ap-send / ap-note → POST
-  /api/understudy/lead with lane "founder-application", mailto fallback + success state), and the
-  build.html link.
-
-  EXTERNAL RESOURCES: exactly two — Google Fonts (Space Grotesk + Inter) and js.stripe.com/v3. Nothing else.
--->
+<!-- Legacy alternate page retained for comparison. Diagnosis CTAs use book.html; staged quote payments remain on-page. -->
 <script>(function(){try{var t=localStorage.getItem('understudy-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -346,7 +306,7 @@
       <a href="#how">How it works</a>
       <a href="#proof">Proof</a>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
-      <a class="btn" href="#quote">Get a diagnosis</a>
+      <a class="btn" href="book.html">Get a diagnosis</a>
     </nav>
   </div>
 </header>
@@ -359,7 +319,7 @@
       <p class="lede reveal"><strong>I build it for real</strong> — done right, live, and yours to own — then hand you an <em style="font-style:normal;color:var(--steel-lit)">understudy</em>: an AI that learns your world and keeps building it with you, safely, under your control.</p>
       <div class="cta-stack reveal">
         <div class="cta-line">
-          <a class="btn lg" href="#quote">Get a diagnosis — $150 &rarr;</a>
+          <a class="btn lg" href="book.html">Get a diagnosis — $150 &rarr;</a>
           <a class="link-quiet" href="#apply">or apply to be a founder &rarr;</a>
         </div>
         <span class="cta-credit">The $150 is credited toward the build. Fixed price, no lock-in.</span>
@@ -425,9 +385,9 @@
   <section id="proof" class="rule-top">
     <div class="wrap">
       <div class="section-head reveal">
-        <span class="eyebrow">Proof — real, anonymized on purpose</span>
+        <span class="eyebrow">Proof in working systems</span>
         <h2>What I've actually built.</h2>
-        <p>The three client systems below run today. The understudy platform is built and tested. Clients kept private.</p>
+        <p>Three shipped outcomes and the built, tested Understudy platform.</p>
       </div>
       <div class="caps">
         <div class="cap reveal">
@@ -451,7 +411,7 @@
           <p>Not a chatbot — an agent that learns one job, with a critic that vets every action and a human gate before anything ships. Kill switch, budget caps, and a full audit log are built in.</p>
         </div>
       </div>
-      <p class="live-strip reveal">A few builds you can click into right now: <a href="https://cosmic-blueprint.org" target="_blank" rel="noopener">Cosmic Blueprint &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://authors-codex.vercel.app" target="_blank" rel="noopener">Authors Codex &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://threemountaintops.world" target="_blank" rel="noopener">Three Mountaintops &rarr;</a></p>
+      <p class="live-strip reveal"><a href="work.html">Review capabilities &amp; work &rarr;</a> &nbsp;&middot;&nbsp; <a href="https://threemountaintops.world" target="_blank" rel="noopener">Open Three Mountaintops &rarr;</a></p>
     </div>
   </section>
 
@@ -474,7 +434,7 @@
             <li>Fixed prices — no agency runaround, no lock-in</li>
             <li>Repo + walkthrough — the code and accounts are yours</li>
           </ul>
-          <a class="btn" href="#quote">Start with a diagnosis &rarr;</a>
+          <a class="btn" href="book.html">Start with a diagnosis &rarr;</a>
         </div>
         <div class="door reveal">
           <div class="k">The ongoing understudy &middot; by application</div>
@@ -496,14 +456,14 @@
   <section id="quote" class="quote rule-top">
     <div class="wrap">
       <div class="section-head reveal" style="text-align:center;">
-        <span class="eyebrow" style="display:block;margin-bottom:8px;">Get a diagnosis — $150</span>
-        <h2 style="margin:0 auto;">See what it costs — instantly.</h2>
-        <p style="margin:8px auto 0;">Describe what you want and get a tailored, start-small plan in seconds — then pay the first step by card, right here. The $150 credits toward the build.</p>
+        <span class="eyebrow" style="display:block;margin-bottom:8px;">Explore the scope</span>
+        <h2 style="margin:0 auto;">See a starting plan — instantly.</h2>
+        <p style="margin:8px auto 0;">Describe what you want and get a tailored, start-small plan in seconds. Build steps can still be funded one at a time below.</p>
       </div>
 
       <div class="pay-direct reveal">
-        <div class="pd-text">Prefer to just start? Pay the $150 diagnosis by card.<small>Secure checkout, on this page — credited toward your build.</small></div>
-        <a class="btn" id="consult-btn" href="mailto:frankeppsjr@gmail.com?subject=Understudy%20%E2%80%94%20book%20a%20diagnosis">Pay $150 by card &rarr;</a>
+        <div class="pd-text">Ready for the diagnosis?<small>Choose a time first, then pay $150 to confirm it.</small></div>
+        <a class="btn" href="book.html">Book the diagnosis &rarr;</a>
       </div>
 
       <div class="lane-toggle reveal">
@@ -569,7 +529,7 @@
       <div class="close-band reveal">
         <h3>Your dream deserves a <em>partner.</em></h3>
         <div class="cb-cta">
-          <a class="btn lg" href="#quote">Get a diagnosis — $150 &rarr;</a>
+          <a class="btn lg" href="book.html">Get a diagnosis — $150 &rarr;</a>
           <span class="cta-credit">Credited toward the build &middot; or <a class="link-quiet" href="#apply" style="border:none;padding:0">apply to be a founder &rarr;</a></span>
         </div>
       </div>
@@ -622,8 +582,6 @@
 <script>
   // Live engine on Render. Empty string would gracefully fall back to email.
   var UNDERSTUDY_API = "https://three-mountaintops-engine.onrender.com";
-  // Paste your Stripe Payment Link here to take the consultation fee upfront. Empty = email to book.
-  var UNDERSTUDY_CONSULT_LINK = "";
   // Stripe PUBLISHABLE key (safe to expose) — LIVE. Empty = email fallback.
   var STRIPE_PK = "pk_live_51TVoa9EODdnbv1UtrlCExV2P3PXRxDfwOWnTBEn2B8WZQF6xTNlBe4LRpkrOxFxsJlL3S7HsIeRDwfCNKXtJeXIB00q3Ri4MHS";
 
@@ -853,8 +811,6 @@
     var x = document.getElementById('uc-pay-close'); if (x) x.addEventListener('click', closePay);
     var ov = _ucOv(); if (ov) ov.addEventListener('click', function (e) { if (e.target === ov) closePay(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov && ov.classList.contains('open')) closePay(); });
-    var cb = document.getElementById('consult-btn');
-    if (cb && _stripe) cb.addEventListener('click', function (e) { e.preventDefault(); payFor(150, 'Understudy consultation (credited to your build)', '', 'consult'); });
   })();
 
   // Lead capture: save the email + idea so a quote is never lost.
@@ -1024,8 +980,6 @@
     if (e.key === 'Enter') { e.preventDefault(); document.getElementById('chat-send').click(); }
   });
 
-  // Point the consultation button at your Stripe Payment Link once you've made it.
-  if (UNDERSTUDY_CONSULT_LINK) { var cb = document.getElementById('consult-btn'); if (cb) { cb.href = UNDERSTUDY_CONSULT_LINK; cb.target = '_blank'; cb.rel = 'noopener'; } }
 </script>
 </body>
 </html>

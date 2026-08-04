@@ -274,8 +274,6 @@
     var x = document.getElementById('uc-pay-close'); if (x) x.addEventListener('click', closePay);
     var ov = _ucOv(); if (ov) ov.addEventListener('click', function (e) { if (e.target === ov) closePay(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && ov && ov.classList.contains('open')) closePay(); });
-    var cb = document.getElementById('consult-btn');
-    if (cb && _stripe) cb.addEventListener('click', function (e) { e.preventDefault(); payFor(150, 'Understudy consultation (credited to your build)', '', 'consult'); });
   })();
   var currentLane = 'technical';
   function submitLead(idea, summary) {
