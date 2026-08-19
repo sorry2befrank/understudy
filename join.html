@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('understudy-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activate your Understudy — Founders</title>
+  <meta name="description" content="Selected Understudy founders activate their private console and AI Understudy here — month-to-month, cancel on 30 days' notice." />
+  <meta name="theme-color" content="#0C0C0D" />
+  <meta name="robots" content="noindex" />
+  <link rel="icon" href="img/understudy-roundel.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--ink:#0C0C0D;--ink-2:#131314;--panel:#17171A;--gold:#C9A45C;--gold-lit:#E9D3A0;--line:rgba(201,164,92,.18);--line-lit:rgba(201,164,92,.45);--bone:#E8E1D5;--dim:#9C978A;--disp:"Cinzel",Georgia,serif;--body:"Montserrat",system-ui,sans-serif;--alt:"Lato",system-ui,sans-serif}
+    [data-theme="light"]{--ink:#F5F2EB;--ink-2:#ECE7DD;--panel:#FFF;--gold:#C9A45C;--gold-lit:#765821;--line:rgba(85,66,28,.18);--line-lit:rgba(85,66,28,.46);--bone:#191919;--dim:#5C584F}
+    *{box-sizing:border-box;margin:0;padding:0;letter-spacing:0!important}
+    html{scroll-behavior:smooth}
+    body{background:var(--ink);color:var(--bone);font-family:var(--body);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+    .wrap{width:min(1120px,100%);margin:0 auto;padding:0 28px}
+    h1,h2,h3{font-family:var(--disp);font-weight:600}
+    .eyebrow{font-size:12px;text-transform:uppercase;color:var(--gold-lit);font-weight:600}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:12px 20px;border:1px solid var(--gold);border-radius:4px;background:var(--gold);color:#111;font-family:var(--body);font-weight:600;cursor:pointer}
+    .btn.ghost{background:transparent;color:var(--bone);border-color:var(--line-lit)}
+    :focus-visible{outline:3px solid var(--gold-lit);outline-offset:3px;border-radius:3px}
+    header{position:sticky;top:0;z-index:20;background:rgba(12,12,13,.95);border-bottom:1px solid var(--line)}
+    [data-theme="light"] header{background:rgba(245,242,235,.95)}
+    header .wrap{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:inline-flex;align-items:center;gap:10px}.brand img{width:42px;height:42px}.brand-type{display:grid;line-height:1}.brand-name{font:600 16px var(--disp);color:var(--gold-lit)}.brand-sub{font:400 9px var(--disp);color:var(--gold);margin-top:5px}
+    .nav{display:flex;align-items:center;gap:18px}.nav a{font-size:12px;color:var(--dim)}
+    .theme-toggle{width:38px;height:38px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--bone);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+    .theme-toggle svg{width:18px;height:18px}
+    .hero{min-height:min(620px,calc(100svh - 72px));display:flex;align-items:center;position:relative;overflow:hidden;isolation:isolate;background:#0C0C0D}
+    .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(12,12,13,.98),rgba(12,12,13,.72) 52%,rgba(12,12,13,.3)),url("img/hero.jpg") center/cover no-repeat;z-index:-1}
+    [data-theme="light"] .hero{background:#F5F2EB}.hero .copy{max-width:760px;padding:72px 0}.hero h1{font-size:56px;line-height:1.06;max-width:15ch;margin:12px 0 20px}.hero p{font-family:var(--alt);font-size:20px;max-width:660px}.hero .actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;align-items:center}.hero .fineprint{font-family:var(--body);font-size:13px;color:var(--dim)}
+    section{padding:82px 0}.hero{padding:0}.section-head{display:grid;grid-template-columns:1fr minmax(280px,470px);gap:36px;align-items:end;margin-bottom:36px}.section-head h2{font-size:38px;line-height:1.15;margin-top:8px}.section-head p{color:var(--dim)}
+    .get{background:var(--ink-2)}
+    .offer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.offer{background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:26px}.offer h3{font-size:20px;margin:10px 0}.offer p{color:var(--dim);font-size:15px}
+    .subscribe{background:var(--ink)}.subscribe-shell{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,430px);gap:56px;align-items:center}.subscribe h2{font-size:40px;line-height:1.14;margin:10px 0 16px}.subscribe p{color:var(--dim)}.subscribe ul{list-style:none;display:grid;gap:10px;margin-top:20px}.subscribe li{position:relative;padding-left:20px;color:var(--dim)}.subscribe li::before{content:"+";position:absolute;left:0;color:var(--gold-lit);font-weight:600}
+    .price-card{border:1px solid var(--line-lit);border-radius:8px;padding:32px;background:var(--panel);text-align:center}.price-card .amount{font-family:var(--disp);font-size:52px;font-weight:600;color:var(--gold-lit);line-height:1}.price-card .per{font-size:14px;color:var(--dim);margin-top:6px}.price-card .divider{height:1px;background:var(--line);margin:22px 0}.price-card .btn{width:100%}.price-card .terms{font-size:12px;color:var(--dim);margin-top:14px}.price-card .secure{font-size:12px;color:var(--dim);margin-top:10px;display:inline-flex;align-items:center;gap:6px}
+    .after{background:var(--ink-2)}.after-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}.step{padding:28px;border-right:1px solid var(--line)}.step:last-child{border-right:0}.step .num{font-family:var(--disp);font-size:14px;color:var(--gold)}.step h3{font-size:19px;margin:8px 0}.step p{color:var(--dim);font-size:15px}
+    footer{background:#080809;color:#E8E1D5;border-top:1px solid rgba(201,164,92,.18)}footer .wrap{min-height:76px;display:flex;justify-content:space-between;align-items:center;gap:20px;font-size:12px}footer a{color:#E9D3A0}
+    .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}.reveal.in{opacity:1;transform:none}
+    @media(max-width:820px){.offer-grid{grid-template-columns:1fr}.subscribe-shell{grid-template-columns:1fr}.after-grid{grid-template-columns:1fr}.step{border-right:0;border-bottom:1px solid var(--line)}.step:last-child{border-bottom:0}}
+    @media(max-width:760px){.wrap{padding:0 20px}.brand-type{display:none}.hero h1{font-size:40px}.hero p{font-size:18px}.section-head{grid-template-columns:1fr}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1!important;transform:none!important;transition:none!important}*{animation:none!important;transition:none!important}}
+  </style>
+  <link rel="stylesheet" href="site-nav.css" />
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Understudy Consulting home"><img src="img/understudy-roundel.svg" alt="" width="42" height="42" /><span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">FOUNDERS</span></span></a>
+      <nav class="nav" aria-label="Primary navigation"><a href="index.html">Home</a><a href="systems.html">Systems</a><a href="founders.html">Founders</a><button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button></nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="wrap"><div class="copy">
+        <span class="eyebrow reveal">Understudy Founders · activate your subscription</span>
+        <h1 class="reveal">Welcome, founder. Let's turn your system on.</h1>
+        <p class="reveal">You've been selected to build with Frank. Your subscription activates your private <strong>console</strong> and your own <strong>AI Understudy</strong> — the agent that keeps building your system with you, month to month. Activate below and your access begins right away.</p>
+        <div class="actions reveal"><a class="btn" href="#activate">Activate your subscription</a><span class="fineprint">Month-to-month · cancel on 30 days' notice</span></div>
+      </div></div>
+    </section>
+
+    <section class="get">
+      <div class="wrap">
+        <div class="section-head reveal"><div><span class="eyebrow">What your subscription powers</span><h2>One system you own, kept alive by an Understudy that's yours.</h2></div><p>The build makes your app real. The subscription is what keeps it growing — your Understudy and your console, evolving with your work instead of ending at go-live.</p></div>
+        <div class="offer-grid">
+          <article class="offer reveal"><span class="eyebrow">Yours to keep</span><h3>Your own production app</h3><p>Real code in your own repo — deployed, working, and exportable. You own it outright, not a rented seat on someone else's platform.</p></article>
+          <article class="offer reveal"><span class="eyebrow">Your revenue</span><h3>Your own Stripe</h3><p>Payments run through your account. You keep 100% of what your app earns — we never sit between you and your customers.</p></article>
+          <article class="offer reveal"><span class="eyebrow">The engine</span><h3>Your own AI Understudy</h3><p>A private, isolated agent scoped to your work — it keeps building and improving your system with you, month after month.</p></article>
+          <article class="offer reveal"><span class="eyebrow">The command view</span><h3>The Armillary console</h3><p>One place to see the work in flight, the evidence behind it, what's blocked, what's next, and every decision waiting on you.</p></article>
+          <article class="offer reveal"><span class="eyebrow">Owned at go-live</span><h3>Deployed, QA'd, documented</h3><p>Credentials handed to you at go-live, a named welcome doc, and two revision rounds — we don't go live until you're happy.</p></article>
+          <article class="offer reveal"><span class="eyebrow">No lock-in</span><h3>Month-to-month, honest lines</h3><p>Cancel on 30 days' notice. The monthly grows the system; it never pays for the build — those stay separate, always.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="subscribe" id="activate">
+      <div class="wrap subscribe-shell">
+        <div class="reveal">
+          <span class="eyebrow">Founders subscription</span>
+          <h2>Activate your console.</h2>
+          <p>Your console and your Understudy come online the moment your subscription is active. Simple, month-to-month, and yours to cancel anytime.</p>
+          <ul>
+            <li>Your private console + your AI Understudy, live and working</li>
+            <li>Ongoing build &amp; evolution of your system, month to month</li>
+            <li>Cancel on 30 days' notice — no long-term contract</li>
+            <li>Your app and your revenue stay 100% yours</li>
+          </ul>
+        </div>
+        <div class="price-card reveal">
+          <div class="amount" id="fp-amount">&mdash;</div>
+          <div class="per" id="fp-per">Open your personal invite link to see your rate</div>
+          <div class="divider"></div>
+          <a class="btn" id="activate-btn" href="#" rel="noopener">Activate subscription</a>
+          <div class="secure" aria-hidden="true">🔒 Secure recurring checkout via Stripe</div>
+          <div class="terms">Your console access begins once your subscription is active. Cancel anytime on 30 days' notice.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="after">
+      <div class="wrap">
+        <div class="section-head reveal"><div><span class="eyebrow">After you activate</span><h2>What happens next.</h2></div><p>Three steps, and your system is in your hands.</p></div>
+        <div class="after-grid">
+          <article class="step reveal"><div class="num">01</div><h3>You subscribe</h3><p>Secure checkout through Stripe. You'll get an emailed receipt the moment it's active.</p></article>
+          <article class="step reveal"><div class="num">02</div><h3>We provision your console</h3><p>Your private console and your Understudy agent are set up and keyed to your access — usually within one business day.</p></article>
+          <article class="step reveal"><div class="num">03</div><h3>You log in and build</h3><p>You open your console, see your system and the work in motion, and your Understudy keeps building it with you.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap"><span>Understudy Founders · a partnership led by Frank Epps</span><a href="index.html">Understudy Consulting</a></div></footer>
+  <script>
+    /* Per-founder subscription config. Each selected founder gets a PRIVATE link: join.html?f=<id>.
+       The price shown here mirrors that founder's Stripe Payment Link, which enforces the real charge.
+       $150 is Aisha's specific rate, NOT a published founder price. Add each founder as they close. */
+    var FOUNDERS = {
+      aisha: { amount: "$150", per: "per month · billed monthly", stripe: "https://buy.stripe.com/dRm6oHd7C30K3Diaxq4Rq0r" }
+      /* future founders: someId: { amount: "$X", per: "per month · billed monthly", stripe: "https://buy.stripe.com/..." } */
+    };
+    (function(){
+      var id = new URLSearchParams(location.search).get("f");
+      var cfg = id && FOUNDERS[id.toLowerCase()];
+      var amt = document.getElementById("fp-amount");
+      var per = document.getElementById("fp-per");
+      var btn = document.getElementById("activate-btn");
+      function disable(label){ btn.textContent = label; btn.setAttribute("aria-disabled","true"); btn.style.opacity = ".55"; btn.style.pointerEvents = "none"; btn.removeAttribute("href"); }
+      if (cfg) {
+        amt.textContent = cfg.amount;
+        per.textContent = cfg.per;
+        if (cfg.stripe && cfg.stripe.indexOf("http") === 0) { btn.setAttribute("href", cfg.stripe); }
+        else { disable("Checkout link coming"); }
+      } else {
+        disable("Open your personal invite link");
+      }
+    })();
+  </script>
+  <script>
+    (function(){var KEY='understudy-theme',btn=document.getElementById('theme-toggle');function light(){return document.documentElement.getAttribute('data-theme')==='light'}function icon(){btn.innerHTML=light()?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="4"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8Z"/></svg>'}icon();btn.addEventListener('click',function(){var n=light()?'dark':'light';document.documentElement.toggleAttribute('data-theme',n==='light');if(n==='light')document.documentElement.setAttribute('data-theme','light');localStorage.setItem(KEY,n);icon()})})();
+    (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in')});return}var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});els.forEach(function(e){io.observe(e)})})();
+  </script>
+  <script src="site-nav.js"></script>
+</body>
+</html>
