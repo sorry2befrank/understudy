@@ -121,8 +121,9 @@
        The price shown here mirrors that founder's Stripe Payment Link, which enforces the real charge.
        $150 is Aisha's specific rate, NOT a published founder price. Add each founder as they close. */
     var FOUNDERS = {
-      aisha: { amount: "$150", per: "per month · billed monthly", stripe: "https://buy.stripe.com/dRm6oHd7C30K3Diaxq4Rq0r" }
-      /* future founders: someId: { amount: "$X", per: "per month · billed monthly", stripe: "https://buy.stripe.com/..." } */
+      aisha: { amount: "$150", per: "per month · billed monthly", stripe: "https://buy.stripe.com/dRm6oHd7C30K3Diaxq4Rq0r" },
+      kay: { free: true, amount: "First month free", per: "on Frank — then $500/mo only if you continue", agreeTo: "frankeppsjr@gmail.com", agreeSubject: "I'm in — my Understudy", agreeBody: "I'm in!\n\nHere's a bit about me —\n\nMy ambitions:\n\n\nWhat I'm most interested in:\n\n\nWhat my home feels like:\n\n" }
+      /* PAID founder: { amount, per, stripe }  ·  FREE/comped founder: { free:true, amount, per, agreeTo, agreeSubject, agreeBody } */
     };
     (function(){
       var id = new URLSearchParams(location.search).get("f");
@@ -130,12 +131,20 @@
       var amt = document.getElementById("fp-amount");
       var per = document.getElementById("fp-per");
       var btn = document.getElementById("activate-btn");
+      var secure = document.querySelector(".price-card .secure");
+      var terms = document.querySelector(".price-card .terms");
       function disable(label){ btn.textContent = label; btn.setAttribute("aria-disabled","true"); btn.style.opacity = ".55"; btn.style.pointerEvents = "none"; btn.removeAttribute("href"); }
       if (cfg) {
         amt.textContent = cfg.amount;
         per.textContent = cfg.per;
-        if (cfg.stripe && cfg.stripe.indexOf("http") === 0) { btn.setAttribute("href", cfg.stripe); }
-        else { disable("Checkout link coming"); }
+        if (cfg.free && cfg.agreeTo) {
+          btn.setAttribute("href", "mailto:" + cfg.agreeTo + "?subject=" + encodeURIComponent(cfg.agreeSubject || "I'm in") + "&body=" + encodeURIComponent(cfg.agreeBody || ""));
+          btn.textContent = "I'm in — start my first month";
+          if (secure) secure.textContent = "No card needed — your first month is on Frank 💛";
+          if (terms) terms.textContent = "After the free month it's $500/mo, only if you continue. Cancel anytime.";
+        } else if (cfg.stripe && cfg.stripe.indexOf("http") === 0) {
+          btn.setAttribute("href", cfg.stripe);
+        } else { disable("Checkout link coming"); }
       } else {
         disable("Open your personal invite link");
       }
