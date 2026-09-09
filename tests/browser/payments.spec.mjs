@@ -79,6 +79,48 @@ test('inquiry retries retain the same request token and show the saved reference
   expect(bodies[0].requestId).toHaveLength(36);
 });
 
+test('guided brief only offers the $150 diagnostic, even if a stale API returns build prices', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 360, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.route(API + '/api/understudy/quote', route => route.fulfill({ json: {
+    startPrice: 999, hourlyRate: 75, total: 4999, greeting: 'Buy the full website now.',
+    steps: [{ name: 'Inspect your booking workflow', delivers: 'Identify which calendar and forms need to connect.', price: 999, hoursLabel: '10 hours' }],
+    note: 'Pay for the full website today.', cta: 'Pay now'
+  } }));
+  await page.goto('/index.html');
+  await page.locator('#idea').fill('My booking workflow needs help.');
+  await page.locator('#send').click();
+  await expect(page.locator('#quote-result')).toContainText('Book the $150 diagnostic');
+  await expect(page.locator('#quote-result')).not.toContainText('$999');
+  await expect(page.locator('#quote-result')).not.toContainText('full website');
+  await expect(page.locator('#quote-result')).not.toContainText('10 hours');
+  await expect(page.locator('#quote-result .uc-pay')).toHaveCount(0);
+  await expect(page.locator('a[href="pay.html"]')).toHaveCount(0);
+  await page.locator('#quote-result a[href="book.html"]').click();
+  await expect(page.locator('h1')).toHaveText('Book your $150 diagnostic.');
+  await expect(page.locator('.booking-intro')).toContainText('diagnostic only, not website design');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  await expect(page.locator('.booking-intro .reveal').first()).toHaveCSS('opacity', '1');
+  await page.locator('.booking-intro').screenshot({ path: testInfo.outputPath('diagnostic-booking-phone.png') });
+  expect(errors).toEqual([]);
+});
+
+test('major-build prices are readable on a phone and offer no direct project purchase', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 360, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.goto('/index.html');
+  await page.getByRole('link', { name: 'View build pricing', exact: true }).click();
+  await expect(page.locator('#pricing')).toContainText('$3,000–$6,000');
+  await expect(page.locator('#pricing')).toContainText('From $10,000');
+  await expect(page.locator('#pricing')).toContainText('remaining 50% when the work is complete');
+  await expect(page.locator('#pricing button, #pricing a[href*="pay.html"]')).toHaveCount(0);
+  expect(await page.locator('#pricing td').evaluateAll(nodes => nodes.every(node => node.scrollWidth <= node.clientWidth + 2))).toBeTruthy();
+  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
+  await page.locator('#pricing').screenshot({ path: testInfo.outputPath('build-prices-phone.png') });
+});
+
 test('private dashboard shows failures rather than empty ledgers and creates approved links', async ({ page }, testInfo) => {
   const root = resolve(process.env.UNDERSTUDY_ENGINE_ROOT || resolve(import.meta.dirname, '../../../understudy-inquiries-checkout'), 'public') + '/';
   test.skip(!existsSync(root + 'understudy-admin.html'), 'Set UNDERSTUDY_ENGINE_ROOT to run the companion backend dashboard check.');

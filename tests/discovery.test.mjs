@@ -112,3 +112,33 @@ test('lead form fails closed without JavaScript and booking retains its existing
   assert.match(book, /frank-epps-ujdwu4\/30min/);
   assert.match(book, /UnderstudyDiscovery.bookingParams/);
 });
+
+test('public purchase path is the diagnostic, with later 50/50 project payments requested privately', async () => {
+  for (const file of pages) {
+    const doc = await documentFor(file);
+    assert.ok(!elements(doc, 'a').some(node => /(?:pay\.html|checkout\.stripe\.com|buy\.stripe\.com)/.test(node.attribs.href || '')), file + ' must not advertise project checkout');
+  }
+  const home = await readFile(resolve(root, 'index.html'), 'utf8');
+  const book = await readFile(resolve(root, 'book.html'), 'utf8');
+  const website = await readFile(resolve(root, 'website-development-atlanta.html'), 'utf8');
+  for (const content of [home, book, website]) {
+    assert.match(content, /50%/);
+    assert.match(content, /when (?:the |the agreed )?work is complete/);
+  }
+  assert.match(book, /diagnostic only, not website design/);
+  assert.doesNotMatch(home, /Fund one small step|pay as you go|You can start today for|function payFor/);
+  assert.match(book, /frank-epps-ujdwu4\/30min/);
+  assert.doesNotMatch(book, /initEmbeddedCheckout|\/api\/understudy\/checkout/);
+});
+
+test('major build budgets stay visible without buy-now project links', async () => {
+  const doc = await documentFor('index.html');
+  const table = elements(doc, 'table').find(node => node.attribs.class === 'price-table reveal');
+  assert.match(text(table), /Website build \+ scoped AI/);
+  assert.match(text(table), /\$3,000–\$6,000/);
+  assert.match(text(table), /Major operator \/ automation build/);
+  assert.match(text(table), /From \$10,000/);
+  assert.equal(elements(table, 'button').length, 0);
+  assert.equal(elements(table, 'a').length, 0);
+  assert.ok(elements(doc, 'a').some(node => node.attribs.href === '#pricing' && text(node) === 'View build pricing'));
+});
