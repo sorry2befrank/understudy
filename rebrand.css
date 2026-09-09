@@ -174,7 +174,7 @@ header.site { background: rgba(12, 12, 13, 0.94); border-bottom: 1px solid var(-
 .outcome p { color: var(--dim); }
 .privacy-note { margin-top: 28px; color: var(--dim); font-size: 13px; }
 
-.pricing-new { background: var(--ink-2); }
+.pricing-new { background: var(--ink-2); scroll-margin-top: 96px; }
 .price-table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--line-lit); }
 .price-table th, .price-table td { text-align: left; padding: 18px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
 .price-table th { color: var(--spot); font-size: 12px; font-family: var(--body); }
