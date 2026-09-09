@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="referrer" content="no-referrer" />
+  <meta name="theme-color" content="#0C0C0D" />
+  <title>Pay for Your Agreed Service | Understudy Consulting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Montserrat:wght@300;400;500;600&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet" />
+  <link rel="icon" href="img/understudy-roundel.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="rebrand.css" />
+  <link rel="stylesheet" href="interior.css?v=2" />
+  <link rel="stylesheet" href="payment.css" />
+</head>
+<body>
+  <header class="site"><div class="wrap">
+    <a class="brand" href="index.html" aria-label="Understudy Consulting home"><img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="42" height="42" /><span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">CONSULTING</span></span></a>
+    <a href="index.html#contact">Contact Frank</a>
+  </div></header>
+  <main class="payment-main">
+    <p class="eyebrow">UNDERSTUDY CONSULTING</p>
+    <h1>Your service payment</h1>
+    <p id="payment-intro">Pay for the scope and amount you agreed with Frank.</p>
+    <div class="payment-summary" id="payment-summary" hidden><h2 id="service-label"></h2><p id="service-amount"></p><p>One-time payment in USD. No subscription.</p></div>
+    <p id="payment-status" role="status" aria-live="polite">Checking your payment link...</p>
+    <button class="btn" id="payment-start" type="button" hidden>Continue to secure payment</button>
+    <button class="btn ghost" id="payment-retry" type="button" hidden>Check again</button>
+    <div id="payment-checkout"></div>
+    <noscript><p>JavaScript is required for secure checkout. Email <a href="mailto:frank@marqueeweb.com">Frank</a> for help with payment.</p></noscript>
+    <section class="payment-help"><h2>Questions before paying?</h2><p><a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></p><p>Your agreed scope and delivery terms still apply. Card details are collected securely by Stripe.</p><p>Booking a diagnosis instead? <a href="book.html">Choose a time and pay $150</a>.</p></section>
+  </main>
+  <footer class="site"><div class="wrap">Understudy Consulting &middot; Frank Epps</div></footer>
+  <script src="payment.js"></script>
+</body>
+</html>

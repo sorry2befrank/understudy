@@ -4,6 +4,7 @@
   var button = document.getElementById('contact-send');
   var status = document.getElementById('contact-status');
   var busy = false;
+  var requestId = crypto.randomUUID();
   button.disabled = false;
   form.addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -23,11 +24,11 @@
     try {
       var response = await fetch(form.action, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: controller.signal,
-        body: JSON.stringify({ name: name, email: email, idea: idea, summary: summary, lane: 'website-inquiry' })
+        body: JSON.stringify({ name: name, email: email, idea: idea, summary: summary, lane: 'website-inquiry', requestId: requestId })
       });
       var result = await response.json();
       if (!response.ok || !result.ok || result.error) throw new Error('Not confirmed');
-      status.textContent = 'Your note has been received. Thank you.';
+      status.textContent = 'Your note has been received. Please allow one business day for a personal reply.' + (result.reference ? ' Reference: ' + result.reference + '.' : '');
       button.textContent = 'Note received';
       form.querySelectorAll('input, textarea').forEach(function (input) { input.disabled = true; });
     } catch (error) {
