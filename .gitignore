@@ -24,3 +24,6 @@ _UNDERSTUDY/
 .remember/
 .playwright-mcp/
 _founder-invite-template/
+node_modules/
+test-results/
+playwright-report/
