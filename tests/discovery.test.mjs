@@ -131,6 +131,18 @@ test('public purchase path is the diagnostic, with later 50/50 project payments 
   assert.doesNotMatch(book, /initEmbeddedCheckout|\/api\/understudy\/checkout/);
 });
 
+test('systems consultation is the $500 Cal.com booking, reachable from book and home', async () => {
+  const consult = await readFile(resolve(root, 'consult.html'), 'utf8');
+  assert.match(consult, /\$500/);
+  assert.match(consult, /frank-epps-ujdwu4\/systems-consultation/);
+  assert.match(consult, /UnderstudyDiscovery\.bookingParams/);
+  assert.doesNotMatch(consult, /initEmbeddedCheckout|\/api\/understudy\/checkout|buy\.stripe\.com/);
+  for (const file of ['book.html', 'index.html']) {
+    const doc = await documentFor(file);
+    assert.ok(elements(doc, 'a').some(node => node.attribs.href === 'consult.html'), file + ' links to the consultation');
+  }
+});
+
 test('major build budgets stay visible without buy-now project links', async () => {
   const doc = await documentFor('index.html');
   const table = elements(doc, 'table').find(node => node.attribs.class === 'price-table reveal');
