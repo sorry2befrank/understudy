@@ -7,7 +7,7 @@ import { parseDocument, DomUtils } from 'htmlparser2';
 
 const root = resolve(import.meta.dirname, '..');
 const origin = 'https://understudy.consulting';
-const pages = ['index.html', 'business-automation-atlanta.html', 'website-development-atlanta.html', 'work.html', 'systems.html', 'founders.html', 'book.html'];
+const pages = ['index.html', 'business-automation-atlanta.html', 'website-development-atlanta.html', 'work.html', 'systems.html', 'book.html', 'consult.html'];
 const documentFor = async (file) => parseDocument(await readFile(resolve(root, file), 'utf8'));
 const elements = (doc, name) => DomUtils.findAll(node => node.name === name, doc.children);
 const text = node => DomUtils.textContent(node);
