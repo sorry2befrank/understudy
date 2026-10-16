@@ -2,7 +2,7 @@
   'use strict';
   var KEY = 'understudy-discovery-v1';
   var MAX_AGE = 30 * 60 * 1000;
-  var pages = ['/', '/index.html', '/work.html', '/systems.html', '/founders.html', '/book.html', '/business-automation-atlanta.html', '/website-development-atlanta.html'];
+  var pages = ['/', '/index.html', '/work.html', '/systems.html', '/book.html', '/business-automation-atlanta.html', '/website-development-atlanta.html'];
   var sources = ['chatgpt', 'google', 'bing', 'perplexity', 'google-business', 'direct'];
   var path = window.location.pathname;
   if (pages.indexOf(path) === -1) return;
