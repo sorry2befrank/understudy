@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>(function(){try{var t=localStorage.getItem('understudy-theme');if(!t&&window.matchMedia&&matchMedia('(prefers-color-scheme: light)').matches)t='light';if(t==='light')document.documentElement.setAttribute('data-theme','light');}catch(e){}})();</script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Book a Systems Consultation | Understudy Consulting</title>
+  <meta name="description" content="Book a $500 paid working session with Frank Epps on a system you want to set up for your own business: an operations desk, an outreach system or a nightly reviewer." />
+  <link rel="canonical" href="https://understudy.consulting/consult.html" />
+  <script src="discovery-attribution.js"></script>
+  <meta name="theme-color" content="#0C0C0D" />
+  <link rel="icon" href="img/understudy-roundel.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Montserrat:wght@300;400;500;600&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="rebrand.css" />
+  <link rel="stylesheet" href="interior.css?v=2" />
+  <link rel="stylesheet" href="site-nav.css" />
+  <style>
+    .process-grid.two-up { grid-template-columns: repeat(2, 1fr); }
+    .cal-fallback { margin-top: 14px; color: var(--dim); }
+    @media (max-width: 680px) {
+      .process-grid.two-up { grid-template-columns: 1fr; }
+      #my-cal-inline-systems-consultation { min-height: 680px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <a class="brand" href="index.html" aria-label="Understudy Consulting home">
+        <img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="42" height="42" />
+        <span class="brand-type"><span class="brand-name">UNDERSTUDY</span><span class="brand-sub">CONSULTING</span></span>
+      </a>
+      <nav class="nav site-nav" aria-label="Primary navigation">
+        <div class="nav-links" id="site-nav-menu">
+          <a href="index.html">Home</a>
+          <a href="work.html">Work</a>
+          <a href="systems.html">Systems</a>
+        </div>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch light or dark mode"></button>
+        <button class="nav-menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu" aria-label="Open navigation menu"><span class="nav-menu-icon" aria-hidden="true"></span></button>
+        <a class="btn nav-cta" href="book.html">Start Here</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="booking-intro">
+      <div class="wrap">
+        <div class="reveal"><span class="eyebrow">Set up your own system</span><h1>Book a systems consultation.</h1><p>$500. A paid working session with Frank on a system you want to set up for your own business.</p></div>
+        <div class="booking-facts reveal"><span><strong>$500</strong> paid when you book</span><span><strong>Confirmed</strong> only when payment succeeds</span></div>
+      </div>
+    </section>
+
+    <section class="booking-embed" aria-label="Choose a systems consultation time">
+      <div class="wrap">
+        <div class="cal-frame reveal">
+          <div id="my-cal-inline-systems-consultation"></div>
+        </div>
+        <p class="cal-fallback">If the calendar does not load, email <a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a>.</p>
+      </div>
+    </section>
+
+    <section id="choose">
+      <div class="wrap">
+        <div class="section-head-new reveal"><div><span class="eyebrow">Two different sessions</span><h2>Consultation or diagnosis?</h2></div><p>Pick the one that matches where you are.</p></div>
+        <div class="process-grid two-up">
+          <article class="process-step reveal"><span class="k">$500 / CONSULTATION</span><h3>Planning and setting up a new system</h3><p>You want a system your business does not have yet. We plan it and work out how to set it up.</p></article>
+          <article class="process-step reveal"><span class="k">$150 / DIAGNOSIS</span><h3>Inspecting something already built</h3><p>You already have a product, site or workflow and want it inspected.</p><p><a href="book.html">Book the $150 diagnosis</a></p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="systems">
+      <div class="wrap">
+        <div class="section-head-new reveal"><div><span class="eyebrow">What the session can cover</span><h2>Systems we can set up</h2></div><p>We work out what your system should do, what it needs, and the first step to set it up.</p></div>
+        <div class="process-grid">
+          <article class="process-step reveal"><span class="k">01 / OPERATIONS DESK</span><h3>An operations desk</h3><p>AI agents take small written tasks and report back with evidence. You keep the decisions about money, customers and your public site.</p></article>
+          <article class="process-step reveal"><span class="k">02 / OUTREACH</span><h3>An outreach system</h3><p>Research and a specific email for each business, safety checks before anything sends, opt-outs honoured, and a scoreboard of results. You answer the real people yourself.</p></article>
+          <article class="process-step reveal"><span class="k">03 / NIGHTLY REVIEW</span><h3>A nightly reviewer</h3><p>It reads your records with read-only access and leaves a short, sourced list of what needs attention. It suggests; you decide.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site"><div class="wrap"><span>Understudy Consulting · built and run by Frank Epps</span><a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></div></footer>
+
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    // Frank creates this Cal.com event (paid $500)
+    var CONSULT_NAMESPACE = "systems-consultation";
+    var CONSULT_CAL_LINK = "frank-epps-ujdwu4/systems-consultation";
+    Cal("init", CONSULT_NAMESPACE, {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns[CONSULT_NAMESPACE]("inline", {
+      elementOrSelector:"#my-cal-inline-systems-consultation",
+      config: Object.assign({"layout":"month_view","useSlotsViewOnSmallScreen":"true"}, window.UnderstudyDiscovery ? window.UnderstudyDiscovery.bookingParams() : {}),
+      calLink: CONSULT_CAL_LINK
+    });
+    Cal.ns[CONSULT_NAMESPACE]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <script>
+    (function(){var KEY='understudy-theme',root=document.documentElement,btn=document.getElementById('theme-toggle');var sun='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5 5l1.8 1.8M17.2 17.2 19 19M19 5l-1.8 1.8M6.8 17.2 5 19"/></svg>';var moon='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.2 6.2 0 0 0 10.5 10.5z"/></svg>';function light(){return root.getAttribute('data-theme')==='light'}function paint(){btn.innerHTML=light()?moon:sun}paint();btn.addEventListener('click',function(){var next=light()?'dark':'light';if(next==='light')root.setAttribute('data-theme','light');else root.removeAttribute('data-theme');try{localStorage.setItem(KEY,next)}catch(e){}paint()})})();
+    (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(el){el.classList.add('in')});return}var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}})},{threshold:.08});els.forEach(function(el){io.observe(el)})})();
+  </script>
+  <script src="site-nav.js"></script>
+</body>
+</html>

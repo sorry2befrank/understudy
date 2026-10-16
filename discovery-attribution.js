@@ -2,7 +2,7 @@
   'use strict';
   var KEY = 'understudy-discovery-v1';
   var MAX_AGE = 30 * 60 * 1000;
-  var pages = ['/', '/index.html', '/work.html', '/systems.html', '/book.html', '/business-automation-atlanta.html', '/website-development-atlanta.html'];
+  var pages = ['/', '/index.html', '/work.html', '/systems.html', '/book.html', '/consult.html', '/business-automation-atlanta.html', '/website-development-atlanta.html'];
   var sources = ['chatgpt', 'google', 'bing', 'perplexity', 'google-business', 'direct'];
   var path = window.location.pathname;
   if (pages.indexOf(path) === -1) return;
@@ -40,7 +40,7 @@
     document.querySelectorAll('a[href]').forEach(function (link) {
       var url;
       try { url = new URL(link.getAttribute('href'), window.location.href); } catch (error) { return; }
-      if (url.origin !== window.location.origin || url.pathname !== '/book.html') return;
+      if (url.origin !== window.location.origin || (url.pathname !== '/book.html' && url.pathname !== '/consult.html')) return;
       var tags = campaignParams();
       Object.keys(tags).forEach(function (key) { if (!url.searchParams.has(key)) url.searchParams.set(key, tags[key]); });
       link.setAttribute('href', url.pathname + url.search + url.hash);
