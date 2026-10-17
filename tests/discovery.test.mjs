@@ -131,7 +131,7 @@ test('public purchase path is the diagnostic, with later 50/50 project payments 
   assert.doesNotMatch(book, /initEmbeddedCheckout|\/api\/understudy\/checkout/);
 });
 
-test('systems consultation is the $500 Cal.com booking, reachable from book and home', async () => {
+test('consultation is the $500 Cal.com booking, reachable from book and home', async () => {
   const consult = await readFile(resolve(root, 'consult.html'), 'utf8');
   assert.match(consult, /\$500/);
   assert.match(consult, /frank-epps-ujdwu4\/systems-consultation/);
