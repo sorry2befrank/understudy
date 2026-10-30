@@ -80,6 +80,7 @@ footer.site a { color: var(--cobalt); }
 .teacher a { font-weight: 600; }
 .new-main .seat-confirmation { padding: 24px; margin: 0 0 28px; background: var(--surface); border: 1px solid var(--cobalt); border-left-width: 4px; border-radius: 12px; }
 .seat-confirmation h2 { color: var(--cobalt); margin-bottom: 12px; }
+.seat-confirmation h2:focus { outline: none; }
 .seat-confirmation p { margin: 0; }
 .work-with-me-page .new-main { padding-top: 32px; }
 .work-hero { max-width: 820px; margin-bottom: 44px; }

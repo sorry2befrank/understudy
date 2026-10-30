@@ -71,6 +71,7 @@ for (const course of ['basics', 'workshop']) {
     await expect(panel).toBeVisible();
     await expect(panel).toHaveAttribute('role', 'status');
     await expect(panel.locator('h2')).toBeFocused();
+    await expect(panel).toBeInViewport({ ratio: 1 });
     await expect(page.locator('#confirmation-' + (course === 'basics' ? 'workshop' : 'basics'))).toBeHidden();
     await expect(panel).toContainText(course === 'basics' ? "You're in." : 'Your seat is reserved.');
     await expect(page.getByRole('heading', { name: 'AI Basics', exact: true })).toBeVisible();

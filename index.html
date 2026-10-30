@@ -77,7 +77,7 @@
     <div><dt>Where:</dt><dd>Online. Your class link comes by email.</dd></div>
     <div class="refunds"><dt>Refunds:</dt><dd>AI Basics: full refund until 6 PM Eastern on Friday, November 13. 30-Day Workshop: full refund through Tuesday, December 29. Email frank@marqueeweb.com.</dd></div>
     <div><dt>Age:</dt><dd>Both classes are for adults 18 and older.</dd></div>
-    <div><dt>Questions:</dt><dd><a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></dd></div>
+    <div id="contact"><dt>Questions:</dt><dd><a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></dd></div>
   </dl></section>
   <section class="teacher" aria-label="About Frank"><img src="img/frank.jpg" alt="Frank Epps" width="104" height="104" loading="lazy"><p><strong>Taught by Frank Epps.</strong> U.S. Air Force electrical and environmental specialist, instrumentation and control technician at Blue Origin, robotics field technician, and now builds AI systems for creators and small businesses. <a href="work-with-me.html">Work with me</a></p></section>
 </main>
@@ -88,7 +88,8 @@
     if (seat !== 'basics' && seat !== 'workshop') return;
     var panel = document.getElementById('confirmation-' + seat);
     panel.hidden = false;
-    panel.querySelector('h2').focus();
+    panel.querySelector('h2').focus({ preventScroll: true });
+    panel.scrollIntoView({ block: 'center' });
   })();
 </script>
 </body>

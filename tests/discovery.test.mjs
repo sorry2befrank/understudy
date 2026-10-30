@@ -245,3 +245,25 @@ test('build booking links carry attribution like the other booking pages', () =>
   assert.match(links[0].href, /^\/start-a-build\.html\?utm_source=chatgpt/);
   assert.equal(links[1].href, 'founders.html');
 });
+
+test('every page names the right paid session and links the path it names', async () => {
+  const hub = await readFile(resolve(root, 'work-with-me.html'), 'utf8');
+  assert.doesNotMatch(hub, /Start with a \$150 diagnosis/);
+  assert.equal(hub.split('Fix what you already have with a $150 diagnosis, or plan a new build with a $500 consultation, credited toward the build.').length - 1, 2);
+  const book = await documentFor('book.html');
+  assert.doesNotMatch(text(book), /or idea/);
+  assert.ok(elements(book, 'a').some(node => node.attribs.href === 'start-a-build.html' && text(node) === 'Start a build.'));
+  assert.match(text(book), /The only consulting services you book and pay for directly on this site/);
+  assert.match(text(await documentFor('consult.html')), /Credited toward the build if we continue\./);
+  const website = await documentFor('website-development-atlanta.html');
+  assert.ok(elements(website, 'a').some(node => node.attribs.href === 'book.html' && text(node) === '$150 diagnosis'), 'repairs keep a $150 route');
+  const pricing = await documentFor('pricing.html');
+  for (const href of ['start-a-build.html', 'book.html', 'consult.html']) {
+    assert.ok(elements(pricing, 'a').some(node => node.attribs.href === href), 'pricing links ' + href);
+  }
+  const home = await documentFor('index.html');
+  assert.equal(DomUtils.findAll(node => node.attribs?.id === 'contact', home.children).length, 1, 'pay.html links index.html#contact');
+  const build = await readFile(resolve(root, 'start-a-build.html'), 'utf8');
+  assert.match(build, /<meta property="og:url" content="https:\/\/understudy\.consulting\/start-a-build\.html" \/>/);
+  assert.match(build, /<meta property="og:image" content="https:\/\/understudy\.consulting\/img\/understudy-logo\.png" \/>/);
+});
