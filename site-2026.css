@@ -103,6 +103,22 @@ footer.site a { color: var(--cobalt); }
 .work-who h2 { font-size: 30px; }
 .work-who p { color: var(--muted); }
 .work-who .eyebrow { color: var(--cobalt); }
+.new-main .work-intro { border-top: 0; padding-top: 0; }
+.work-intro h1 { margin: 12px 0 16px; font-size: clamp(36px, 5.2vw, 60px); line-height: 1.02; }
+.work-intro p:not(.eyebrow) { font-size: 18px; }
+.new-main .hub-booking { padding: 0 0 48px; }
+.hub-booking h2 { margin: 0 0 8px; }
+.hub-booking h2:focus { outline: none; }
+.hub-booking > p { color: var(--muted); margin: 0 0 18px; }
+.hub-booking .cal-frame { border: 1px solid var(--line); padding: 8px; overflow: hidden; }
+.hub-cal { width: 100%; min-height: 680px; overflow: auto; }
+.hub-booking .cal-fallback { margin: 14px 0 0; font-size: 15px; }
+.new-main .work-prices { padding: 40px 0 16px; border-top: 1px solid var(--line); }
+.price-list { margin: 20px 0 18px; }
+.price-list > div { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 16px; padding: 14px 0; border-top: 1px solid var(--line); }
+.price-list dt { font-weight: 600; }
+.price-list dd { margin: 0; color: var(--muted); }
+.price-list dd strong { color: var(--text); }
 /* Existing page tokens and literal exceptions; protected stylesheets stay intact. */
 .reveal { opacity: 1; transform: none; }
 .service-page, [data-theme="light"] .service-page { --accent: var(--cobalt); }
@@ -147,6 +163,7 @@ footer.site a { color: var(--cobalt); }
   .class-card h2 { font-size: 40px; }
   .new-main .work-who { grid-template-columns: 1fr; }
   .work-who figure { max-width: 260px; }
+  .price-list > div { grid-template-columns: 1fr; gap: 4px; }
   .price-table td:nth-child(2) { white-space: normal; }
   .good-to-know dl > .refunds { flex-basis: 100%; }
   footer.site .wrap { align-items: flex-start; justify-content: flex-start; }

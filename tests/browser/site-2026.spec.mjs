@@ -141,13 +141,45 @@ for (const path of navPages) {
   });
 }
 
-test('service hub has exactly the three approved prices and correct offer routes', async ({ page }) => {
+test('service hub introduces Frank first, keeps three orange buttons that open the right calendar, and puts prices last', async ({ page }) => {
   await page.goto('/work-with-me.html');
-  expect(new Set((await page.locator('body').innerText()).match(/\$\d[\d,]*/g))).toEqual(new Set(['$150', '$500', '$1,500']));
+  await expect(page.locator('h1')).toHaveText("I'm Frank Epps. I do AI consultation.");
+  const sections = await page.locator('main > section').evaluateAll(nodes => nodes.map(node => node.className));
+  expect(sections[0]).toContain('work-intro');
+  expect(sections[sections.length - 1]).toContain('work-prices');
+  expect(await page.locator('.work-intro').innerText()).not.toMatch(/\$\d/);
   await expect(page.locator('.offer-card')).toHaveCount(3);
+  await expect(page.locator('.offer-card .price')).toHaveCount(0);
   const routes = await page.locator('.offer-card .btn').evaluateAll(links => links.map(link => new URL(link.href).pathname));
   expect(routes).toEqual(['/book.html', '/consult.html', '/start-a-build.html']);
-  await expect(page.getByRole('link', { name: 'View website and major-build price ranges', exact: true })).toHaveAttribute('href', 'pricing.html');
+  await expect(page.locator('#booking')).toBeHidden();
+  for (const [name, namespace, calLink] of [
+    ['Book the $150 diagnosis', 'hub-diagnosis', 'frank-epps-ujdwu4/30min'],
+    ['Book a consultation', 'hub-consultation', 'frank-epps-ujdwu4/systems-consultation'],
+    ['Start a build', 'hub-diagnosis', 'frank-epps-ujdwu4/30min'],
+  ]) {
+    await page.locator('.offer-card .btn', { hasText: name }).click();
+    await expect(page).toHaveURL(/\/work-with-me\.html/);
+    await expect(page.locator('#booking')).toBeVisible();
+    await expect(page.locator('#booking-title')).toHaveText(name);
+    await expect(page.locator('#booking-title')).toBeFocused();
+    await expect(page.locator('#my-cal-inline-' + namespace)).toBeVisible();
+    const inline = await page.evaluate(ns => window.Cal.ns[ns].q.map(args => Array.from(args)).find(args => args[0] === 'inline'), namespace);
+    expect(inline[1].calLink).toBe(calLink);
+    expect(inline[1].elementOrSelector).toBe('#my-cal-inline-' + namespace);
+  }
+  await expect(page.locator('.work-prices dt')).toHaveText(['Diagnosis', 'Consultation', 'Builds']);
+  await expect(page.locator('.work-prices')).toContainText('$1,500, $3,000 or $6,000');
+  await expect(page.getByRole('link', { name: 'See the full price list', exact: true })).toHaveAttribute('href', 'pricing.html');
+});
+
+test('without JavaScript the three hub buttons still reach their booking pages', async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto('/work-with-me.html');
+  await page.locator('.offer-card .btn', { hasText: 'Book a consultation' }).click();
+  await expect(page).toHaveURL(/\/consult\.html/);
+  await context.close();
 });
 
 test('Seed form retains its endpoint, hidden honeypot and acknowledgement flow', async ({ page }) => {

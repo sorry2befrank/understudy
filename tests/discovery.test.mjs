@@ -154,14 +154,14 @@ test('major build budgets stay visible without buy-now project links', async () 
   const doc = await documentFor('pricing.html');
   const table = elements(doc, 'table').find(node => node.attribs.class === 'price-table reveal');
   assert.match(text(table), /Builds and fixes/);
-  assert.match(text(table), /\$1,500–\$5,000/);
+  assert.match(text(table), /\$1,500 \/ \$3,000 \/ \$6,000/);
   assert.doesNotMatch(text(table), /Small build or system build|Live app or site rescue|Website build \+ scoped AI|\$3,000–\$6,000/);
-  assert.match(text(table), /Major operator \/ automation build/);
-  assert.match(text(table), /From \$10,000/);
+  assert.match(text(table), /A major build/);
+  assert.match(text(table), /starts at \$10,000 plus a retainer/);
   assert.equal(elements(table, 'button').length, 0);
   assert.equal(elements(table, 'a').length, 0);
   const hub = await documentFor('work-with-me.html');
-  assert.ok(elements(hub, 'a').some(node => node.attribs.href === 'pricing.html' && text(node) === 'View website and major-build price ranges'));
+  assert.ok(elements(hub, 'a').some(node => node.attribs.href === 'pricing.html' && text(node) === 'See the full price list'));
 });
 
 test('class checkout uses enabled native anchors with the correct course mapping', async () => {
@@ -196,48 +196,6 @@ test('new service and pricing paths retain referral attribution without storing 
   }
 });
 
-test('builds book the $500 consultation on their own page, credited toward the build', async () => {
-  const page = await readFile(resolve(root, 'start-a-build.html'), 'utf8');
-  const doc = await documentFor('start-a-build.html');
-  assert.equal(text(elements(doc, 'h1')[0]), 'Start a build.');
-  assert.equal(DomUtils.findAll(node => node.attribs?.id === 'my-cal-inline-build-consultation', doc.children).length, 1);
-  assert.match(page, /var BUILD_NAMESPACE = "build-consultation";/);
-  assert.match(page, /var BUILD_CAL_LINK = "frank-epps-ujdwu4\/systems-consultation";/);
-  assert.match(page, /UnderstudyDiscovery\.bookingParams/);
-  assert.match(text(doc), /If we build together, the \$500 comes off the build price\./);
-  assert.match(text(doc), /with the \$500 taken off/);
-  assert.doesNotMatch(page, /initEmbeddedCheckout|\/api\/understudy\/checkout|buy\.stripe\.com|checkout\.stripe\.com|pay\.html/);
-  assert.ok(elements(doc, 'a').some(node => node.attribs.href === 'mailto:frank@marqueeweb.com'));
-  const hub = await documentFor('work-with-me.html');
-  const buildsButton = elements(hub, 'a').find(node => text(node) === 'Start a build');
-  assert.equal(buildsButton?.attribs.href, 'start-a-build.html');
-  assert.match(text(hub), /Every build starts with the \$500 consultation\. It comes off the build price if we build together\./);
-});
-
-test('one rule across the site: the $150 diagnosis diagnoses what exists, the $500 consultation plans something new', async () => {
-  for (const file of [...pages, 'founders.html']) {
-    const content = text(await documentFor(file));
-    for (const pattern of [/For a build, book the \$150 diagnostic/, /before you commit to a build/, /or a fix or build you want me to take on/, /scoping work for me/]) {
-      assert.doesNotMatch(content, pattern, file + ' still says ' + pattern);
-    }
-  }
-  const pricing = await readFile(resolve(root, 'pricing.html'), 'utf8');
-  assert.equal(pricing.split('For a new build, book the $500 consultation first. To fix something you already have, book the $150 diagnostic.').length - 1, 3);
-  assert.match(pricing, /A paid working session to plan a build or a system you want to set up for your own business\. Credited toward the build if we continue\./);
-  const website = await documentFor('website-development-atlanta.html');
-  assert.doesNotMatch(text(website), /Start with a \$150 diagnosis|Book the \$150 diagnosis|Diagnostic: \$150/);
-  assert.match(text(website), /Consultation: \$500\./);
-  assert.equal(elements(website, 'a').filter(node => node.attribs.href === 'start-a-build.html' && text(node) === 'Start a build').length, 2);
-  const work = await documentFor('work.html');
-  assert.ok(elements(work, 'a').some(node => node.attribs.href === 'work-with-me.html' && text(node) === 'Work with me'));
-  assert.ok(!elements(work, 'a').some(node => text(node) === 'Start with a diagnosis'));
-  assert.match(text(await documentFor('book.html')), /I inspect what you already have and explain the scope before you commit to a fix\./);
-  assert.match(text(await documentFor('consult.html')), /Diagnosing a problem with what you have/);
-  assert.doesNotMatch(text(await documentFor('consult.html')), /Inspecting or fixing|a fix you want me to take on/);
-  const automation = await documentFor('business-automation-atlanta.html');
-  assert.ok(elements(automation, 'a').some(node => node.attribs.href === 'book.html' && text(node) === 'Start with a $150 diagnosis'), 'automation keeps its $150 diagnosis: it inspects an existing workflow');
-});
-
 test('build booking links carry attribution like the other booking pages', () => {
   const window = { location: { origin, pathname: '/work-with-me.html', search: '?utm_source=chatgpt.com', href: origin + '/work-with-me.html?utm_source=chatgpt.com' } };
   const links = ['start-a-build.html', 'founders.html'].map(href => ({ href, getAttribute() { return this.href; }, setAttribute(key, value) { this.href = value; } }));
@@ -248,39 +206,76 @@ test('build booking links carry attribution like the other booking pages', () =>
   assert.equal(links[1].href, 'founders.html');
 });
 
-test('every page names the right paid session and links the path it names', async () => {
-  const hub = await readFile(resolve(root, 'work-with-me.html'), 'utf8');
-  assert.doesNotMatch(hub, /Start with a \$150 diagnosis/);
-  assert.equal(hub.split('Book a $150 diagnosis to find the problem with something you already have, or plan a new build with a $500 consultation, credited toward the build.').length - 1, 2);
-  assert.doesNotMatch(hub, /Fix what you already have with a \$150 diagnosis/);
+test('the $150 diagnosis prices every build and fix; Start a build books it', async () => {
+  const page = await readFile(resolve(root, 'start-a-build.html'), 'utf8');
+  const doc = await documentFor('start-a-build.html');
+  assert.equal(text(elements(doc, 'h1')[0]), 'Start a build.');
+  assert.equal(DomUtils.findAll(node => node.attribs?.id === 'my-cal-inline-build-diagnosis', doc.children).length, 1);
+  assert.match(page, /var BUILD_NAMESPACE = "build-diagnosis";/);
+  assert.match(page, /var BUILD_CAL_LINK = "frank-epps-ujdwu4\/30min";/);
+  assert.match(page, /UnderstudyDiscovery\.bookingParams/);
+  assert.match(text(doc), /Builds are \$1,500, \$3,000 or \$6,000\. Every build starts with a \$150 diagnosis/);
+  assert.doesNotMatch(page, /systems-consultation|\$500/);
+  assert.doesNotMatch(page, /initEmbeddedCheckout|\/api\/understudy\/checkout|buy\.stripe\.com|checkout\.stripe\.com|pay\.html/);
+  assert.ok(elements(doc, 'a').some(node => node.attribs.href === 'mailto:frank@marqueeweb.com'));
+  assert.match(page, /<meta property="og:url" content="https:\/\/understudy\.consulting\/start-a-build\.html" \/>/);
+  assert.match(page, /<meta property="og:image" content="https:\/\/understudy\.consulting\/img\/understudy-logo\.png" \/>/);
+  const hubRaw = await readFile(resolve(root, 'work-with-me.html'), 'utf8');
+  const hub = await documentFor('work-with-me.html');
+  assert.equal(elements(hub, 'a').find(node => text(node) === 'Start a build')?.attribs.href, 'start-a-build.html');
+  assert.match(text(hub), /Every build starts with the \$150 diagnosis, and you get a fixed price before any work starts\./);
+  assert.match(text(hub), /I look at what you want built or what isn't working, then give you a fixed price before any work starts\./);
+  assert.equal(hubRaw.split('Book a diagnosis, a consultation or a build, and pick a date on the same page.').length - 1, 2);
   const book = await documentFor('book.html');
-  assert.doesNotMatch(text(book), /or idea/);
-  assert.ok(elements(book, 'a').some(node => node.attribs.href === 'start-a-build.html' && text(node) === 'Start a build.'));
+  assert.match(text(book), /I look at what you want built or what isn't working, then give you a fixed price before you commit\./);
+  assert.ok(elements(book, 'a').some(node => node.attribs.href === 'consult.html' && text(node) === 'Book a consultation.'));
   assert.match(text(book), /The only consulting services you book and pay for directly on this site/);
-  assert.match(text(await documentFor('consult.html')), /Credited toward the build if we continue\./);
   const website = await documentFor('website-development-atlanta.html');
+  assert.match(text(website), /Diagnosis: \$150\./);
+  assert.match(text(website), /A website with a back end is \$1,500, \$3,000 or \$6,000, set after the diagnosis\./);
+  assert.equal(elements(website, 'a').filter(node => node.attribs.href === 'start-a-build.html' && text(node) === 'Start a build').length, 2);
   assert.ok(elements(website, 'a').some(node => node.attribs.href === 'book.html' && text(node) === '$150 diagnosis'), 'repairs keep a $150 route');
-  const pricing = await documentFor('pricing.html');
+  const automation = await documentFor('business-automation-atlanta.html');
+  assert.ok(elements(automation, 'a').some(node => node.attribs.href === 'book.html' && text(node) === 'Start with a $150 diagnosis'));
+  const work = await documentFor('work.html');
+  assert.ok(elements(work, 'a').some(node => node.attribs.href === 'work-with-me.html' && text(node) === 'Work with me'));
+});
+
+test('the $500 consultation is a conversation about anything, taken off the price if they hire Frank', async () => {
+  const consult = text(await documentFor('consult.html'));
+  assert.match(consult, /An hour with Frank about anything you want to talk through/);
+  assert.match(consult, /If you hire me afterward, the \$500 comes off the price\./);
+  assert.match(consult, /Getting a price for a build or a fix/);
+  assert.doesNotMatch(consult, /Setting up your own system|Diagnosing a problem with what you have|Credited toward the build if we continue/);
+  assert.match(text(await documentFor('work-with-me.html')), /Talk it through/);
+});
+
+test('pricing: builds and fixes at $1,500, $3,000 or $6,000 after the diagnosis; major builds from $10,000; support is not priced', async () => {
+  const raw = await readFile(resolve(root, 'pricing.html'), 'utf8');
+  assert.equal(raw.split('Every build or fix starts with the $150 diagnostic. After I see what you need, I give you a fixed price; these are not checkout prices.').length - 1, 3);
+  const doc = await documentFor('pricing.html');
+  const table = elements(doc, 'table').find(node => node.attribs.class === 'price-table reveal');
+  const rows = elements(table, 'tr').filter(node => elements(node, 'td').length);
+  assert.deepEqual(rows.map(node => text(elements(node, 'td')[0])), ['Diagnostic', 'Consultation', 'Builds and fixes'], 'no more than three packages');
+  assert.deepEqual(rows.map(node => text(elements(node, 'td')[1])), ['$150', '$500', '$1,500 / $3,000 / $6,000']);
+  assert.match(text(rows[2]), /I set the price after the \$150 diagnosis, before any work starts\./);
+  assert.match(text(rows[2]), /email support, FAQs/);
+  assert.match(text(rows[2]), /starts at \$10,000 plus a retainer to maintain it, priced with the build\./);
+  assert.match(text(doc), /The monthly price is set with the build, based on what it takes to maintain\./);
   for (const href of ['start-a-build.html', 'book.html', 'consult.html']) {
-    assert.ok(elements(pricing, 'a').some(node => node.attribs.href === href), 'pricing links ' + href);
+    assert.ok(elements(doc, 'a').some(node => node.attribs.href === href), 'pricing links ' + href);
+  }
+});
+
+test('no page keeps a retired price or the retired $500-build rule', async () => {
+  for (const file of [...pages, 'founders.html']) {
+    const raw = await readFile(resolve(root, file), 'utf8');
+    for (const pattern of [/Every build starts with (a|the) \$500/, /new build, book the \$500/, /plan a new build with a \$500/, /Consultation: \$500/,
+      /\$500 taken off/, /\$1,500[–-]\$5,000/, /\$3,000[–-]\$6,000/, /\$1,500[–-]\$3,000/, /\$6,000 mo/, /Governed operate/, /Major operator/,
+      /For a build, book the \$150 diagnostic/, /scoping work for me/, /Fix what you already have with a \$150 diagnosis/]) {
+      assert.doesNotMatch(raw, pattern, file + ' still says ' + pattern);
+    }
   }
   const home = await documentFor('index.html');
   assert.equal(DomUtils.findAll(node => node.attribs?.id === 'contact', home.children).length, 1, 'pay.html links index.html#contact');
-  const build = await readFile(resolve(root, 'start-a-build.html'), 'utf8');
-  assert.match(build, /<meta property="og:url" content="https:\/\/understudy\.consulting\/start-a-build\.html" \/>/);
-  assert.match(build, /<meta property="og:image" content="https:\/\/understudy\.consulting\/img\/understudy-logo\.png" \/>/);
-});
-
-test('one builds-and-fixes row, $1,500 to $5,000, backs the from-$1,500 build price', async () => {
-  const doc = await documentFor('pricing.html');
-  const table = elements(doc, 'table').find(node => node.attribs.class === 'price-table reveal');
-  const row = elements(table, 'tr').find(node => text(node).startsWith('Builds and fixes'));
-  assert.ok(row, 'pricing has the builds and fixes row');
-  assert.match(text(row), /\$1,500–\$5,000/);
-  assert.match(text(row), /A new build starts with the \$500 consultation, credited toward the build\./);
-  assert.match(text(row), /A fix starts with the \$150 diagnosis, and I price it once I can see the issue\./);
-  assert.match(text(await documentFor('start-a-build.html')), /Builds start at \$1,500\./);
-  const website = text(await documentFor('website-development-atlanta.html'));
-  assert.match(website, /typically \$1,500-\$5,000/);
-  assert.doesNotMatch(website, /\$3,000-\$6,000/);
 });

@@ -50,7 +50,7 @@ test('referral survives service page to booking and reaches the Cal embed config
   expect(inline[1].config.utm_content).toBe('business-automation-atlanta');
 });
 
-for (const path of ['/work-with-me.html', '/pricing.html']) {
+for (const path of ['/pricing.html']) {
   test('referral survives ' + path + ' to a booking', async ({ page }) => {
     await page.goto(path + '?utm_source=chatgpt.com&email=never-forward@example.org');
     await page.locator('main a[href^="/book.html"], main a[href^="/consult.html"]').first().click();
@@ -76,15 +76,27 @@ test('service content and its inquiry link remain available without JavaScript',
   await context.close();
 });
 
-test('referral survives the services hub to the build booking and reaches its Cal embed', async ({ page }) => {
+test('referral reaches the calendar that a services hub button opens', async ({ page }) => {
   await page.goto('/work-with-me.html?utm_source=chatgpt.com&email=never-forward@example.org');
+  await page.locator('.offer-card .btn', { hasText: 'Book the $150 diagnosis' }).click();
+  const inline = await page.evaluate(() => window.Cal.ns['hub-diagnosis'].q.map(args => Array.from(args)).find(args => args[0] === 'inline'));
+  expect(inline[1].calLink).toBe('frank-epps-ujdwu4/30min');
+  expect(inline[1].config.utm_source).toBe('chatgpt');
+  expect(inline[1].config.utm_content).toBe('work-with-me');
+  expect(JSON.stringify(inline[1].config)).not.toContain('never-forward');
+  expect(await page.evaluate(() => Boolean(window.Cal.config && window.Cal.config.forwardQueryParams))).toBe(false);
+});
+
+test('referral survives the website page to the build booking and reaches its Cal embed', async ({ page }) => {
+  await page.goto('/website-development-atlanta.html?utm_source=chatgpt.com&email=never-forward@example.org');
   await page.locator('main a[href^="/start-a-build.html"]').first().click();
   await expect(page).toHaveURL(/start-a-build.html\?utm_source=chatgpt/);
   expect(page.url()).not.toContain('never-forward');
   await expect(page.locator('h1')).toHaveText('Start a build.');
-  const inline = await page.evaluate(() => window.Cal.ns['build-consultation'].q.map(args => Array.from(args)).find(args => args[0] === 'inline'));
-  expect(inline[1].calLink).toBe('frank-epps-ujdwu4/systems-consultation');
-  expect(inline[1].elementOrSelector).toBe('#my-cal-inline-build-consultation');
+  await page.waitForFunction(() => window.Cal && window.Cal.ns && window.Cal.ns['build-diagnosis']);
+  const inline = await page.evaluate(() => window.Cal.ns['build-diagnosis'].q.map(args => Array.from(args)).find(args => args[0] === 'inline'));
+  expect(inline[1].calLink).toBe('frank-epps-ujdwu4/30min');
+  expect(inline[1].elementOrSelector).toBe('#my-cal-inline-build-diagnosis');
   expect(inline[1].config.utm_source).toBe('chatgpt');
-  expect(inline[1].config.utm_content).toBe('work-with-me');
+  expect(inline[1].config.utm_content).toBe('website-development-atlanta');
 });

@@ -65,13 +65,13 @@ test('major-build prices are readable on a phone and offer no direct project pur
   await page.setViewportSize({ width: 360, height: 900 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/work-with-me.html');
-  await page.getByRole('link', { name: 'View website and major-build price ranges', exact: true }).click();
+  await page.getByRole('link', { name: 'See the full price list', exact: true }).click();
   await expect(page).toHaveURL(/pricing\.html$/);
   await expect.poll(() => page.locator('#pricing .eyebrow').evaluate(node =>
     node.getBoundingClientRect().top >= document.querySelector('header.site').getBoundingClientRect().bottom
   )).toBeTruthy();
-  await expect(page.locator('#pricing')).toContainText('$1,500–$5,000');
-  await expect(page.locator('#pricing')).toContainText('From $10,000');
+  await expect(page.locator('#pricing')).toContainText('$1,500 / $3,000 / $6,000');
+  await expect(page.locator('#pricing')).toContainText('$10,000 plus a retainer');
   await expect(page.locator('#pricing')).toContainText('remaining 50% when the work is complete');
   await expect(page.locator('#pricing button, #pricing a[href*="pay.html"]')).toHaveCount(0);
   expect(await page.locator('#pricing td').evaluateAll(nodes => nodes.every(node => node.scrollWidth <= node.clientWidth + 2))).toBeTruthy();
