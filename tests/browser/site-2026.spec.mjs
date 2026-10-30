@@ -202,3 +202,11 @@ test('Seed form retains its endpoint, hidden honeypot and acknowledgement flow',
   await expect(page.getByRole('link', { name: 'Explore the Orrery', exact: true })).toHaveAttribute('rel', 'noopener');
   await expect(page.getByRole('link', { name: 'Explore the Orrery', exact: true })).toHaveAttribute('href', 'https://voyage.understudy.consulting/');
 });
+
+for (const old of ['/landing-v2.html', '/build.html']) {
+  test(old + ' forwards to Work with me with its query', async ({ page }) => {
+    await page.goto(old + '?utm_source=flyer');
+    await expect(page).toHaveURL(/\/work-with-me\.html\?utm_source=flyer$/);
+    await expect(page.locator('h1')).toHaveText("I'm Frank Epps. I do AI consultation.");
+  });
+}

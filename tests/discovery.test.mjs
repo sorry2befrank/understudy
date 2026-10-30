@@ -280,3 +280,16 @@ test('no page keeps a retired price or the retired $500-build rule', async () =>
   const home = await documentFor('index.html');
   assert.equal(DomUtils.findAll(node => node.attribs?.id === 'contact', home.children).length, 1, 'pay.html links index.html#contact');
 });
+
+test('retired pages forward to Work with me, keep the query and stay out of search', async () => {
+  for (const file of ['landing-v2.html', 'build.html']) {
+    const raw = await readFile(resolve(root, file), 'utf8');
+    assert.match(raw, /location\.replace\('\/work-with-me\.html' \+ location\.search\)/, file);
+    assert.match(raw, /<meta http-equiv="refresh" content="0; url=\/work-with-me\.html">/, file);
+    assert.match(raw, /<meta name="robots" content="noindex">/, file);
+    assert.match(raw, /<link rel="canonical" href="https:\/\/understudy\.consulting\/work-with-me\.html">/, file);
+    assert.doesNotMatch(raw, /\$\d/, file + ' carries no prices');
+  }
+  const sitemap = await readFile(resolve(root, 'sitemap.xml'), 'utf8');
+  assert.doesNotMatch(sitemap, /landing-v2\.html|\/build\.html/);
+});
