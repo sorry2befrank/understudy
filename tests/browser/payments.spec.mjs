@@ -70,7 +70,7 @@ test('major-build prices are readable on a phone and offer no direct project pur
   await expect.poll(() => page.locator('#pricing .eyebrow').evaluate(node =>
     node.getBoundingClientRect().top >= document.querySelector('header.site').getBoundingClientRect().bottom
   )).toBeTruthy();
-  await expect(page.locator('#pricing')).toContainText('$3,000–$6,000');
+  await expect(page.locator('#pricing')).toContainText('$1,500–$5,000');
   await expect(page.locator('#pricing')).toContainText('From $10,000');
   await expect(page.locator('#pricing')).toContainText('remaining 50% when the work is complete');
   await expect(page.locator('#pricing button, #pricing a[href*="pay.html"]')).toHaveCount(0);
