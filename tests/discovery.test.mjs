@@ -8,8 +8,10 @@ import { parseDocument, DomUtils } from 'htmlparser2';
 const root = resolve(import.meta.dirname, '..');
 const origin = 'https://understudy.consulting';
 const pages = ['index.html', 'business-automation-atlanta.html', 'website-development-atlanta.html', 'work.html', 'systems.html', 'book.html', 'consult.html', 'work-with-me.html', 'pricing.html'];
-// Fill with the two owner-supplied URLs before enabling class checkout.
-const classPaymentLinks = { basics: null, workshop: null };
+const classPaymentLinks = {
+  basics: 'https://buy.stripe.com/cNibJ11oU7h07Ty9tm4Rq0x',
+  workshop: 'https://buy.stripe.com/fZu4gz0kQeJsc9O7le4Rq0y'
+};
 const documentFor = async (file) => parseDocument(await readFile(resolve(root, file), 'utf8'));
 const elements = (doc, name) => DomUtils.findAll(node => node.name === name, doc.children);
 const text = node => DomUtils.textContent(node);
@@ -120,7 +122,7 @@ test('public project purchase path stays diagnostic; only the two approved class
     const hrefs = elements(doc, 'a').map(node => node.attribs.href || '');
     assert.ok(!hrefs.some(href => /(?:pay\.html|checkout\.stripe\.com)/.test(href)), file + ' must not advertise project checkout');
     const stripeHrefs = hrefs.filter(href => /buy\.stripe\.com/.test(href));
-    assert.deepEqual(new Set(stripeHrefs), new Set(file === 'index.html' ? Object.values(classPaymentLinks).filter(Boolean) : []), file + ' may link only its owner-approved class checkout URLs');
+    assert.deepEqual(new Set(stripeHrefs), new Set(file === 'index.html' ? Object.values(classPaymentLinks) : []), file + ' may link only its owner-approved class checkout URLs');
   }
   const home = await readFile(resolve(root, 'index.html'), 'utf8');
   const pricing = await readFile(resolve(root, 'pricing.html'), 'utf8');
@@ -161,22 +163,22 @@ test('major build budgets stay visible without buy-now project links', async () 
   assert.ok(elements(hub, 'a').some(node => node.attribs.href === 'pricing.html' && text(node) === 'View website and major-build price ranges'));
 });
 
-test('unconfigured class checkout stays disabled without placeholder or invented URLs', async () => {
+test('class checkout uses enabled native anchors with the correct course mapping', async () => {
   const doc = await documentFor('index.html');
   const buttons = elements(doc, 'a').filter(node => node.attribs.class?.split(/\s+/).includes('class-checkout'));
   assert.equal(buttons.length, 2);
   assert.deepEqual(new Set(buttons.map(node => node.attribs['data-class'])), new Set(['basics', 'workshop']));
   for (const button of buttons) {
-    const url = classPaymentLinks[button.attribs['data-class']];
-    if (url) assert.equal(button.attribs.href, url);
-    else {
-      assert.equal(button.attribs.href, undefined);
-      assert.equal(button.attribs['aria-disabled'], 'true');
-    }
+    assert.equal(button.attribs.href, classPaymentLinks[button.attribs['data-class']]);
+    assert.equal(button.attribs.target, undefined);
+    assert.equal(button.attribs['aria-disabled'], undefined);
+    assert.equal(button.attribs.disabled, undefined);
+    assert.equal(button.attribs.role, undefined);
+    assert.equal(button.attribs.tabindex, undefined);
   }
 });
 
-test('class checkout uses the two exact owner-approved Stripe URLs', { skip: Object.values(classPaymentLinks).some(url => !url) ? 'Pending owner-supplied AI Basics and 30-Day Workshop Payment Links; checkout is not release-ready.' : false }, async () => {
+test('class checkout uses the two exact owner-approved Stripe URLs', async () => {
   const doc = await documentFor('index.html');
   const links = elements(doc, 'a').filter(node => /buy\.stripe\.com/.test(node.attribs.href || '')).map(node => node.attribs.href);
   assert.equal(links.length, 2);

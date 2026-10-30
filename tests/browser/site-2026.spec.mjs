@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 
-// Real checkout is a separate release gate; no substitute URLs are permitted.
-const classPaymentLinks = { basics: null, workshop: null };
+const classPaymentLinks = {
+  basics: 'https://buy.stripe.com/cNibJ11oU7h07Ty9tm4Rq0x',
+  workshop: 'https://buy.stripe.com/fZu4gz0kQeJsc9O7le4Rq0y'
+};
 const navPages = ['/', '/work-with-me.html', '/founders.html', '/book.html', '/consult.html', '/pricing.html', '/work.html', '/systems.html', '/business-automation-atlanta.html', '/website-development-atlanta.html'];
 const primaryPages = { '/': 'Classes', '/work-with-me.html': 'Work with me', '/founders.html': 'The Seed' };
 const serviceChildren = ['/book.html', '/consult.html', '/pricing.html'];
@@ -28,32 +30,37 @@ test('classes home has approved offers, dates, prices and no unfinished copy', a
   expect(errors).toEqual([]);
 });
 
-test('unconfigured registration buttons cannot navigate to invented or placeholder checkouts', async ({ page }) => {
+test('registration links are visible, enabled native anchors with the approved labels', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.class-checkout')).toHaveCount(2);
   for (const [course, label] of Object.entries(classLabels)) {
     const button = page.locator('.class-checkout[data-class="' + course + '"]');
     await expect(button).toHaveText(label);
     await expect(button).toBeVisible();
-    if (classPaymentLinks[course]) {
-      await expect(button).toHaveAttribute('href', classPaymentLinks[course]);
-    } else {
-      await expect(button).not.toHaveAttribute('href');
-      await expect(button).toHaveAttribute('aria-disabled', 'true');
-      await button.dispatchEvent('click');
-      await expect(page).toHaveURL('http://127.0.0.1:4387/');
-    }
+    await expect(button).toBeEnabled();
+    await expect(button).toHaveAttribute('href', classPaymentLinks[course]);
+    await expect(button).not.toHaveAttribute('aria-disabled');
+    await expect(button).not.toHaveAttribute('disabled');
+    await expect(button).not.toHaveAttribute('role');
+    await expect(button).not.toHaveAttribute('tabindex');
+    await expect(page.getByRole('link', { name: label, exact: true })).toHaveCount(1);
   }
 });
 
-test('registration buttons use the two exact owner-approved Stripe checkout URLs', async ({ page }) => {
-  test.skip(Object.values(classPaymentLinks).some(url => !url), 'Pending owner-supplied Payment Links; no claim that checkout has passed.');
-  await page.goto('/');
+test('registration links navigate in the same tab to the exact approved Stripe URLs', async ({ page }) => {
+  // Intercept locally: exercise native link navigation without visiting or paying Stripe.
+  for (const url of Object.values(classPaymentLinks)) {
+    await page.route(url, route => route.fulfill({ contentType: 'text/html', body: '<!doctype html><title>Class checkout fixture</title>' }));
+  }
   for (const [course, url] of Object.entries(classPaymentLinks)) {
+    await page.goto('/');
     const button = page.locator('.class-checkout[data-class="' + course + '"]');
     await expect(button).toHaveAttribute('href', url);
     await expect(button).not.toHaveAttribute('target');
-    await expect(button).not.toHaveAttribute('aria-disabled', 'true');
+    await button.focus();
+    await page.keyboard.press('Enter');
+    await expect(page).toHaveURL(url);
+    await expect(page).toHaveTitle('Class checkout fixture');
   }
 });
 
