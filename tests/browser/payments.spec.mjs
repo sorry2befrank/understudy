@@ -64,8 +64,8 @@ test('missing, expired or unreachable payment links never start payment', async 
 test('major-build prices are readable on a phone and offer no direct project purchase', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 360, height: 900 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/work-with-me.html');
-  await page.getByRole('link', { name: 'See the full price list', exact: true }).click();
+  await page.goto('/book.html');
+  await page.getByRole('link', { name: 'See the prices', exact: true }).click();
   await expect(page).toHaveURL(/pricing\.html$/);
   await expect.poll(() => page.locator('#pricing .eyebrow').evaluate(node =>
     node.getBoundingClientRect().top >= document.querySelector('header.site').getBoundingClientRect().bottom

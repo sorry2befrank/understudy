@@ -47,8 +47,9 @@ test('structured data uses confirmed service coverage without invented location,
 test('public sitemap contains only canonical marketing pages, not client invitations or internal files', async () => {
   const doc = parseDocument(await readFile(resolve(root, 'sitemap.xml'), 'utf8'), { xmlMode: true });
   const urls = elements(doc, 'loc').map(text);
-  assert.equal(new Set(urls).size, pages.length);
-  assert.deepEqual(new Set(urls), new Set(pages.map(file => `${origin}/${file === 'index.html' ? '' : file}`)));
+  const listed = [...pages, 'founders.html'];
+  assert.equal(new Set(urls).size, listed.length);
+  assert.deepEqual(new Set(urls), new Set(listed.map(file => `${origin}/${file === 'index.html' ? '' : file}`)));
   const robots = await readFile(resolve(root, 'robots.txt'), 'utf8');
   assert.match(robots, /User-agent: \*\s+Allow: \//);
   assert.match(robots, /Sitemap: https:\/\/understudy\.consulting\/sitemap\.xml/);
@@ -161,7 +162,7 @@ test('major build budgets stay visible without buy-now project links', async () 
   assert.equal(elements(table, 'button').length, 0);
   assert.equal(elements(table, 'a').length, 0);
   const hub = await documentFor('work-with-me.html');
-  assert.ok(elements(hub, 'a').some(node => node.attribs.href === 'pricing.html' && text(node) === 'See the full price list'));
+  assert.doesNotMatch(text(hub), /\$1,500|\$3,000|\$6,000|\$10,000/, 'Work with me has no prices section');
 });
 
 test('class checkout uses enabled native anchors with the correct course mapping', async () => {

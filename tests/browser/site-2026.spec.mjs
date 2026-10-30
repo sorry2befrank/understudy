@@ -141,12 +141,12 @@ for (const path of navPages) {
   });
 }
 
-test('service hub introduces Frank first, keeps three orange buttons that open the right calendar, and puts prices last', async ({ page }) => {
+test('service hub introduces Frank first, keeps three orange buttons that open the right calendar, and has no prices section', async ({ page }) => {
   await page.goto('/work-with-me.html');
   await expect(page.locator('h1')).toHaveText("I'm Frank Epps. I do AI consultation.");
   const sections = await page.locator('main > section').evaluateAll(nodes => nodes.map(node => node.className));
   expect(sections[0]).toContain('work-intro');
-  expect(sections[sections.length - 1]).toContain('work-prices');
+  expect(sections[sections.length - 1]).toContain('work-proof');
   expect(await page.locator('.work-intro').innerText()).not.toMatch(/\$\d/);
   await expect(page.locator('.offer-card')).toHaveCount(3);
   await expect(page.locator('.offer-card .price')).toHaveCount(0);
@@ -168,9 +168,8 @@ test('service hub introduces Frank first, keeps three orange buttons that open t
     expect(inline[1].calLink).toBe(calLink);
     expect(inline[1].elementOrSelector).toBe('#my-cal-inline-' + namespace);
   }
-  await expect(page.locator('.work-prices dt')).toHaveText(['Diagnosis', 'Consultation', 'Builds']);
-  await expect(page.locator('.work-prices')).toContainText('$1,500, $3,000 or $6,000');
-  await expect(page.getByRole('link', { name: 'See the full price list', exact: true })).toHaveAttribute('href', 'pricing.html');
+  await expect(page.locator('.work-prices')).toHaveCount(0);
+  expect(await page.locator('main').innerText()).not.toMatch(/\$1,500|\$3,000|\$6,000|\$10,000/);
 });
 
 test('without JavaScript the three hub buttons still reach their booking pages', async ({ browser }) => {
@@ -199,6 +198,7 @@ test('Seed form retains its endpoint, hidden honeypot and acknowledgement flow',
   await expect(page.locator('#seed-send')).toBeDisabled();
   expect(bodies).toHaveLength(1);
   expect(bodies[0].lane).toBe('seed-waitlist');
-  await expect(page.getByRole('link', { name: 'Visit the Voyage', exact: true })).toHaveAttribute('target', '_blank');
-  await expect(page.getByRole('link', { name: 'Visit the Voyage', exact: true })).toHaveAttribute('rel', 'noopener');
+  await expect(page.getByRole('link', { name: 'Explore the Orrery', exact: true })).toHaveAttribute('target', '_blank');
+  await expect(page.getByRole('link', { name: 'Explore the Orrery', exact: true })).toHaveAttribute('rel', 'noopener');
+  await expect(page.getByRole('link', { name: 'Explore the Orrery', exact: true })).toHaveAttribute('href', 'https://voyage.understudy.consulting/');
 });
