@@ -61,57 +61,12 @@ test('missing, expired or unreachable payment links never start payment', async 
   await expect(page.locator('#payment-status')).toContainText('could not confirm');
   await expect(page.locator('#payment-start')).toBeHidden();
 });
-test('inquiry retries retain the same request token and show the saved reference', async ({ page }) => {
-  const bodies = [];
-  await page.route(API + '/api/understudy/lead', route => {
-    bodies.push(route.request().postDataJSON());
-    return bodies.length === 1 ? route.abort() : route.fulfill({ json: { ok: true, reference: 'lead_fixture' } });
-  });
-  await page.goto('/index.html#contact');
-  await page.locator('#contact-name').fill('Test owner');
-  await page.locator('#contact-email').fill('test@example.invalid');
-  await page.locator('#contact-business').fill('A test inquiry.');
-  await page.locator('#contact-send').click();
-  await expect(page.locator('#contact-status')).toContainText('could not confirm');
-  await page.locator('#contact-send').click();
-  await expect(page.locator('#contact-status')).toContainText('lead_fixture');
-  expect(bodies[0].requestId).toBe(bodies[1].requestId);
-  expect(bodies[0].requestId).toHaveLength(36);
-});
-
-test('guided brief only offers the $150 diagnostic, even if a stale API returns build prices', async ({ page }, testInfo) => {
-  await page.setViewportSize({ width: 360, height: 900 });
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  const errors = [];
-  page.on('pageerror', error => errors.push(error.message));
-  await page.route(API + '/api/understudy/quote', route => route.fulfill({ json: {
-    startPrice: 999, hourlyRate: 75, total: 4999, greeting: 'Buy the full website now.',
-    steps: [{ name: 'Inspect your booking workflow', delivers: 'Identify which calendar and forms need to connect.', price: 999, hoursLabel: '10 hours' }],
-    note: 'Pay for the full website today.', cta: 'Pay now'
-  } }));
-  await page.goto('/index.html');
-  await page.locator('#idea').fill('My booking workflow needs help.');
-  await page.locator('#send').click();
-  await expect(page.locator('#quote-result')).toContainText('Book the $150 diagnostic');
-  await expect(page.locator('#quote-result')).not.toContainText('$999');
-  await expect(page.locator('#quote-result')).not.toContainText('full website');
-  await expect(page.locator('#quote-result')).not.toContainText('10 hours');
-  await expect(page.locator('#quote-result .uc-pay')).toHaveCount(0);
-  await expect(page.locator('a[href="pay.html"]')).toHaveCount(0);
-  await page.locator('#quote-result a[href="book.html"]').click();
-  await expect(page.locator('h1')).toHaveText('Book your $150 diagnostic.');
-  await expect(page.locator('.booking-intro')).toContainText('diagnostic only, not website design');
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
-  await expect(page.locator('.booking-intro .reveal').first()).toHaveCSS('opacity', '1');
-  await page.locator('.booking-intro').screenshot({ path: testInfo.outputPath('diagnostic-booking-phone.png') });
-  expect(errors).toEqual([]);
-});
-
 test('major-build prices are readable on a phone and offer no direct project purchase', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 360, height: 900 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await page.goto('/index.html');
-  await page.getByRole('link', { name: 'View build pricing', exact: true }).click();
+  await page.goto('/work-with-me.html');
+  await page.getByRole('link', { name: 'View website and major-build price ranges', exact: true }).click();
+  await expect(page).toHaveURL(/pricing\.html$/);
   await expect.poll(() => page.locator('#pricing .eyebrow').evaluate(node =>
     node.getBoundingClientRect().top >= document.querySelector('header.site').getBoundingClientRect().bottom
   )).toBeTruthy();

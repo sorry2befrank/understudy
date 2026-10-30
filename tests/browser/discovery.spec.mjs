@@ -9,7 +9,7 @@ test.beforeEach(async ({ page }) => {
 
 for (const width of [360, 768, 1440]) {
   for (const path of pages) {
-    test(`${path} is readable and interactive at ${width}px`, async ({ page }, testInfo) => {
+    test(path + ' is readable and interactive at ' + width + 'px', async ({ page }, testInfo) => {
       await page.setViewportSize({ width, height: 900 });
       const errors = [];
       page.on('pageerror', error => errors.push(error.message));
@@ -27,17 +27,10 @@ for (const width of [360, 768, 1440]) {
       expect(clipped).toEqual([]);
       await page.locator('details summary').first().click();
       await expect(page.locator('details').first()).toHaveAttribute('open', '');
-      await page.locator('#theme-toggle').click();
-      await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
-      await page.evaluate(() => window.scrollTo(0, 0));
-      await page.screenshot({ path: testInfo.outputPath('light.png'), fullPage: true });
-      await page.locator('#theme-toggle').click();
-      if (width < 761) {
-        await page.locator('.nav-menu-toggle').click();
-        await expect(page.locator('.nav-menu-toggle')).toHaveAttribute('aria-expanded', 'true');
-        await page.keyboard.press('Escape');
-        await expect(page.locator('.nav-menu-toggle')).toHaveAttribute('aria-expanded', 'false');
-      }
+      await expect(page.locator('#theme-toggle, .nav-menu-toggle')).toHaveCount(0);
+      await expect(page.locator('nav a')).toHaveText(['Classes', 'Work with me', 'The Seed']);
+      for (const link of await page.locator('nav a').all()) await expect(link).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Send a short inquiry', exact: true })).toHaveAttribute('href', 'mailto:frank@marqueeweb.com');
       await page.evaluate(() => window.scrollTo(0, 0));
       await page.screenshot({ path: testInfo.outputPath('dark.png'), fullPage: true });
       await page.screenshot({ path: testInfo.outputPath('first-screen.png') });
@@ -45,27 +38,6 @@ for (const width of [360, 768, 1440]) {
     });
   }
 }
-
-test('homepage local services and inquiry form fit a phone screen', async ({ page }, testInfo) => {
-  await page.setViewportSize({ width: 360, height: 800 });
-  const errors = [];
-  page.on('pageerror', error => errors.push(error.message));
-  await page.goto('/index.html');
-  await expect(page.locator('h1')).toBeVisible();
-  await expect(page.locator('body')).toContainText('Atlanta');
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBeTruthy();
-  await page.screenshot({ path: testInfo.outputPath('home-phone.png') });
-  await page.locator('#contact-name').scrollIntoViewIfNeeded();
-  await expect(page.locator('#contact-send')).toBeEnabled();
-  await expect(page.locator('#contact-form')).toHaveCSS('opacity', '1');
-  const clipped = await page.locator('#contact input, #contact button').evaluateAll(nodes => nodes.filter(n => {
-    const box = n.getBoundingClientRect();
-    return box.left < 0 || box.right > innerWidth || n.scrollWidth > n.clientWidth + 2;
-  }).map(n => n.id));
-  expect(clipped).toEqual([]);
-  await page.screenshot({ path: testInfo.outputPath('inquiry-phone.png') });
-  expect(errors).toEqual([]);
-});
 
 test('referral survives service page to booking and reaches the Cal embed configuration', async ({ page }) => {
   await page.goto(pages[0] + '?utm_source=chatgpt.com&email=never-forward@example.org');
@@ -78,47 +50,28 @@ test('referral survives service page to booking and reaches the Cal embed config
   expect(inline[1].config.utm_content).toBe('business-automation-atlanta');
 });
 
-test('inquiry submits exactly once with source and reports success only after acknowledgement', async ({ page }) => {
-  const requests = [];
-  await page.route('https://three-mountaintops-engine.onrender.com/api/understudy/lead', async route => {
-    requests.push(route.request().postDataJSON());
-    await route.fulfill({ contentType: 'application/json', body: '{"ok":true}' });
+for (const path of ['/work-with-me.html', '/pricing.html']) {
+  test('referral survives ' + path + ' to a booking', async ({ page }) => {
+    await page.goto(path + '?utm_source=chatgpt.com&email=never-forward@example.org');
+    await page.locator('main a[href^="/book.html"], main a[href^="/consult.html"]').first().click();
+    await expect(page).toHaveURL(/(?:book|consult).html\?utm_source=chatgpt/);
+    expect(page.url()).not.toContain('never-forward');
+    const params = await page.evaluate(() => window.UnderstudyDiscovery.bookingParams());
+    expect(params.utm_source).toBe('chatgpt');
+    expect(params.utm_content).toBe(path.slice(1).replace('.html', ''));
   });
-  await page.goto(pages[0] + '?utm_source=chatgpt.com');
-  await page.locator('a[href="index.html#contact"]').click();
-  await page.locator('#contact-name').fill('Test owner');
-  await page.locator('#contact-email').fill('test@example.org');
-  await page.locator('#contact-business').fill('Please connect our booking workflow.');
-  await page.locator('#contact-send').click();
-  await expect(page.locator('#contact-status')).toContainText('has been received');
-  await expect(page.locator('#contact-send')).toBeDisabled();
-  expect(requests).toHaveLength(1);
-  expect(requests[0].summary).toContain('chatgpt; landing page: /business-automation-atlanta.html');
-  expect(page.url()).not.toContain('test@example.org');
-});
+}
 
-test('inquiry failure keeps entered information and allows a deliberate retry', async ({ page }) => {
-  await page.route('https://three-mountaintops-engine.onrender.com/api/understudy/lead', route => route.fulfill({ status: 503, contentType: 'application/json', body: '{"error":"unavailable"}' }));
-  await page.goto('/index.html#contact');
-  await page.locator('#contact-name').fill('Test owner');
-  await page.locator('#contact-email').fill('test@example.org');
-  await page.locator('#contact-business').fill('Please inspect our site.');
-  await page.locator('#contact-send').click();
-  await expect(page.locator('#contact-status')).toContainText('could not confirm');
-  await expect(page.locator('#contact-send')).toBeEnabled();
-  await expect(page.locator('#contact-business')).toHaveValue('Please inspect our site.');
-});
-
-test('service content remains available without JavaScript', async ({ browser }) => {
+test('service content and its inquiry link remain available without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 360, height: 900 } });
   const page = await context.newPage();
   await page.goto('http://127.0.0.1:4387' + pages[0]);
   await expect(page.locator('h1')).toBeVisible();
   await expect(page.locator('main a[href="book.html"]').first()).toBeVisible();
-  await page.goto('http://127.0.0.1:4387/index.html#contact');
-  await expect(page.locator('#contact-form')).toHaveCSS('opacity', '1');
-  await expect(page.locator('#contact-send')).toBeDisabled();
-  await expect(page.locator('#contact-form noscript')).toBeVisible();
-  await expect(page.locator('#contact-note a')).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Send a short inquiry', exact: true })).toHaveAttribute('href', 'mailto:frank@marqueeweb.com');
+  await page.goto('http://127.0.0.1:4387/');
+  await expect(page.locator('h1')).toHaveText('Learn AI. Then build with it.');
+  await expect(page.locator('.class-checkout')).toHaveCount(2);
+  await expect(page.locator('#contact-form, #help-panel, #quote-result')).toHaveCount(0);
   await context.close();
 });

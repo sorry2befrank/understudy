@@ -7,7 +7,9 @@ import { parseDocument, DomUtils } from 'htmlparser2';
 
 const root = resolve(import.meta.dirname, '..');
 const origin = 'https://understudy.consulting';
-const pages = ['index.html', 'business-automation-atlanta.html', 'website-development-atlanta.html', 'work.html', 'systems.html', 'book.html', 'consult.html'];
+const pages = ['index.html', 'business-automation-atlanta.html', 'website-development-atlanta.html', 'work.html', 'systems.html', 'book.html', 'consult.html', 'work-with-me.html', 'pricing.html'];
+// Fill with the two owner-supplied URLs before enabling class checkout.
+const classPaymentLinks = { basics: null, workshop: null };
 const documentFor = async (file) => parseDocument(await readFile(resolve(root, file), 'utf8'));
 const elements = (doc, name) => DomUtils.findAll(node => node.name === name, doc.children);
 const text = node => DomUtils.textContent(node);
@@ -35,7 +37,8 @@ test('structured data uses confirmed service coverage without invented location,
     const serialized = JSON.stringify(schemas);
     assert.match(serialized, /Atlanta metropolitan area, Georgia/);
     assert.doesNotMatch(serialized, /streetAddress|postalCode|latitude|longitude|aggregateRating|reviewCount|LocalBusiness|SDVOSB/);
-    assert.match(text(doc), /visit clients|visits to clients|client visits/i);
+    const visibleContent = file === 'index.html' ? await documentFor('work-with-me.html') : doc;
+    assert.match(text(visibleContent), /visit clients|visits to clients|client visits/i);
   }
 });
 
@@ -51,7 +54,7 @@ test('public sitemap contains only canonical marketing pages, not client invitat
 });
 
 test('local links and referenced assets resolve, including fragment targets', async () => {
-  for (const file of pages.slice(0, 3)) {
+  for (const file of [...pages, 'founders.html']) {
     const doc = await documentFor(file);
     const nodes = DomUtils.findAll(node => node.attribs && (node.attribs.src || node.attribs.href), doc.children);
     for (const node of nodes) {
@@ -102,26 +105,28 @@ test('attribution validates storage, ignores spoofed hosts and expires at thirty
   assert.equal(attribution({ path: '/join-aisha.html' }).api, undefined);
 });
 
-test('lead form fails closed without JavaScript and booking retains its existing calendar', async () => {
+test('classes home retires the inquiry form and booking retains its existing calendar', async () => {
   const doc = await documentFor('index.html');
-  const form = elements(doc, 'form').find(node => node.attribs.id === 'contact-form');
-  assert.equal(form.attribs.method, 'post');
-  assert.equal(form.attribs.action, 'https://three-mountaintops-engine.onrender.com/api/understudy/lead');
-  assert.ok('disabled' in elements(form, 'button').find(node => node.attribs.id === 'contact-send').attribs);
+  assert.equal(elements(doc, 'form').length, 0);
+  assert.ok(!DomUtils.findOne(node => ['contact-form', 'idea', 'quote-result', 'help-panel'].includes(node.attribs?.id), doc.children, true));
   const book = await readFile(resolve(root, 'book.html'), 'utf8');
   assert.match(book, /frank-epps-ujdwu4\/30min/);
   assert.match(book, /UnderstudyDiscovery.bookingParams/);
 });
 
-test('public purchase path is the diagnostic, with later 50/50 project payments requested privately', async () => {
+test('public project purchase path stays diagnostic; only the two approved class links may appear on home', async () => {
   for (const file of pages) {
     const doc = await documentFor(file);
-    assert.ok(!elements(doc, 'a').some(node => /(?:pay\.html|checkout\.stripe\.com|buy\.stripe\.com)/.test(node.attribs.href || '')), file + ' must not advertise project checkout');
+    const hrefs = elements(doc, 'a').map(node => node.attribs.href || '');
+    assert.ok(!hrefs.some(href => /(?:pay\.html|checkout\.stripe\.com)/.test(href)), file + ' must not advertise project checkout');
+    const stripeHrefs = hrefs.filter(href => /buy\.stripe\.com/.test(href));
+    assert.deepEqual(new Set(stripeHrefs), new Set(file === 'index.html' ? Object.values(classPaymentLinks).filter(Boolean) : []), file + ' may link only its owner-approved class checkout URLs');
   }
   const home = await readFile(resolve(root, 'index.html'), 'utf8');
+  const pricing = await readFile(resolve(root, 'pricing.html'), 'utf8');
   const book = await readFile(resolve(root, 'book.html'), 'utf8');
   const website = await readFile(resolve(root, 'website-development-atlanta.html'), 'utf8');
-  for (const content of [home, book, website]) {
+  for (const content of [pricing, book, website]) {
     assert.match(content, /50%/);
     assert.match(content, /when (?:the |the agreed )?work is complete/);
   }
@@ -131,20 +136,20 @@ test('public purchase path is the diagnostic, with later 50/50 project payments 
   assert.doesNotMatch(book, /initEmbeddedCheckout|\/api\/understudy\/checkout/);
 });
 
-test('consultation is the $500 Cal.com booking, reachable from book and home', async () => {
+test('consultation is the $500 Cal.com booking, reachable from book and the services hub', async () => {
   const consult = await readFile(resolve(root, 'consult.html'), 'utf8');
   assert.match(consult, /\$500/);
   assert.match(consult, /frank-epps-ujdwu4\/systems-consultation/);
   assert.match(consult, /UnderstudyDiscovery\.bookingParams/);
   assert.doesNotMatch(consult, /initEmbeddedCheckout|\/api\/understudy\/checkout|buy\.stripe\.com/);
-  for (const file of ['book.html', 'index.html']) {
+  for (const file of ['book.html', 'work-with-me.html']) {
     const doc = await documentFor(file);
     assert.ok(elements(doc, 'a').some(node => node.attribs.href === 'consult.html'), file + ' links to the consultation');
   }
 });
 
 test('major build budgets stay visible without buy-now project links', async () => {
-  const doc = await documentFor('index.html');
+  const doc = await documentFor('pricing.html');
   const table = elements(doc, 'table').find(node => node.attribs.class === 'price-table reveal');
   assert.match(text(table), /Website build \+ scoped AI/);
   assert.match(text(table), /\$3,000–\$6,000/);
@@ -152,5 +157,38 @@ test('major build budgets stay visible without buy-now project links', async () 
   assert.match(text(table), /From \$10,000/);
   assert.equal(elements(table, 'button').length, 0);
   assert.equal(elements(table, 'a').length, 0);
-  assert.ok(elements(doc, 'a').some(node => node.attribs.href === '#pricing' && text(node) === 'View build pricing'));
+  const hub = await documentFor('work-with-me.html');
+  assert.ok(elements(hub, 'a').some(node => node.attribs.href === 'pricing.html' && text(node) === 'View website and major-build price ranges'));
+});
+
+test('unconfigured class checkout stays disabled without placeholder or invented URLs', async () => {
+  const doc = await documentFor('index.html');
+  const buttons = elements(doc, 'a').filter(node => node.attribs.class?.split(/\s+/).includes('class-checkout'));
+  assert.equal(buttons.length, 2);
+  assert.deepEqual(new Set(buttons.map(node => node.attribs['data-class'])), new Set(['basics', 'workshop']));
+  for (const button of buttons) {
+    const url = classPaymentLinks[button.attribs['data-class']];
+    if (url) assert.equal(button.attribs.href, url);
+    else {
+      assert.equal(button.attribs.href, undefined);
+      assert.equal(button.attribs['aria-disabled'], 'true');
+    }
+  }
+});
+
+test('class checkout uses the two exact owner-approved Stripe URLs', { skip: Object.values(classPaymentLinks).some(url => !url) ? 'Pending owner-supplied AI Basics and 30-Day Workshop Payment Links; checkout is not release-ready.' : false }, async () => {
+  const doc = await documentFor('index.html');
+  const links = elements(doc, 'a').filter(node => /buy\.stripe\.com/.test(node.attribs.href || '')).map(node => node.attribs.href);
+  assert.equal(links.length, 2);
+  assert.deepEqual(new Set(links), new Set(Object.values(classPaymentLinks)));
+});
+
+test('new service and pricing paths retain referral attribution without storing private data', () => {
+  for (const path of ['/work-with-me.html', '/pricing.html']) {
+    const result = attribution({ path, search: '?utm_source=chatgpt.com&email=never-store@example.org' });
+    assert.equal(result.saved.landing, path);
+    assert.equal(result.api.bookingParams().utm_source, 'chatgpt');
+    assert.match(result.links[0].href, /utm_source=chatgpt/);
+    assert.doesNotMatch(JSON.stringify(result.saved) + result.links[0].href, /never-store|email/);
+  }
 });
