@@ -7,7 +7,7 @@ import { parseDocument, DomUtils } from 'htmlparser2';
 
 const root = resolve(import.meta.dirname, '..');
 const origin = 'https://understudy.consulting';
-const pages = ['index.html', 'business-automation-atlanta.html', 'website-development-atlanta.html', 'work.html', 'systems.html', 'book.html', 'consult.html', 'work-with-me.html', 'pricing.html'];
+const pages = ['index.html', 'business-automation-atlanta.html', 'website-development-atlanta.html', 'work.html', 'systems.html', 'book.html', 'consult.html', 'work-with-me.html', 'pricing.html', 'start-a-build.html'];
 const classPaymentLinks = {
   basics: 'https://buy.stripe.com/cNibJ11oU7h07Ty9tm4Rq0x',
   workshop: 'https://buy.stripe.com/fZu4gz0kQeJsc9O7le4Rq0y'
@@ -186,11 +186,62 @@ test('class checkout uses the two exact owner-approved Stripe URLs', async () =>
 });
 
 test('new service and pricing paths retain referral attribution without storing private data', () => {
-  for (const path of ['/work-with-me.html', '/pricing.html']) {
+  for (const path of ['/work-with-me.html', '/pricing.html', '/start-a-build.html']) {
     const result = attribution({ path, search: '?utm_source=chatgpt.com&email=never-store@example.org' });
     assert.equal(result.saved.landing, path);
     assert.equal(result.api.bookingParams().utm_source, 'chatgpt');
     assert.match(result.links[0].href, /utm_source=chatgpt/);
     assert.doesNotMatch(JSON.stringify(result.saved) + result.links[0].href, /never-store|email/);
   }
+});
+
+test('builds book the $500 consultation on their own page, credited toward the build', async () => {
+  const page = await readFile(resolve(root, 'start-a-build.html'), 'utf8');
+  const doc = await documentFor('start-a-build.html');
+  assert.equal(text(elements(doc, 'h1')[0]), 'Start a build.');
+  assert.equal(DomUtils.findAll(node => node.attribs?.id === 'my-cal-inline-build-consultation', doc.children).length, 1);
+  assert.match(page, /var BUILD_NAMESPACE = "build-consultation";/);
+  assert.match(page, /var BUILD_CAL_LINK = "frank-epps-ujdwu4\/systems-consultation";/);
+  assert.match(page, /UnderstudyDiscovery\.bookingParams/);
+  assert.match(text(doc), /If we build together, the \$500 comes off the build price\./);
+  assert.match(text(doc), /with the \$500 taken off/);
+  assert.doesNotMatch(page, /initEmbeddedCheckout|\/api\/understudy\/checkout|buy\.stripe\.com|checkout\.stripe\.com|pay\.html/);
+  assert.ok(elements(doc, 'a').some(node => node.attribs.href === 'mailto:frank@marqueeweb.com'));
+  const hub = await documentFor('work-with-me.html');
+  const buildsButton = elements(hub, 'a').find(node => text(node) === 'Start a build');
+  assert.equal(buildsButton?.attribs.href, 'start-a-build.html');
+  assert.match(text(hub), /Every build starts with the \$500 consultation\. It comes off the build price if we build together\./);
+});
+
+test('one rule across the site: the $150 diagnosis fixes what exists, the $500 consultation plans something new', async () => {
+  for (const file of [...pages, 'founders.html']) {
+    const content = text(await documentFor(file));
+    for (const pattern of [/For a build, book the \$150 diagnostic/, /before you commit to a build/, /or a fix or build you want me to take on/, /scoping work for me/]) {
+      assert.doesNotMatch(content, pattern, file + ' still says ' + pattern);
+    }
+  }
+  const pricing = await readFile(resolve(root, 'pricing.html'), 'utf8');
+  assert.equal(pricing.split('For a new build, book the $500 consultation first. To fix something you already have, book the $150 diagnostic.').length - 1, 3);
+  assert.match(pricing, /A paid working session to plan a build or a system you want to set up for your own business\. Credited toward the build if we continue\./);
+  const website = await documentFor('website-development-atlanta.html');
+  assert.doesNotMatch(text(website), /Start with a \$150 diagnosis|Book the \$150 diagnosis|Diagnostic: \$150/);
+  assert.match(text(website), /Consultation: \$500\./);
+  assert.equal(elements(website, 'a').filter(node => node.attribs.href === 'start-a-build.html' && text(node) === 'Start a build').length, 2);
+  const work = await documentFor('work.html');
+  assert.ok(elements(work, 'a').some(node => node.attribs.href === 'work-with-me.html' && text(node) === 'Work with me'));
+  assert.ok(!elements(work, 'a').some(node => text(node) === 'Start with a diagnosis'));
+  assert.match(text(await documentFor('book.html')), /I inspect what you already have and explain the scope before you commit to a fix\./);
+  assert.match(text(await documentFor('consult.html')), /Inspecting or fixing what you have/);
+  const automation = await documentFor('business-automation-atlanta.html');
+  assert.ok(elements(automation, 'a').some(node => node.attribs.href === 'book.html' && text(node) === 'Start with a $150 diagnosis'), 'automation keeps its $150 diagnosis: it inspects an existing workflow');
+});
+
+test('build booking links carry attribution like the other booking pages', () => {
+  const window = { location: { origin, pathname: '/work-with-me.html', search: '?utm_source=chatgpt.com', href: origin + '/work-with-me.html?utm_source=chatgpt.com' } };
+  const links = ['start-a-build.html', 'founders.html'].map(href => ({ href, getAttribute() { return this.href; }, setAttribute(key, value) { this.href = value; } }));
+  let saved = null;
+  runInNewContext(script, { window, document: { referrer: '', readyState: 'complete', querySelectorAll: () => links }, URL, URLSearchParams, Date, Number,
+    sessionStorage: { getItem() { return saved; }, setItem(key, value) { saved = value; } } });
+  assert.match(links[0].href, /^\/start-a-build\.html\?utm_source=chatgpt/);
+  assert.equal(links[1].href, 'founders.html');
 });

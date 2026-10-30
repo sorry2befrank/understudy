@@ -75,3 +75,16 @@ test('service content and its inquiry link remain available without JavaScript',
   await expect(page.locator('#contact-form, #help-panel, #quote-result')).toHaveCount(0);
   await context.close();
 });
+
+test('referral survives the services hub to the build booking and reaches its Cal embed', async ({ page }) => {
+  await page.goto('/work-with-me.html?utm_source=chatgpt.com&email=never-forward@example.org');
+  await page.locator('main a[href^="/start-a-build.html"]').first().click();
+  await expect(page).toHaveURL(/start-a-build.html\?utm_source=chatgpt/);
+  expect(page.url()).not.toContain('never-forward');
+  await expect(page.locator('h1')).toHaveText('Start a build.');
+  const inline = await page.evaluate(() => window.Cal.ns['build-consultation'].q.map(args => Array.from(args)).find(args => args[0] === 'inline'));
+  expect(inline[1].calLink).toBe('frank-epps-ujdwu4/systems-consultation');
+  expect(inline[1].elementOrSelector).toBe('#my-cal-inline-build-consultation');
+  expect(inline[1].config.utm_source).toBe('chatgpt');
+  expect(inline[1].config.utm_content).toBe('work-with-me');
+});

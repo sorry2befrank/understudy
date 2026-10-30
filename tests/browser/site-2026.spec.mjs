@@ -4,9 +4,9 @@ const classPaymentLinks = {
   basics: 'https://buy.stripe.com/cNibJ11oU7h07Ty9tm4Rq0x',
   workshop: 'https://buy.stripe.com/fZu4gz0kQeJsc9O7le4Rq0y'
 };
-const navPages = ['/', '/work-with-me.html', '/founders.html', '/book.html', '/consult.html', '/pricing.html', '/work.html', '/systems.html', '/business-automation-atlanta.html', '/website-development-atlanta.html'];
+const navPages = ['/', '/work-with-me.html', '/founders.html', '/book.html', '/consult.html', '/pricing.html', '/work.html', '/systems.html', '/business-automation-atlanta.html', '/website-development-atlanta.html', '/start-a-build.html'];
 const primaryPages = { '/': 'Classes', '/work-with-me.html': 'Work with me', '/founders.html': 'The Seed' };
-const serviceChildren = ['/book.html', '/consult.html', '/pricing.html'];
+const serviceChildren = ['/book.html', '/consult.html', '/pricing.html', '/start-a-build.html'];
 const classLabels = { basics: 'Save my seat: $25', workshop: 'Reserve my seat: $150' };
 
 test.beforeEach(async ({ page }) => {
@@ -145,7 +145,7 @@ test('service hub has exactly the three approved prices and correct offer routes
   expect(new Set((await page.locator('body').innerText()).match(/\$\d[\d,]*/g))).toEqual(new Set(['$150', '$500', '$1,500']));
   await expect(page.locator('.offer-card')).toHaveCount(3);
   const routes = await page.locator('.offer-card .btn').evaluateAll(links => links.map(link => new URL(link.href).pathname));
-  expect(routes).toEqual(['/book.html', '/consult.html', '/book.html']);
+  expect(routes).toEqual(['/book.html', '/consult.html', '/start-a-build.html']);
   await expect(page.getByRole('link', { name: 'View website and major-build price ranges', exact: true })).toHaveAttribute('href', 'pricing.html');
 });
 

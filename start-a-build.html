@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start a build | Understudy Consulting</title>
+  <meta name="description" content="Start a build with Frank Epps. Apps, websites and AI systems from $1,500. Every build starts with a $500 consultation, credited toward the build." />
+  <link rel="canonical" href="https://understudy.consulting/start-a-build.html" />
+  <script src="discovery-attribution.js"></script>
+  <meta name="theme-color" content="#0B1220" />
+  <link rel="icon" href="img/understudy-roundel.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="rebrand.css" />
+  <link rel="stylesheet" href="interior.css?v=2" />
+  <style>
+    .process-grid.two-up { grid-template-columns: repeat(2, 1fr); }
+    .cal-fallback { margin-top: 14px; color: var(--dim); }
+    #my-cal-inline-build-consultation { width: 100%; min-height: 760px; height: 100%; overflow: auto; }
+    @media (max-width: 680px) {
+      .process-grid.two-up { grid-template-columns: 1fr; }
+      #my-cal-inline-build-consultation { min-height: 680px; }
+    }
+  </style>
+  <link rel="stylesheet" href="site-2026.css" />
+</head>
+<body>
+  <header class="site">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Understudy Consulting home">
+        <img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="34" height="34" />
+        <span class="brand-name">UNDERSTUDY</span>
+      </a>
+      <nav class="site-tabs" aria-label="Primary navigation">
+        <a href="index.html">Classes</a>
+        <a href="work-with-me.html" aria-current="true">Work with me</a>
+        <a href="founders.html">The Seed</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="booking-intro">
+      <div class="wrap">
+        <div class="reveal"><span class="eyebrow">An app, a website, or an idea</span><h1>Start a build.</h1><p>Builds start at $1,500. Every build starts with a $500 consultation with Frank about what you want built. If we build together, the $500 comes off the build price.</p></div>
+        <div class="booking-facts reveal"><span><strong>$500</strong> paid when you book</span><span><strong>Credited</strong> toward the build if we continue</span></div>
+      </div>
+    </section>
+
+    <section class="booking-embed" aria-label="Choose a consultation time">
+      <div class="wrap">
+        <div class="cal-frame reveal">
+          <div id="my-cal-inline-build-consultation"></div>
+        </div>
+        <p class="cal-fallback">If the calendar does not load, email <a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a>.</p>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <div class="section-head-new reveal"><div><span class="eyebrow">How a build works</span><h2>From a consultation to a finished build.</h2></div><p>Three steps, with the price fixed before any work starts.</p></div>
+        <div class="process-grid">
+          <article class="process-step reveal"><span class="k">01 / CONSULTATION</span><h3>Tell me what you want built</h3><p>A paid $500 session with Frank. Bring the idea, the website or the app.</p></article>
+          <article class="process-step reveal"><span class="k">02 / SCOPE</span><h3>A fixed price in writing</h3><p>If it is a fit, I send a written scope and a fixed price, with the $500 taken off. <a href="pricing.html">See the price ranges</a></p></article>
+          <article class="process-step reveal"><span class="k">03 / BUILD</span><h3>50% to begin, 50% when complete</h3><p>No full payment upfront. The code, accounts, domain, and operating knowledge are handed to you.</p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site"><div class="wrap"><span>Understudy Consulting · built and run by Frank Epps</span><a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></div></footer>
+
+  <script type="text/javascript">
+    (function (C, A, L) { let p = function (a, ar) { a.q.push(ar); }; let d = C.document; C.Cal = C.Cal || function () { let cal = C.Cal; let ar = arguments; if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; } if (ar[0] === L) { const api = function () { p(api, arguments); }; const namespace = ar[1]; api.q = api.q || []; if(typeof namespace === "string"){cal.ns[namespace] = cal.ns[namespace] || api;p(cal.ns[namespace], ar);p(cal, ["initNamespace", namespace]);} else p(cal, ar); return;} p(cal, ar); }; })(window, "https://app.cal.com/embed/embed.js", "init");
+    // Same Cal.com event as consult.html (paid $500); builds start with the consultation
+    var BUILD_NAMESPACE = "build-consultation";
+    var BUILD_CAL_LINK = "frank-epps-ujdwu4/systems-consultation";
+    Cal("init", BUILD_NAMESPACE, {origin:"https://app.cal.com"});
+    Cal.config = Cal.config || {};
+    Cal.config.forwardQueryParams = true;
+    Cal.ns[BUILD_NAMESPACE]("inline", {
+      elementOrSelector:"#my-cal-inline-build-consultation",
+      config: Object.assign({"layout":"month_view","useSlotsViewOnSmallScreen":"true"}, window.UnderstudyDiscovery ? window.UnderstudyDiscovery.bookingParams() : {}),
+      calLink: BUILD_CAL_LINK
+    });
+    Cal.ns[BUILD_NAMESPACE]("ui", {"hideEventTypeDetails":false,"layout":"month_view"});
+  </script>
+  <script>
+    (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(el){el.classList.add('in')});return}var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}})},{threshold:.08});els.forEach(function(el){io.observe(el)})})();
+  </script>
+</body>
+</html>
