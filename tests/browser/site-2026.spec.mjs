@@ -21,9 +21,10 @@ test('classes home has approved offers, dates, prices and no unfinished copy', a
   await page.goto('/');
   await expect(page.locator('h1')).toHaveText('Learn AI. Then build with it.');
   const text = await page.locator('body').innerText();
-  expect(new Set(text.match(/\$\d[\d,]*/g))).toEqual(new Set(['$25', '$150']));
+  // $20 is the students' own AI plan (Frank approved the requirements line 2026-11-01), not a class price.
+  expect(new Set(text.match(/\$\d[\d,]*/g))).toEqual(new Set(['$25', '$150', '$20']));
   expect(text).not.toMatch(/\$250|founding|TBD|PASTE|register now|waitlist|\[/i);
-  for (const value of ['Sunday, November 15, 2026', '6–8 PM Eastern', 'Starts January 1, 2027', 'THREE MOUNTAINS CREATIVE WORKSHOP', '30 seats', '12 seats', 'full refund until 6 PM Eastern on Friday, November 13', 'full refund through Tuesday, December 29']) {
+  for (const value of ['Sunday, November 22, 2026', '6–8 PM Eastern', 'Starts January 1, 2027', 'THREE MOUNTAINS CREATIVE WORKSHOP', '30 seats', '12 seats', 'full refund until 6 PM Eastern on Friday, November 20', 'full refund through Tuesday, December 29']) {
     expect(text).toContain(value);
   }
   await expect(page.locator('#contact-form, #quote-result, #help-panel')).toHaveCount(0);
