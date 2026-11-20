@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Seed | Understudy Consulting</title>
+  <meta name="description" content="The Seed is a working name for a skeleton of the system Frank Epps runs his own work on, planned so other people can grow their own. In development. Join the list to hear once, when it opens." />
+  <link rel="canonical" href="https://understudy.consulting/founders.html" />
+  <script src="discovery-attribution.js"></script>
+  <meta name="theme-color" content="#0B1220" />
+  <link rel="icon" href="img/understudy-roundel.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="rebrand.css" />
+  <link rel="stylesheet" href="interior.css?v=2" />
+  <style>
+    .booking-intro .seed-status { margin-top: 18px; color: var(--gold-lit); font-weight: 600; }
+    .process-grid.two-up { grid-template-columns: repeat(2, 1fr); }
+    .process-grid.two-up .process-step { padding: 28px 26px 22px 0; border-right: 1px solid var(--line); }
+    .process-grid.two-up .process-step:nth-child(2n) { padding-left: 26px; padding-right: 0; border-right: 0; }
+    .process-grid.two-up .process-step:nth-child(n+3) { border-top: 1px solid var(--line); }
+    .seed-list .contact-form label .optional { color: var(--dim); font-weight: 400; }
+    .seed-trap { position: absolute; left: -10000px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+    .seed-help p { color: var(--dim); max-width: 640px; }
+    .seed-help .btn { margin-top: 18px; }
+    @media (max-width: 680px) {
+      .process-grid.two-up { grid-template-columns: 1fr; }
+      .process-grid.two-up .process-step, .process-grid.two-up .process-step:nth-child(2n) { padding: 22px 0; border-right: 0; border-top: 0; border-bottom: 1px solid var(--line); }
+    }
+  </style>
+  <link rel="stylesheet" href="site-2026.css" />
+</head>
+<body class="seed-page">
+  <header class="site">
+    <div class="wrap">
+      <a class="brand" href="/" aria-label="Understudy Consulting home">
+        <img class="brand-mark" src="img/understudy-roundel.svg" alt="" width="34" height="34" />
+        <span class="brand-name">UNDERSTUDY</span>
+      </a>
+      <nav class="site-tabs" aria-label="Primary navigation">
+        <a href="index.html">Classes</a>
+        <a href="work-with-me.html">Work with me</a>
+        <a href="founders.html" aria-current="page">The Seed</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="final-contact seed-list" id="list">
+      <div class="wrap contact-layout">
+        <div class="contact-copy reveal"><h1>The Seed.</h1><p>Join the email list.</p><p><a class="btn" href="https://voyage.understudy.consulting/" target="_blank" rel="noopener">Explore the Orrery</a></p></div>
+        <form class="contact-form" id="seed-form" autocomplete="on" method="post" action="https://three-mountaintops-engine.onrender.com/api/understudy/lead">
+          <div class="contact-grid">
+            <label>Email<input id="seed-email" name="email" type="email" required autocomplete="email" maxlength="200" /></label>
+            <label>First name <span class="optional">(optional)</span><input id="seed-name" name="name" type="text" autocomplete="given-name" maxlength="40" /></label>
+          </div>
+          <div class="seed-trap" aria-hidden="true"><label>Leave this empty<input id="seed-website" name="website" type="text" tabindex="-1" autocomplete="off" /></label></div>
+          <button class="btn" id="seed-send" type="submit" disabled>Add me to the list</button>
+          <p class="contact-note" id="seed-status" role="status" aria-live="polite"></p>
+          <p class="contact-note">Your email is used only to tell you when the Seed opens. To be taken off the list, email <a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a>.</p>
+          <noscript><p class="contact-note">This form needs JavaScript. To join without it, email <a href="mailto:frank@marqueeweb.com?subject=The%20Seed%20list">frank@marqueeweb.com</a> with the subject "The Seed list".</p></noscript>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site"><div class="wrap"><span>Understudy Consulting · built and run by Frank Epps</span><a href="mailto:frank@marqueeweb.com">frank@marqueeweb.com</a></div></footer>
+
+  <script>
+(function () {
+  // The Seed list (founders.html). Posts a fixed note to the same lead route as the contact form,
+  // under its own lane. The engine sends no automatic email for this lane: this page is the
+  // only acknowledgement, so it must never promise a reply or a follow-up message.
+  var form = document.getElementById('seed-form');
+  if (!form) return;
+  var button = document.getElementById('seed-send');
+  var status = document.getElementById('seed-status');
+  var trap = document.getElementById('seed-website');
+  var busy = false;
+  var requestId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now());
+  var LABEL = 'Add me to the list';
+  button.disabled = false;
+
+  function done(message) {
+    status.textContent = message;
+    button.textContent = 'On the list';
+    button.disabled = true;
+    form.querySelectorAll('input').forEach(function (input) { input.disabled = true; });
+  }
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    if (busy || !form.reportValidity()) return;
+    var email = document.getElementById('seed-email').value.trim();
+    var name = document.getElementById('seed-name').value.trim();
+    if (!email || email.indexOf('@') === -1) { status.textContent = 'Please enter a valid email address.'; return; }
+    // Honeypot: a person never sees this field. If it is filled, show the normal
+    // confirmation and send nothing.
+    if (trap && trap.value) { done('You are on the list. You\'ll hear from us once, when the Seed opens.'); return; }
+    var summary = 'Seed waitlist';
+    if (window.UnderstudyDiscovery) summary = window.UnderstudyDiscovery.enrichSummary(summary);
+    busy = true;
+    button.disabled = true;
+    button.textContent = 'Adding...';
+    status.textContent = 'Adding you to the list.';
+    var controller = new AbortController();
+    var timeout = setTimeout(function () { controller.abort(); }, 20000);
+    try {
+      var response = await fetch(form.action, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: controller.signal,
+        body: JSON.stringify({ email: email, name: name, idea: 'SEED WAITLIST: notify me when the Seed opens.', summary: summary, lane: 'seed-waitlist', requestId: requestId })
+      });
+      var result = await response.json();
+      if (!response.ok || !result.ok || result.error) throw new Error('Not confirmed');
+      done('You are on the list. You\'ll hear from us once, when the Seed opens.');
+    } catch (error) {
+      status.textContent = 'We could not confirm your sign-up. Please try again, or email frank@marqueeweb.com with the subject "The Seed list".';
+      busy = false;
+      button.disabled = false;
+      button.textContent = LABEL;
+    } finally { clearTimeout(timeout); }
+  });
+})();
+  </script>
+  <script>
+    (function(){var els=document.querySelectorAll('.reveal');if(!('IntersectionObserver'in window)){els.forEach(function(el){el.classList.add('in')});return}var io=new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add('in');io.unobserve(entry.target)}})},{threshold:.08});els.forEach(function(el){io.observe(el)})})();
+  </script>
+</body>
+</html>
